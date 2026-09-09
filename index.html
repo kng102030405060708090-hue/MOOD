@@ -62,7 +62,9 @@
     *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important;}
   }
   @keyframes fadeInUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
-  @keyframes floatBlob{ 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-14px) scale(1.05);} }
+  @keyframes floatBlobA{ 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(-18px,-26px) scale(1.08);} 66%{transform:translate(14px,-10px) scale(0.96);} }
+  @keyframes floatBlobB{ 0%,100%{transform:translate(0,0) scale(1);} 40%{transform:translate(20px,16px) scale(1.1);} 75%{transform:translate(-12px,-14px) scale(0.94);} }
+  @keyframes floatBlobC{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-16px,20px) scale(1.06);} }
   @keyframes shimmer{ 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
 
   .stagger{ opacity:0; animation:fadeInUp .5s cubic-bezier(.22,.8,.35,1) forwards; animation-delay:var(--d,0ms); }
@@ -169,16 +171,21 @@
   .receipt-wrap{margin-bottom:22px;}
 
   /* hero */
-  .hero{text-align:center;padding:34px 0 10px;position:relative;}
+  .hero{text-align:center;padding:34px 0 10px;position:relative;overflow:visible;}
   .hero::before{
-    content:"";position:absolute;top:-40px;right:4%;width:320px;height:320px;border-radius:50%;
-    background:radial-gradient(circle,rgba(199,210,254,.55),transparent 65%);
-    filter:blur(6px);z-index:-1;animation:floatBlob 7s ease-in-out infinite;
+    content:"";position:absolute;top:-60px;right:2%;width:440px;height:440px;border-radius:50%;
+    background:radial-gradient(circle,rgba(129,140,248,.22),transparent 68%);
+    filter:blur(12px);z-index:-1;animation:floatBlobA 8s ease-in-out infinite;
   }
   .hero::after{
-    content:"";position:absolute;bottom:-30px;left:2%;width:260px;height:260px;border-radius:50%;
-    background:radial-gradient(circle,rgba(221,214,254,.5),transparent 65%);
-    filter:blur(6px);z-index:-1;animation:floatBlob 9s ease-in-out infinite reverse;
+    content:"";position:absolute;bottom:-50px;left:0%;width:380px;height:380px;border-radius:50%;
+    background:radial-gradient(circle,rgba(196,181,253,.24),transparent 68%);
+    filter:blur(12px);z-index:-1;animation:floatBlobB 10s ease-in-out infinite;
+  }
+  .hero-blob-3{
+    content:"";position:absolute;top:20%;left:50%;transform:translateX(-50%);width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle,rgba(244,114,182,.13),transparent 70%);
+    filter:blur(12px);z-index:-1;animation:floatBlobC 13s ease-in-out infinite;pointer-events:none;
   }
   .hero h1{
     font-size:clamp(1.7rem,4.5vw,2.5rem);
@@ -604,12 +611,12 @@
 <body>
 
 <header class="topbar">
-  <div class="brand"><span class="mark">أ</span><span class="brand-text"><strong>أكاديمية أسيل</strong><small>للكاشير</small></span></div>
+  <div class="brand"><span class="mark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="9" rx="1"/><path d="M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><rect x="9" y="4" width="6" height="3" rx="1"/><line x1="7" y1="14.5" x2="7" y2="14.51"/><line x1="12" y1="14.5" x2="12" y2="14.51"/><line x1="17" y1="14.5" x2="17" y2="14.51"/></svg></span><span class="brand-text"><strong>أكاديمية أسيل</strong><small>للكاشير</small></span></div>
   <nav class="top-nav">
     <button data-nav="home"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg><span>الرئيسية</span></button>
     <button data-nav="course"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>الدورة</span></button>
     <button data-nav="simulator"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>المحاكي</span></button>
-    <button data-nav="learnmore"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.472V15a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.528A6 6 0 0 0 12 3z"/></svg><span>تعلم أكثر</span></button>
+    <button data-nav="learnmore"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>محاكي الدفع</span></button>
     <button data-nav="profile"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>حسابي</span></button>
   </nav>
 </header>
@@ -620,7 +627,7 @@
   <button data-nav="home"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg><span>الرئيسية</span></button>
   <button data-nav="course"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>الدورة</span></button>
   <button data-nav="simulator"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>المحاكي</span></button>
-  <button data-nav="learnmore"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.472V15a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.528A6 6 0 0 0 12 3z"/></svg><span>تعلم أكثر</span></button>
+  <button data-nav="learnmore"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>محاكي الدفع</span></button>
   <button data-nav="profile"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>حسابي</span></button>
 </div>
 
@@ -1385,6 +1392,9 @@ const LEVELS_CONTENT = {
   11: {lessons: LEVEL11_LESSONS, quiz: LEVEL11_QUIZ},
   12: {lessons: LEVEL12_LESSONS, quiz: []},
 };
+/* per-level pass threshold override (fraction correct required to pass); levels not listed
+   here fall back to the 0.66 default used at the call site */
+const QUIZ_PASS_THRESHOLD = {};
 
 const ALL_LEVELS = [
   {n:1, title:"أساسيات مهنة الكاشير", desc:"8 دروس + اختبار", hasContent:true},
@@ -1646,10 +1656,7 @@ function render(){
   if(route==="simulator") return renderSimulator();
   if(route==="finalsim") return renderFinalSim();
   if(route==="learnmore") return renderLearnMore();
-  if(route==="tests") return renderComingSoon("الاختبارات", [
-    "متاح الآن: اختبار كل مستوى من صفحة الدورة مباشرة بعد دروسه",
-    "قادم: اختبار سريع عام يجمع أسئلة عشوائية من كل المستويات",
-  ]);
+  if(route==="tests") return renderGeneralTest();
   renderHome();
 }
 
@@ -1658,6 +1665,7 @@ function renderHome(){
   const hasName = !!state.name;
   mount(`
     <div class="hero stagger">
+      <div class="hero-blob-3"></div>
       <h1>تعلم مهنة الكاشير من الصفر حتى الاحتراف</h1>
       <p class="sub">دورة عملية تفاعلية تحاكي بيئة العمل الحقيقية في المتاجر السعودية.</p>
       ${!hasName ? `
@@ -1930,6 +1938,105 @@ function renderQuizResult(score, total, passed, levelN){
           <button class="btn btn-outline" data-nav="quiz/${levelN}">إعادة المحاولة</button>
           <button class="btn btn-primary" data-nav="course">رجوع للدورة</button>
           ${isFinal && passed ? `<button class="btn btn-primary" data-nav="certificate">🎓 عرض الشهادة</button>` : ""}
+        </div>
+      </div>
+    </div>
+  `);
+}
+
+/* ---------- GENERAL RANDOM TEST (spans all levels) ---------- */
+function buildGeneralTestPool(){
+  const pool = [];
+  for(let n=1;n<=11;n++){
+    const quiz = (LEVELS_CONTENT[n] && LEVELS_CONTENT[n].quiz) || [];
+    quiz.forEach(q=>pool.push(Object.assign({level:n}, q)));
+  }
+  return pool;
+}
+const GENERAL_TEST_SIZE = 20;
+function renderGeneralTest(){
+  const pool = buildGeneralTestPool();
+  const order = shuffledIndices(pool.length).slice(0, Math.min(GENERAL_TEST_SIZE, pool.length));
+  const questions = order.map(i=>pool[i]);
+  const ARABIC_LETTERS = ["أ","ب","ج","د","هـ","و"];
+  mount(`
+    <button class="btn btn-outline" data-nav="home" style="margin-bottom:16px;">→ رجوع للرئيسية</button>
+    <div class="receipt-wrap stagger">
+      <div class="receipt">
+        <div class="section-head"><h2>اختبار سريع عام</h2><span class="count">${questions.length} سؤال من كل المستويات</span></div>
+        <div id="quizError" style="display:none;color:var(--danger);font-weight:600;margin:14px 0;"></div>
+        <div id="quizForm">
+          ${questions.map((q,i)=>`
+            <div class="q-block" id="qBlock${i}">
+              <div class="q-header">
+                <span class="q-num">${i+1}</span>
+                <span class="q-text">${q.q}</span>
+              </div>
+              ${q.opts.map((o,j)=>`
+                <label class="opt">
+                  <input type="radio" name="q${i}" value="${j}">
+                  <span class="opt-letter">${ARABIC_LETTERS[j] || j+1}</span>
+                  ${o}
+                </label>
+              `).join("")}
+            </div>
+          `).join("")}
+          <button type="button" id="generalTestSubmitBtn" class="btn btn-primary btn-block">تسليم الاختبار</button>
+        </div>
+      </div>
+    </div>
+  `);
+
+  document.getElementById("generalTestSubmitBtn").addEventListener("click", ()=>{
+    const errorBox = document.getElementById("quizError");
+    try{
+      let firstUnanswered = -1;
+      for(let i=0;i<questions.length;i++){
+        if(!document.querySelector(`input[name="q${i}"]:checked`)){ firstUnanswered = i; break; }
+      }
+      if(firstUnanswered !== -1){
+        errorBox.textContent = `لم تُجب على السؤال رقم ${firstUnanswered+1} — يرجى الإجابة عليه قبل التسليم`;
+        errorBox.style.display = "block";
+        const block = document.getElementById(`qBlock${firstUnanswered}`);
+        if(block && typeof block.scrollIntoView === "function"){
+          block.scrollIntoView({behavior:"smooth", block:"center"});
+        }
+        if(block){
+          block.style.outline = "2px solid var(--danger)";
+          block.style.borderRadius = "8px";
+          setTimeout(()=>{ block.style.outline = ""; }, 1800);
+        }
+        return;
+      }
+      errorBox.style.display = "none";
+      let score = 0;
+      questions.forEach((q,i)=>{
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if(sel && parseInt(sel.value)===q.a) score++;
+      });
+      state.xp += 30;
+      saveState(state);
+      renderGeneralTestResult(score, questions.length);
+    }catch(err){
+      errorBox.style.display = "block";
+      errorBox.textContent = "حدث خطأ تقني غير متوقع: " + (err && err.message ? err.message : String(err));
+      console.error("General test submit error:", err);
+    }
+  });
+}
+function renderGeneralTestResult(score, total){
+  const pct = total>0 ? score/total : 0;
+  const label = pct>=0.9 ? "ممتاز جدًا 🏆" : pct>=0.75 ? "جيد جدًا 👏" : pct>=0.5 ? "جيد، راجع نقاطك الضعيفة" : "يحتاج مراجعة شاملة";
+  mount(`
+    <div class="receipt-wrap stagger">
+      <div class="receipt quiz-result">
+        <p class="muted">نتيجتك بالاختبار السريع العام</p>
+        <div class="score"><span data-countup="${score}">0</span>/${total}</div>
+        <p class="muted">تم منحك 30 XP لإكمال الاختبار</p>
+        <p class="badge-pass">${label}</p>
+        <div class="cta-row" style="margin-top:18px;">
+          <button class="btn btn-outline" data-nav="tests">اختبار جديد بأسئلة عشوائية</button>
+          <button class="btn btn-primary" data-nav="home">رجوع للرئيسية</button>
         </div>
       </div>
     </div>
@@ -2832,7 +2939,7 @@ function generatePaymentOutcome(){
   if(r<0.85) return "network";
   return "cancelled";
 }
-/* the realistic terminal (in "تعلم أكثر") distinguishes contactless (no PIN) from chip+PIN,
+/* the realistic terminal (in "محاكي الدفع") distinguishes contactless (no PIN) from chip+PIN,
    since only the PIN path can fail with a wrong PIN */
 function generateContactlessOutcome(){
   const r = Math.random();
@@ -3179,7 +3286,7 @@ function renderFinalSim(){
   `);
 }
 
-/* ---------- REALISTIC PAYMENT TERMINAL REPLICA (for "تعلم أكثر") ---------- */
+/* ---------- REALISTIC PAYMENT TERMINAL REPLICA (for "محاكي الدفع") ---------- */
 let terminalGame = null;
 let terminalTxnLog = [];
 function freshTerminalGame(){
@@ -3727,7 +3834,7 @@ function renderLearnMore(){
   storyGame = freshStoryGame();
   terminalGame = freshTerminalGame();
   mount(`
-    <div class="section-head"><h2>تعلم أكثر</h2><span class="count">محاكاة كاملة لعملية بيع</span></div>
+    <div class="section-head"><h2>محاكي الدفع</h2><span class="count">محاكاة كاملة لعملية بيع</span></div>
     <div class="receipt-wrap stagger">
       <div class="receipt">
         <h2 style="margin-bottom:12px;font-size:1.05rem;">🎬 من دخول العميل حتى الدفع</h2>
