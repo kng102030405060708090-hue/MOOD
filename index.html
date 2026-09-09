@@ -33,7 +33,9 @@
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   html,body{margin:0;padding:0;}
+  html{overflow-x:hidden;}
   body{
+    overflow-x:hidden;
     background:
       radial-gradient(1100px 480px at 90% -10%, #E0E7FF 0%, transparent 60%),
       radial-gradient(900px 420px at -10% 8%, #EDE9FE 0%, transparent 55%),
@@ -282,10 +284,11 @@
     box-shadow:0 6px 14px -6px rgba(124,58,237,.5);
   }
   .level.locked .idx{background:#E9EBF4;color:#9AA3B8;box-shadow:none;}
-  .level .title{font-weight:700;color:var(--primary-2);}
-  .level .desc{font-size:.82rem;color:var(--ink-soft);margin-top:2px;}
+  .level-info{flex:1;min-width:0;}
+  .level .title{font-weight:700;color:var(--primary-2);overflow-wrap:break-word;}
+  .level .desc{font-size:.82rem;color:var(--ink-soft);margin-top:2px;overflow-wrap:break-word;}
   .level .tag{
-    margin-right:auto;font-size:.74rem;padding:5px 12px;border-radius:20px;font-weight:700;white-space:nowrap;
+    margin-right:auto;font-size:.74rem;padding:5px 12px;border-radius:20px;font-weight:700;white-space:nowrap;flex:0 0 auto;
   }
 
   /* lesson list inside a level */
@@ -305,7 +308,7 @@
     background:#fff;transition:all .18s ease;color:#fff;
   }
   .lesson-row.done .check{background:var(--success);border-color:var(--success);box-shadow:0 3px 8px -2px rgba(5,150,105,.5);}
-  .lesson-row a.lesson-link, .lesson-row .lesson-link{flex:1;font-size:.92rem;font-weight:600;text-decoration:none;color:var(--ink);transition:color .15s ease;cursor:pointer;}
+  .lesson-row a.lesson-link, .lesson-row .lesson-link{flex:1;min-width:0;overflow-wrap:break-word;font-size:.92rem;font-weight:600;text-decoration:none;color:var(--ink);transition:color .15s ease;cursor:pointer;}
   .lesson-row a.lesson-link:hover, .lesson-row .lesson-link:hover{text-decoration:none;color:var(--accent-2);}
 
   /* lesson detail view */
@@ -356,7 +359,7 @@
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 4px 10px -3px rgba(124,58,237,.5);
   }
-  .q-block .q-text{font-weight:700;flex:1;color:var(--primary-2);}
+  .q-block .q-text{font-weight:700;flex:1;min-width:0;overflow-wrap:break-word;color:var(--primary-2);}
   .opt{
     display:flex;align-items:center;gap:10px;padding:11px 12px;margin-bottom:6px;
     background:#fff;border:1.5px solid var(--line);border-radius:12px;
@@ -405,13 +408,13 @@
   .sim-product{display:flex;align-items:center;gap:10px;padding:11px 8px;border-bottom:1px solid rgba(15,23,42,.06);border-radius:10px;transition:background-color .14s ease;}
   .sim-product:hover{background:rgba(255,255,255,.75);}
   .sim-product:last-child{border-bottom:none;}
-  .sim-product .pname{flex:1;font-size:.9rem;font-weight:600;}
+  .sim-product .pname{flex:1;min-width:0;overflow-wrap:break-word;font-size:.9rem;font-weight:600;}
   .sim-product .pprice{font-size:.85rem;color:var(--ink-soft);min-width:64px;text-align:left;font-weight:600;}
   .sim-scan-btn{background:#fff;color:var(--accent-2);border:1.5px solid #C7D2FE;border-radius:10px;padding:7px 14px;font-size:.8rem;font-weight:700;transition:all .15s ease;}
   .sim-scan-btn:hover{background:var(--grad);color:#fff;border-color:transparent;transform:translateY(-1px);box-shadow:0 4px 12px -4px rgba(124,58,237,.5);}
   .sim-cart-row{display:flex;align-items:center;gap:8px;padding:10px 6px;border-bottom:1px solid rgba(15,23,42,.06);font-size:.88rem;}
   .sim-cart-row:last-child{border-bottom:none;}
-  .sim-cart-row .cname{flex:1;font-weight:600;}
+  .sim-cart-row .cname{flex:1;min-width:0;overflow-wrap:break-word;font-weight:600;}
   .qty-ctrl{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:2px 5px;}
   .qty-btn{width:22px;height:22px;border-radius:7px;border:none;background:#F1F5F9;font-size:.95rem;line-height:1;display:flex;align-items:center;justify-content:center;color:var(--primary-2);font-weight:800;transition:background-color .14s ease;}
   .qty-btn:hover{background:#E0E7FF;}
@@ -1739,7 +1742,7 @@ function levelBlockHTML(lv){
     <div>
       <div class="level open" data-nav="${headerTarget}">
         <div class="idx">${lv.n}</div>
-        <div>
+        <div class="level-info">
           <div class="title">${lv.title}</div>
           <div class="desc">${lv.desc}</div>
         </div>
