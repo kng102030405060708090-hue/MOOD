@@ -1,0 +1,3657 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أكاديمية أسيل للكاشير</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F6F9;
+    --surface:#FFFFFF;
+    --ink:#1C2733;
+    --ink-soft:#64748B;
+    --primary:#16324F;
+    --primary-2:#0E2438;
+    --accent:#2563EB;
+    --accent-soft:#2563EB14;
+    --danger:#B3261E;
+    --success:#15803D;
+    --success-soft:#15803D1A;
+    --line:#E2E8F0;
+    --radius:10px;
+    --radius-sm:8px;
+    --shadow-soft:0 4px 14px -6px rgba(16,24,40,.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans Arabic', sans-serif;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+  @media print{
+    header.topbar, .tabbar, .btn, .lesson-nav, .cta-row .btn{display:none !important;}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important;}
+  }
+  @keyframes fadeInUp{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  .stagger{ opacity:0; animation:fadeInUp .35s ease forwards; animation-delay:var(--d,0ms); }
+  input:focus, button:focus-visible, select:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  h1,h2,h3,.display{
+    font-weight:700;
+    margin:0;
+    color:var(--primary);
+  }
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- layout shell ---------- */
+  header.topbar{
+    background:var(--primary);
+    color:#fff;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .brand{
+    font-weight:700;
+    font-size:1.05rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .brand .mark{
+    display:inline-flex;
+    width:28px;height:28px;
+    background:var(--accent);
+    color:#fff;
+    align-items:center;justify-content:center;
+    font-weight:700;
+    border-radius:6px;
+    font-size:.9rem;
+  }
+  nav.top-nav{
+    display:flex;
+    gap:4px;
+  }
+  nav.top-nav button{
+    background:transparent;
+    border:none;
+    color:#fff;
+    opacity:.78;
+    padding:8px 12px;
+    font-size:.9rem;
+    border-radius:6px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    transition:opacity .15s ease, background-color .15s ease;
+  }
+  nav.top-nav button svg{flex:0 0 auto;}
+  nav.top-nav button.active,nav.top-nav button:hover{opacity:1;background:#ffffff1a;}
+  nav.top-nav button.active::after{
+    content:"";position:absolute;bottom:2px;left:14px;right:14px;height:2px;
+    background:var(--accent);border-radius:2px;
+  }
+  @media (max-width:680px){
+    nav.top-nav{display:none;}
+  }
+
+  main{
+    max-width:920px;
+    margin:0 auto;
+    padding:28px 18px 100px;
+  }
+
+  .divider{height:1px;background:var(--line);margin:24px 0;}
+
+  /* card */
+  .receipt{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow:var(--shadow-soft);
+  }
+  .receipt-wrap{margin-bottom:24px;}
+
+  /* hero */
+  .hero{text-align:center;padding:18px 0 6px;}
+  .hero h1{font-size:1.8rem;line-height:1.35;}
+  .hero p.sub{color:var(--ink-soft);margin-top:10px;font-size:1rem;}
+  .cta-row{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;
+  }
+  .btn{
+    border:none;padding:11px 18px;font-size:.92rem;font-weight:600;border-radius:var(--radius-sm);
+    transition:background-color .15s ease, box-shadow .15s ease, transform .08s ease;
+  }
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:var(--shadow-soft);}
+  .btn-primary:hover{background:#1D4ED8;}
+  .btn-primary:active{transform:translateY(1px);}
+  .btn-outline{background:#fff;border:1px solid var(--line);color:var(--primary);}
+  .btn-outline:hover{background:#F8FAFC;border-color:var(--primary);}
+  .btn-outline:active{transform:translateY(1px);}
+  .btn-block{width:100%;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none !important;}
+
+  /* generic form field (search box, selects, discount input) */
+  .field{
+    padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);
+    font-family:inherit;font-size:.9rem;background:#fff;width:100%;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .field:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);outline:none;}
+
+  /* stat grid */
+  .stat-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;
+  }
+  @media (max-width:600px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+  .stat{text-align:center;border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 8px;background:#FAFBFC;}
+  .stat .num{font-weight:700;font-size:1.35rem;color:var(--primary);}
+  .stat .lbl{font-size:.74rem;color:var(--ink-soft);margin-top:3px;}
+
+  .progress-track{
+    background:var(--line);height:8px;border-radius:4px;overflow:hidden;margin-top:14px;
+  }
+  .progress-fill{
+    background:var(--accent);height:100%;transition:width .5s ease;border-radius:4px;
+  }
+
+  /* login box */
+  .login-box{max-width:360px;margin:22px auto 0;display:flex;gap:8px;}
+  .login-box input{
+    flex:1;padding:11px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);font-family:inherit;font-size:.95rem;
+    background:#fff;transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .login-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);outline:none;}
+
+  /* section headers */
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:6px;}
+  .section-head h2{font-size:1.2rem;}
+  .section-head .count{font-size:.85rem;color:var(--ink-soft);}
+
+  /* level list */
+  .level{
+    display:flex;align-items:center;gap:14px;
+    padding:14px 10px;border-bottom:1px solid var(--line);
+    cursor:pointer;border-radius:8px;
+    transition:background-color .15s ease;
+  }
+  .level:last-child{border-bottom:none;}
+  .level.open:hover{background:#F8FAFC;}
+  .level.locked{cursor:default;}
+  .level .idx{
+    width:34px;height:34px;flex:0 0 34px;
+    border-radius:8px;
+    background:var(--primary);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:.85rem;
+  }
+  .level.locked .idx{background:var(--line);color:var(--ink-soft);}
+  .level .title{font-weight:600;}
+  .level .desc{font-size:.82rem;color:var(--ink-soft);margin-top:2px;}
+  .level .tag{
+    margin-right:auto;font-size:.74rem;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;
+  }
+
+  /* lesson list inside a level */
+  .lesson-list{padding:0 4px 6px;}
+  .lesson-row{
+    display:flex;align-items:center;gap:12px;padding:11px 8px;border-bottom:1px solid var(--line);
+    border-radius:6px;transition:background-color .15s ease;
+  }
+  .lesson-row:last-child{border-bottom:none;}
+  .lesson-row:hover{background:#F8FAFC;}
+  .lesson-row .check{
+    width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:.7rem;flex:0 0 20px;
+    transition:background-color .15s ease, border-color .15s ease;
+  }
+  .lesson-row.done .check{background:var(--success);border-color:var(--success);color:#fff;}
+  .lesson-row a.lesson-link, .lesson-row .lesson-link{flex:1;font-size:.92rem;font-weight:500;text-decoration:none;color:var(--ink);transition:color .15s ease;cursor:pointer;}
+  .lesson-row a.lesson-link:hover, .lesson-row .lesson-link:hover{text-decoration:underline;color:var(--accent);}
+
+  /* lesson detail view */
+  .lesson-detail h2{font-size:1.25rem;}
+  .lesson-progress-dots{display:flex;gap:5px;margin:8px 0 14px;}
+  .lesson-progress-dots .dot{width:7px;height:7px;border-radius:50%;background:var(--line);transition:all .15s ease;}
+  .lesson-progress-dots .dot.done{background:var(--success);}
+  .lesson-progress-dots .dot.current{background:var(--accent);width:9px;height:9px;}
+  .lesson-title-row{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .lesson-icon-badge{
+    width:52px;height:52px;flex:0 0 52px;border-radius:14px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+  }
+  .lesson-detail ul{list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:10px;}
+  .lesson-detail li{
+    display:flex;gap:12px;align-items:flex-start;
+    background:#F8FAFC;border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+  }
+  .lesson-point-num{
+    flex:0 0 24px;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;
+    font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center;margin-top:1px;
+  }
+  .lesson-point-text{flex:1;font-size:.94rem;line-height:1.7;}
+  .lesson-done-banner{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--success-soft);color:var(--success);font-weight:700;
+    padding:13px;border-radius:var(--radius-sm);
+  }
+  .lesson-nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap;}
+
+  /* quiz */
+  .q-block{
+    margin-bottom:16px;background:#F8FAFC;border:1px solid var(--line);
+    border-right:4px solid var(--accent);border-radius:10px;padding:14px 16px;
+  }
+  .q-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+  .q-num{
+    flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;
+    font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center;
+  }
+  .q-block .q-text{font-weight:600;flex:1;}
+  .opt{
+    display:flex;align-items:center;gap:9px;padding:10px 10px;border-bottom:1px solid var(--line);
+    font-size:.92rem;border-radius:6px;transition:background-color .12s ease;cursor:pointer;
+  }
+  .opt:last-child{border-bottom:none;}
+  .opt:hover{background:#EEF2F7;}
+  .opt:has(input:checked){background:var(--accent-soft);}
+  .opt input{accent-color:var(--accent);width:16px;height:16px;}
+  .opt-letter{
+    display:flex;align-items:center;justify-content:center;flex:0 0 22px;width:22px;height:22px;
+    border-radius:50%;background:#fff;border:1.5px solid var(--line);color:var(--ink-soft);
+    font-weight:700;font-size:.72rem;transition:background-color .12s ease,color .12s ease,border-color .12s ease;
+  }
+  .opt:has(input:checked) .opt-letter{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .quiz-result{text-align:center;padding:6px 0;}
+  .quiz-result .score{font-weight:700;font-size:2.2rem;color:var(--primary);}
+  .badge-pass{color:var(--success);font-weight:600;}
+  .badge-fail{color:var(--danger);font-weight:600;}
+
+  /* coming soon */
+  .soon-list{padding-inline-start:20px;color:var(--ink-soft);}
+  .soon-list li{margin-bottom:6px;}
+
+  /* ---------- POS simulator ---------- */
+  .sim-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;}
+  @media (max-width:760px){.sim-grid{grid-template-columns:1fr;}}
+  .sim-products-panel{background:var(--success-soft);border:1px solid #BBF0D2;border-radius:var(--radius);padding:14px;}
+  .sim-cart-panel{background:var(--accent-soft);border:1px solid #BFDBFE;border-radius:var(--radius);padding:14px;}
+  .sim-panel-label{font-weight:700;font-size:.85rem;color:var(--ink);margin:0 0 10px;}
+  /* color-code each simulator section so it's clear at a glance which tool you're in */
+  .sim-section{border-top:5px solid transparent;}
+  .sim-section-pos{border-top-color:var(--primary);}
+  .sim-section-pos .section-head h2, .sim-section-pos h2{color:var(--primary);}
+  .sim-section-cash{border-top-color:var(--success);}
+  .sim-section-cash .section-head h2{color:var(--success);}
+  .sim-section-discount{border-top-color:#D97706;}
+  .sim-section-discount .section-head h2{color:#D97706;}
+  .sim-section-customer{border-top-color:#7C3AED;}
+  .sim-section-customer .section-head h2{color:#7C3AED;}
+  .sim-section-closing{border-top-color:#0D9488;}
+  .sim-section-closing .section-head h2{color:#0D9488;}
+  .sim-section-payment{border-top-color:#2563EB;}
+  .sim-section-payment .section-head h2{color:#2563EB;}
+  .sim-section-returns{border-top-color:#DB2777;}
+  .sim-section-returns .section-head h2{color:#DB2777;}
+  .sim-product{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid var(--line);}
+  .sim-product:last-child{border-bottom:none;}
+  .sim-product .pname{flex:1;font-size:.9rem;font-weight:500;}
+  .sim-product .pprice{font-size:.85rem;color:var(--ink-soft);min-width:64px;text-align:left;}
+  .sim-scan-btn{background:var(--accent-soft);color:var(--accent);border:none;border-radius:6px;padding:7px 12px;font-size:.8rem;font-weight:600;transition:background-color .15s ease,color .15s ease;}
+  .sim-scan-btn:hover{background:var(--accent);color:#fff;}
+  .sim-cart-row{display:flex;align-items:center;gap:8px;padding:9px 4px;border-bottom:1px solid var(--line);font-size:.88rem;}
+  .sim-cart-row:last-child{border-bottom:none;}
+  .sim-cart-row .cname{flex:1;}
+  .qty-ctrl{display:flex;align-items:center;gap:6px;}
+  .qty-btn{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:#fff;font-size:.9rem;line-height:1;display:flex;align-items:center;justify-content:center;}
+  .qty-btn:hover{background:#F8FAFC;}
+  .remove-btn{color:var(--danger);background:none;border:none;font-size:.85rem;padding:2px 6px;}
+  .sim-totals-row{display:flex;justify-content:space-between;font-size:.9rem;padding:4px 0;}
+  .sim-totals-row.muted-row{color:var(--ink-soft);}
+  .sim-totals-row.row-discount{color:var(--danger);font-weight:600;}
+  .sim-totals-row.row-vat{color:var(--accent);font-weight:600;}
+  .sim-totals-row.total{font-weight:700;font-size:1.05rem;border-top:1px solid var(--line);margin-top:6px;padding-top:8px;color:var(--primary);}
+  .sim-receipt{background:#EAEDF2;border:1px solid var(--line);border-radius:var(--radius);padding:22px 12px 28px;}
+  .thermal-slip{
+    max-width:300px;margin:0 auto;background:#fff;
+    font-family:'Courier New', monospace;font-size:.78rem;line-height:1.55;color:#1a1a1a;
+    padding:16px 16px 20px;position:relative;box-shadow:0 3px 12px rgba(0,0,0,.1);
+  }
+  .thermal-slip::after{
+    content:"";display:block;position:absolute;left:0;right:0;bottom:-12px;height:12px;
+    background:
+      linear-gradient(-45deg, #EAEDF2 7px, transparent 0) 0 0/14px 14px,
+      linear-gradient(45deg, #EAEDF2 7px, transparent 0) 0 0/14px 14px;
+    background-color:#fff;
+  }
+  .thermal-store{text-align:center;font-weight:700;font-size:.9rem;}
+  .thermal-sub{text-align:center;color:#555;font-size:.7rem;margin-top:2px;}
+  .thermal-meta{text-align:center;font-size:.74rem;margin-top:2px;}
+  .thermal-divider{border-top:1px dashed #999;margin:8px 0;}
+  .thermal-item{margin-bottom:7px;}
+  .thermal-item-name{font-weight:700;}
+  .thermal-item-calc{display:flex;justify-content:space-between;color:#555;font-size:.74rem;margin-top:1px;}
+  .t-row{display:flex;justify-content:space-between;padding:2px 0;font-size:.76rem;}
+  .t-row.muted-row{color:#666;}
+  .t-row.row-discount{color:var(--danger);font-weight:700;}
+  .t-row.row-vat{color:var(--accent);font-weight:700;}
+  .thermal-total-final{display:flex;justify-content:space-between;font-weight:700;font-size:.95rem;margin-top:4px;}
+  .thermal-qr{display:flex;justify-content:center;margin:12px 0 4px;color:var(--primary);}
+  .thermal-footer{text-align:center;font-size:.72rem;color:#555;margin-top:8px;}
+  .thermal-policy{font-size:.66rem;color:#777;line-height:1.5;margin:6px 0 0;text-align:center;}
+  .discount-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .discount-row .field{flex:1;min-width:100px;}
+
+  /* ---------- cash change-calculator game ---------- */
+  .diff-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .diff-btn{border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:20px;font-size:.85rem;font-weight:600;cursor:pointer;color:var(--ink-soft);transition:all .15s ease;}
+  .diff-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .diff-btn:hover{border-color:var(--primary);}
+  .cash-scenario{background:#F8FAFC;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;}
+  .cash-line{display:flex;justify-content:space-between;padding:4px 0;font-size:.92rem;}
+  .cash-scenario .cash-line:nth-child(1){color:var(--primary);font-weight:700;}
+  .cash-scenario .cash-line:nth-child(2){color:var(--success);font-weight:700;}
+  .cash-picker{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+  .cash-denom{cursor:pointer;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;transition:transform .1s ease,box-shadow .15s ease;}
+  .cash-denom.note{border-radius:6px;padding:10px 12px;min-width:60px;min-height:42px;}
+  .cash-denom.coin{border-radius:50%;width:60px;height:60px;padding:0;}
+  .cash-denom-value{font-size:.95rem;}
+  .cash-denom-unit{font-size:.6rem;opacity:.9;font-weight:600;margin-top:1px;}
+  .cash-denom:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft);}
+  .cash-selected{display:flex;flex-wrap:wrap;gap:6px;min-height:34px;margin:10px 0;padding:10px;background:#F8FAFC;border:1px dashed var(--line);border-radius:8px;align-items:center;}
+  .chip{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:4px 10px;font-size:.8rem;font-weight:600;}
+  .chip button{background:none;border:none;color:var(--danger);cursor:pointer;font-size:.8rem;padding:0 2px;}
+  .cash-total-row{display:flex;justify-content:space-between;font-weight:700;padding:8px 0;border-top:1px solid var(--line);margin-top:4px;margin-bottom:14px;}
+  .cash-feedback{padding:12px;border-radius:8px;font-weight:600;text-align:center;margin-bottom:10px;font-size:.9rem;}
+  .cash-feedback.correct{background:var(--success-soft);color:var(--success);}
+  .cash-feedback.wrong{background:#FEE2E2;color:var(--danger);}
+  .cash-linked-banner{background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.82rem;padding:8px 12px;border-radius:8px;margin-bottom:10px;text-align:center;}
+  .discount-steps{background:#F8FAFC;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:12px;}
+  .discount-steps-title{font-weight:700;font-size:.85rem;margin:0 0 6px;color:var(--primary);}
+  .discount-steps ol{margin:0;padding-inline-start:20px;font-size:.85rem;line-height:1.8;}
+  .discount-steps li{margin-bottom:3px;}
+  .scenario-options{display:flex;flex-direction:column;gap:8px;}
+  .scenario-opt{
+    text-align:right;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;
+    cursor:pointer;font-size:.9rem;transition:background-color .15s ease,border-color .15s ease;
+  }
+  .scenario-opt:hover:not(:disabled){background:#F8FAFC;border-color:var(--primary);}
+  .scenario-opt:disabled{cursor:default;}
+  .scenario-opt.good{border-color:var(--success);background:var(--success-soft);}
+  .scenario-opt.bad{border-color:var(--danger);background:#FEE2E2;}
+  .scenario-feedback{display:block;margin-top:6px;font-size:.82rem;font-weight:600;}
+  .scenario-opt.good .scenario-feedback{color:var(--success);}
+  .scenario-opt.bad .scenario-feedback{color:var(--danger);}
+  .scenario-image{display:flex;justify-content:center;}
+  .closing-scenario{background:#F8FAFC;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;}
+  .closing-scenario .cash-line{font-weight:500;}
+  .closing-scenario .cash-line:nth-child(1),
+  .closing-scenario .cash-line:nth-child(2),
+  .closing-scenario .cash-line:nth-child(3){color:var(--danger);font-weight:600;}
+  .closing-scenario .cash-line:nth-child(4){color:var(--accent);font-weight:700;}
+  .closing-scenario .cash-line:nth-child(5){color:var(--success);font-weight:700;}
+  .cert-card{border:2px solid var(--accent);border-radius:12px;padding:20px;text-align:center;margin-top:16px;background:linear-gradient(135deg,#EFF6FF,#fff);}
+  .cert-title{font-weight:800;font-size:1.05rem;color:var(--primary);margin:0 0 8px;}
+  .cert-name{font-weight:700;font-size:1.3rem;color:var(--accent);margin:0 0 10px;}
+  .cert-line{font-size:.85rem;color:var(--ink-soft);margin:2px 0;}
+  .payment-methods{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .payment-status{padding:14px;border-radius:10px;text-align:center;font-weight:700;font-size:1rem;}
+  /* ---------- realistic payment terminal replica ---------- */
+  .pos-terminal-wrap{perspective:900px;}
+  .pos-terminal-body{max-width:420px;width:100%;margin:0 auto;background:linear-gradient(160deg,#3D434C,#1F2226);border:1px solid #14161A;border-radius:26px;padding:18px 18px 22px;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05);transform:rotateX(3deg);}
+  .pos-statusbar{display:flex;justify-content:space-between;color:#8FE6B8;font-family:'Courier New',monospace;font-size:.7rem;opacity:.85;margin-bottom:8px;}
+  .pos-home-title{color:#7CFFB2;font-weight:700;font-size:1.2rem;text-align:center;margin-top:10px;}
+  .pos-home-screen{min-height:90px;}
+  .pos-app-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  .pos-app-btn{background:#454B54;color:#fff;border:none;border-radius:14px;padding:22px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background-color .1s ease,transform .1s ease;}
+  .pos-app-btn:active{transform:scale(.95);background:#5A616B;}
+  .pos-app-icon{display:flex;align-items:center;justify-content:center;}
+  .pos-txn-list{display:flex;flex-direction:column;gap:6px;}
+  .pos-txn-row{display:flex;justify-content:space-between;background:#F8FAFC;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:.82rem;width:100%;text-align:right;cursor:pointer;color:var(--ink);}
+  .pos-txn-row:hover{background:#F1F5F9;}
+  .pos-brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:2px 4px;}
+  .pos-brand-name{color:#E5E7EB;font-weight:800;font-size:1rem;letter-spacing:.4px;}
+  .pos-brand-name span{color:#5FE3A1;}
+  .pos-signal{font-size:.72rem;opacity:.75;color:#D1D5DB;}
+  .pos-screen{background:#0B3D2E;border:2px solid #052318;border-radius:10px;padding:20px 16px;margin-bottom:16px;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;box-shadow:inset 0 2px 6px rgba(0,0,0,.4);}
+  .pos-printer-slot{height:9px;background:#0E1013;border-radius:5px;margin-top:16px;box-shadow:inset 0 2px 4px rgba(0,0,0,.6);}
+  .pos-card-slot{height:5px;background:#0E1013;border-radius:3px;margin:2px 30px 12px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6);}
+  .pos-screen-txntype{color:#8FE6B8;font-family:'Courier New',monospace;font-size:.85rem;font-weight:600;letter-spacing:1px;opacity:.85;}
+  .pos-screen-amount{color:#7CFFB2;font-family:'Courier New',monospace;font-size:1.8rem;font-weight:700;}
+  .pos-screen-status{color:#B8FFD1;font-family:'Courier New',monospace;font-size:.95rem;text-align:center;}
+  .pos-pin-dots{display:flex;gap:6px;margin-top:6px;}
+  .pos-pin-dot{width:13px;height:13px;border-radius:50%;border:2px solid #7CFFB2;background:transparent;}
+  .pos-pin-dot.filled{background:#7CFFB2;}
+  .pos-nfc-area{background:#3A3F47;border:2px dashed #6B7280;border-radius:12px;padding:18px;text-align:center;margin-bottom:16px;cursor:pointer;transition:background-color .15s ease;}
+  .pos-nfc-area:hover{background:#454B54;}
+  .pos-nfc-area .nfc-icon{font-size:2.1rem;}
+  .pos-nfc-area p{color:#D1D5DB;font-size:.92rem;margin:6px 0 0;}
+  .pos-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .pos-key{background:#454B54;color:#fff;border:none;border-radius:10px;padding:20px 0;font-size:1.4rem;font-weight:700;cursor:pointer;transition:background-color .1s ease,transform .1s ease;}
+  .pos-key:active{transform:scale(.95);background:#5A616B;}
+  .pos-key.action{font-size:.8rem;}
+  .pos-key.cancel{background:#7F1D1D;}
+  .pos-key.enter{background:#166534;}
+  .pos-method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .pos-method-btn{background:#454B54;color:#fff;border:none;border-radius:10px;padding:20px 8px;font-size:1rem;font-weight:700;cursor:pointer;transition:background-color .1s ease,transform .1s ease;}
+  .pos-method-btn:active{transform:scale(.96);background:#5A616B;}
+  @keyframes pos-print-out{0%{opacity:0;transform:translateY(-18px) scaleY(.7);}60%{opacity:1;transform:translateY(2px) scaleY(1.03);}100%{opacity:1;transform:translateY(0) scaleY(1);}}
+  .pos-receipt{background:#F8FAFC;border:1px dashed var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;transform-origin:top center;animation:pos-print-out .5s cubic-bezier(.2,.8,.3,1);}
+  .pos-receipt-title{font-weight:700;color:var(--success);margin:0 0 8px;text-align:center;font-size:.92rem;}
+  .pos-receipt-line{display:flex;justify-content:space-between;font-size:.85rem;padding:2px 0;}
+  .pay-cards-row{display:flex;gap:14px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
+  .story-illustration{display:flex;justify-content:center;padding:8px 0 4px;}
+  .pay-card{
+    width:140px;height:88px;border-radius:10px;padding:10px 12px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    cursor:grab;user-select:none;touch-action:none;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+  }
+  .pay-card.funded{background:linear-gradient(135deg,#16324F,#2563EB);color:#fff;}
+  .pay-card.empty{background:linear-gradient(135deg,#9CA3AF,#D1D5DB);color:#374151;}
+  .pay-card.dragging{box-shadow:0 14px 26px rgba(0,0,0,.35);cursor:grabbing;position:relative;z-index:50;}
+  .pay-card-chip{width:26px;height:18px;background:rgba(255,255,255,.55);border-radius:3px;}
+  .pay-card-number{font-family:'Courier New',monospace;font-size:.85rem;letter-spacing:1px;}
+  .pay-card-balance{font-size:.7rem;font-weight:700;}
+
+  /* bottom mobile tab bar */
+  .tabbar{display:none;}
+  @media (max-width:680px){
+    .tabbar{
+      display:flex;position:fixed;bottom:0;left:0;right:0;
+      background:var(--primary);z-index:60;
+      box-shadow:0 -2px 10px #0002;
+    }
+    .tabbar button{
+      flex:1;background:none;border:none;color:#ffffffb0;
+      padding:11px 4px 9px;font-size:.72rem;display:flex;flex-direction:column;align-items:center;gap:3px;
+    }
+    .tabbar button.active{color:#fff;font-weight:600;}
+    main{padding-bottom:80px;}
+  }
+
+  .muted{color:var(--ink-soft);font-size:.88rem;}
+  .empty-name{color:var(--ink-soft);text-align:center;padding:30px 10px;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="mark">أ</span> أكاديمية أسيل للكاشير</div>
+  <nav class="top-nav">
+    <button data-nav="home"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg><span>الرئيسية</span></button>
+    <button data-nav="course"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>الدورة</span></button>
+    <button data-nav="simulator"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>المحاكي</span></button>
+    <button data-nav="learnmore"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.472V15a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.528A6 6 0 0 0 12 3z"/></svg><span>تعلم أكثر</span></button>
+    <button data-nav="profile"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>حسابي</span></button>
+  </nav>
+</header>
+
+<main id="app"></main>
+
+<div class="tabbar">
+  <button data-nav="home"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg><span>الرئيسية</span></button>
+  <button data-nav="course"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>الدورة</span></button>
+  <button data-nav="simulator"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>المحاكي</span></button>
+  <button data-nav="learnmore"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.472V15a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.528A6 6 0 0 0 12 3z"/></svg><span>تعلم أكثر</span></button>
+  <button data-nav="profile"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>حسابي</span></button>
+</div>
+
+<script>
+/* ============ CONTENT: LEVEL 1 ============ */
+const LEVEL1_LESSONS = [
+  {id:1, title:"ما هي وظيفة الكاشير؟", icon:"🧑‍💼", points:[
+    "الكاشير هو أول وآخر نقطة تواصل مع العميل داخل المتجر، ومسؤول عن إتمام عمليات البيع بدقة وسرعة.",
+    "المهمة لا تقتصر على استلام النقود، بل تشمل الدقة في الحساب، أمانة النقد، وتمثيل صورة المتجر أمام الزبون.",
+    "الكاشير الجيد يجمع بين السرعة، الدقة، والتعامل الراقي مع العملاء."
+  ]},
+  {id:2, title:"مهام الكاشير اليومية", icon:"📋", points:[
+    "فتح الصندوق والتأكد من رصيد النقدية الافتتاحي.",
+    "استقبال العملاء وتسجيل المشتريات عبر النظام.",
+    "التعامل مع طرق الدفع المختلفة (نقدًا، مدى، محافظ رقمية).",
+    "إصدار الفواتير والإيصالات وتسليمها للعميل.",
+    "الحفاظ على نظافة وترتيب منطقة الكاشير.",
+    "تسجيل أي ملاحظة أو مشكلة وإبلاغ المشرف بها."
+  ]},
+  {id:3, title:"مسؤوليات الكاشير", icon:"✅", points:[
+    "الدقة التامة في العد والحساب.",
+    "أمانة النقد، والمسؤولية عن أي عجز أو زيادة في الصندوق.",
+    "الالتزام بسياسات المتجر في الخصومات والاسترجاع.",
+    "تقديم خدمة سريعة دون التضحية بالدقة.",
+    "الإبلاغ الفوري عن أي عطل في الجهاز أو مشكلة مع عميل."
+  ]},
+  {id:4, title:"بداية الشفت", icon:"🌅", points:[
+    "استلام العهدة النقدية وعدّها والتأكد من مطابقتها للتقرير.",
+    "تسجيل الدخول إلى نظام نقاط البيع (POS).",
+    "التأكد من عمل الطابعة وقارئ الباركود قبل استقبال أول عميل.",
+    "مراجعة أي تعليمات أو عروض جديدة من المشرف."
+  ]},
+  {id:5, title:"نهاية الشفت", icon:"🌙", points:[
+    "التوقف عن استقبال عمليات بيع جديدة في الوقت المحدد.",
+    "عدّ النقدية بدقة ومطابقتها مع تقرير النظام.",
+    "تسليم العهدة والتقرير النهائي للمشرف.",
+    "تسجيل الخروج من النظام قبل مغادرة الصندوق."
+  ]},
+  {id:6, title:"التعامل مع العملاء", icon:"🤝", points:[
+    "الابتسامة والترحيب بالعميل عند الاستقبال.",
+    "الاستماع الجيد لطلب العميل قبل الرد.",
+    "الحفاظ على الهدوء والاحترافية حتى مع العملاء الغاضبين.",
+    "شكر العميل عند انتهاء العملية."
+  ]},
+  {id:7, title:"أخطاء الكاشير الشائعة", icon:"⚠️", points:[
+    "تسليم الباقي دون التأكد من صحته.",
+    "نسيان مسح أحد المنتجات عبر الباركود.",
+    "الخلط بين طرق الدفع المختلفة عند التسجيل.",
+    "عدم مراجعة الفاتورة قبل الطباعة.",
+    "التسرّع في الخدمة دون التأكد من رضا العميل."
+  ]},
+  {id:8, title:"قواعد السلوك والمظهر", icon:"👔", points:[
+    "الالتزام بالزي الرسمي والحفاظ على نظافته.",
+    "عدم استخدام الجوال أثناء خدمة العميل.",
+    "التحدث بلباقة واحترام مع كل عميل.",
+    "الحفاظ على مكان العمل مرتبًا ونظيفًا طوال الشفت."
+  ]},
+];
+
+const LEVEL1_QUIZ = [
+  {q:"ما أول شيء يجب على الكاشير فعله في بداية الشفت؟",
+   opts:["استقبال أول عميل","عدّ العهدة النقدية والتأكد من مطابقتها","إغلاق الصندوق","طباعة تقرير المبيعات"], a:1},
+  {q:"أي مما يلي يُعد من مسؤوليات الكاشير؟",
+   opts:["تحديد أسعار المنتجات","أمانة النقد والدقة في الحساب","إدارة مخزون المتجر بالكامل","توظيف موظفين جدد"], a:1},
+  {q:"ماذا يفعل الكاشير في نهاية الشفت؟",
+   opts:["يترك الصندوق دون عدّ النقدية","يأخذ النقدية معه للمنزل","يعدّ النقدية ويطابقها مع التقرير ثم يسلّمها للمشرف","يحذف تقرير المبيعات"], a:2},
+  {q:"أي مما يلي يُعد من الأخطاء الشائعة للكاشير؟",
+   opts:["مراجعة الفاتورة قبل الطباعة","نسيان مسح أحد المنتجات بالباركود","الترحيب بالعميل","التأكد من الباقي قبل تسليمه"], a:1},
+  {q:"كيف يجب أن يتعامل الكاشير مع عميل غاضب؟",
+   opts:["الرد بنفس الانفعال","تجاهله والانتقال للعميل التالي","الحفاظ على الهدوء والاستماع له بلباقة","استدعاء الأمن فورًا"], a:2},
+  {q:"من قواعد المظهر والسلوك المطلوبة من الكاشير؟",
+   opts:["استخدام الجوال بين الحين والآخر أثناء الخدمة","الالتزام بالزي الرسمي ونظافته والتحدث بلباقة","ارتداء أي ملابس مريحة حسب المزاج","التحدث بصوت مرتفع مع الزملاء أثناء العمل"], a:1},
+];
+
+/* ============ CONTENT: LEVEL 2 ============ */
+const LEVEL2_LESSONS = [
+  {id:9, title:"تسجيل الدخول للنظام", icon:"🔐", points:[
+    "كل كاشير له اسم مستخدم ورقم سري خاص به داخل نظام نقاط البيع (POS).",
+    "تسجيل الدخول بالحساب الشخصي مهم لتحديد المسؤولية عن كل عملية بيع.",
+    "لا يجوز مشاركة بيانات الدخول مع أي موظف آخر.",
+    "عند انتهاء الشفت، يجب تسجيل الخروج قبل مغادرة الجهاز."
+  ]},
+  {id:10, title:"فتح عملية بيع جديدة", icon:"🧾", points:[
+    "كل عميل يبدأ بعملية بيع (فاتورة) جديدة في النظام.",
+    "يجب التأكد أن الفاتورة السابقة أُغلقت تمامًا قبل البدء بعملية جديدة.",
+    "تبقى عملية البيع مفتوحة طالما لم يتم إنهاؤها أو إلغاؤها."
+  ]},
+  {id:11, title:"البحث عن منتج", icon:"🔍", points:[
+    "يمكن البحث عن المنتج بالاسم أو رقمه إذا تعذّر مسح الباركود.",
+    "البحث اليدوي أبطأ من المسح، لذلك يُستخدم فقط عند الحاجة.",
+    "يجب التأكد من اختيار المنتج الصحيح عند ظهور نتائج متشابهة."
+  ]},
+  {id:12, title:"استخدام الباركود", icon:"🏷️", points:[
+    "الباركود هو أسرع وأدق طريقة لإضافة منتج للفاتورة.",
+    "يتم تمرير الماسح فوق الباركود مباشرة دون الضغط عليه.",
+    "إذا لم يُقرأ الباركود، يُعاد المحاولة أو يُبحث عن المنتج يدويًا."
+  ]},
+  {id:13, title:"إدخال وتعديل الكمية", icon:"🔢", points:[
+    "الكمية الافتراضية عند مسح المنتج هي واحد.",
+    "يمكن زيادة الكمية عند شراء العميل أكثر من قطعة من نفس المنتج.",
+    "يجب التأكد من مطابقة الكمية المُدخلة لما بيد العميل فعليًا."
+  ]},
+  {id:14, title:"حذف منتج من الفاتورة", icon:"🗑️", points:[
+    "يمكن حذف أي منتج أُضيف بالخطأ قبل إنهاء الفاتورة.",
+    "يجب التأكد من حذف المنتج الصحيح، خاصة عند وجود منتجات متشابهة.",
+    "بعض المتاجر تتطلب موافقة المشرف لحذف منتج بعد مسحه."
+  ]},
+  {id:15, title:"تطبيق الخصم", icon:"💸", points:[
+    "الخصم يكون إما نسبة مئوية أو مبلغ ثابت حسب سياسة المتجر أو العرض.",
+    "يجب التأكد أن الخصم مطابق للعرض الفعلي قبل تطبيقه.",
+    "لا يجوز منح خصم غير معتمد دون إذن المشرف."
+  ]},
+  {id:16, title:"إنهاء الفاتورة وطباعة الإيصال", icon:"🖨️", points:[
+    "قبل الإنهاء، يجب مراجعة المنتجات والكميات والإجمالي.",
+    "بعد التأكد من صحة الفاتورة، تُنهى العملية ويُطبع الإيصال للعميل.",
+    "الإيصال يوثّق العملية ويُستخدم لاحقًا في حال الإرجاع أو الاستبدال."
+  ]},
+  {id:17, title:"إلغاء العملية", icon:"❌", points:[
+    "يمكن إلغاء الفاتورة بالكامل قبل إنهائها إذا غيّر العميل رأيه.",
+    "الإلغاء يختلف عن حذف منتج واحد؛ فهو يصفّر الفاتورة كاملة.",
+    "بعض الأنظمة تطلب سببًا لإلغاء العملية لأغراض المراجعة."
+  ]},
+  {id:18, title:"ضريبة القيمة المضافة (VAT)", icon:"🧮", points:[
+    "ضريبة القيمة المضافة في السعودية 15%، وتُطبّق على معظم السلع والخدمات.",
+    "الأسعار المعروضة على العميل في المتجر تكون عادة شاملة الضريبة، أي أن الضريبة محسوبة ضمن السعر الذي يراه أمامه.",
+    "الفاتورة الضريبية يجب أن توضح المبلغ قبل الضريبة، قيمة الضريبة، والإجمالي شامل الضريبة — حسب متطلبات هيئة الزكاة والضريبة والجمارك (ZATCA).",
+    "الخصم يُطبَّق أولًا على المبلغ، ثم تُحتسب الضريبة كجزء من المبلغ النهائي بعد الخصم.",
+    "لا يجوز للكاشير حذف أو تعديل قيمة الضريبة يدويًا؛ فالنظام يتولى حسابها تلقائيًا."
+  ]},
+];
+
+const LEVEL2_QUIZ = [
+  {q:"ما الفائدة الرئيسية من تسجيل الدخول بحساب كل كاشير على حدة؟",
+   opts:["مشاركة الحساب بين الموظفين لتسريع العمل","تحديد المسؤولية عن كل عملية بيع","تجاوز الحاجة لكلمة مرور","تقليل عدد المستخدمين في النظام"], a:1},
+  {q:"ما أسرع وأدق طريقة لإضافة منتج للفاتورة؟",
+   opts:["البحث اليدوي بالاسم","سؤال المشرف عن السعر","مسح الباركود","إدخال السعر يدويًا"], a:2},
+  {q:"ماذا تفعل إذا لم يُقرأ الباركود؟",
+   opts:["تجاهل المنتج ولا تضيفه","بيع المنتج مجانًا","إعادة المحاولة أو البحث اليدوي عن المنتج","إلغاء الفاتورة بالكامل"], a:2},
+  {q:"متى يجوز منح خصم للعميل؟",
+   opts:["في أي وقت وبأي نسبة","إذا كان الخصم مطابقًا لعرض أو سياسة معتمدة","إذا طلب العميل ذلك بإلحاح","لا يجوز أبدًا تحت أي ظرف"], a:1},
+  {q:"ما الفرق بين حذف منتج وإلغاء العملية؟",
+   opts:["لا فرق بينهما","الإلغاء أسهل من الحذف دائمًا","حذف المنتج يزيل قطعة واحدة، بينما الإلغاء يصفّر الفاتورة كاملة","الحذف يتطلب دائمًا موافقة المشرف بينما الإلغاء لا يتطلب"], a:2},
+  {q:"ما الذي يجب فعله قبل إنهاء الفاتورة؟",
+   opts:["إغلاق الجهاز مباشرة","مراجعة المنتجات والكميات والإجمالي","حذف كل المنتجات","تجاهل الكمية المُدخلة"], a:1},
+  {q:"كم نسبة ضريبة القيمة المضافة المطبّقة في السعودية؟",
+   opts:["5%","10%","15%","20%"], a:2},
+];
+
+/* ============ CONTENT: LEVEL 3 ============ */
+const LEVEL3_LESSONS = [
+  {id:19, title:"المنتجات بدون باركود", icon:"❓", points:[
+    "بعض المنتجات لا تحمل باركود مطبوع، مثل بعض المنتجات المحلية أو المعبأة داخل المتجر.",
+    "في هذه الحالة يُستخدم رمز داخلي (PLU) أو يُبحث عن المنتج بالاسم يدويًا في النظام.",
+    "إذا تعذّر إيجاد المنتج، يُستدعى المشرف بدل تخمين السعر."
+  ]},
+  {id:20, title:"المنتجات التي تُباع بالوزن", icon:"⚖️", points:[
+    "منتجات مثل الخضار والفواكه والمعجنات تُباع أحيانًا بالوزن لا بالقطعة.",
+    "يوضع المنتج على الميزان المتصل بالنظام، ويُحسب السعر تلقائيًا حسب الوزن وسعر الكيلو.",
+    "يجب التأكد أن الميزان يعرض صفرًا قبل وضع المنتج، لضمان دقة الوزن."
+  ]},
+  {id:21, title:"اختلاف سعر المنتج", icon:"💲", points:[
+    "أحيانًا يختلف السعر الظاهر على الرف عن السعر المسجل في النظام.",
+    "لا يجوز للكاشير تعديل السعر يدويًا بناءً على رأيه الشخصي.",
+    "يُبلَّغ المشرف للتحقق من السعر الصحيح قبل إتمام البيع."
+  ]},
+  {id:22, title:"المنتج غير الموجود في النظام", icon:"🚫", points:[
+    "إذا لم يتعرّف النظام على باركود المنتج، لا يُتجاهل المنتج ولا يُباع مجانًا.",
+    "يُبلَّغ المشرف لإدخال المنتج أو التأكد من سعره قبل المتابعة.",
+    "تسجيل هذه الحالات يساعد المتجر على تحديث قاعدة بيانات المنتجات."
+  ]},
+  {id:23, title:"المنتج التالف", icon:"💔", points:[
+    "إذا لاحظ الكاشير أن المنتج تالف أو منتهي الصلاحية أثناء المسح، لا يُباع للعميل.",
+    "يُستبعد المنتج من الفاتورة، ويُبلَّغ المشرف لإزالته من الرف ومن المخزون.",
+    "سلامة العميل أهم من إتمام عملية البيع."
+  ]},
+  {id:24, title:"المنتجات والعروض المرتبطة", icon:"🎁", points:[
+    "بعض المنتجات ترتبط بعروض مثل «اشترِ قطعتين واحصل على الثالثة مجانًا».",
+    "يجب التأكد من استيفاء شروط العرض (العدد، النوع، التاريخ) قبل تطبيقه.",
+    "النظام غالبًا يطبّق هذه العروض تلقائيًا عند استيفاء الشروط، لكن يبقى على الكاشير التأكد من ظهورها في الفاتورة."
+  ]},
+  {id:25, title:"التحقق من صلاحية العرض", icon:"📅", points:[
+    "لكل عرض تاريخ بداية ونهاية، ولا يجوز تطبيقه خارج هذه الفترة.",
+    "يجب مطابقة المنتج المعروض مع شروط العرض الفعلية، لا الاعتماد على كلام العميل فقط.",
+    "عند الشك في صلاحية عرض، يُرجع للمشرف بدل تطبيقه أو رفضه من تلقاء نفسه."
+  ]},
+  {id:26, title:"التعامل الشامل مع حالات المنتجات", icon:"🧩", points:[
+    "كل حالة غير معتادة (بدون باركود، بالوزن، سعر مختلف، تالف، أو ضمن عرض) تحتاج هدوءًا وعدم تسرّع.",
+    "الأصل دائمًا أن يُحل الموقف دون إيقاف الطابور لفترة طويلة أو إحراج العميل.",
+    "عند التردد، الرجوع للمشرف أفضل من اتخاذ قرار قد يكون خاطئًا."
+  ]},
+];
+
+const LEVEL3_QUIZ = [
+  {q:"ماذا يفعل الكاشير إذا لم يجد باركود على منتج ما؟",
+   opts:["يبيعه مجانًا","يتجاهل المنتج ولا يضيفه للفاتورة","يستخدم رمزًا داخليًا (PLU) أو يبحث عنه يدويًا بالاسم","يضع له سعرًا تقديريًا بنفسه"], a:2},
+  {q:"كيف يُحسب سعر المنتجات التي تُباع بالوزن؟",
+   opts:["حسب عدد القطع الموجودة","يحدده العميل بنفسه","تلقائيًا حسب الوزن على الميزان وسعر الكيلو","بسعر ثابت بغض النظر عن الوزن"], a:2},
+  {q:"ماذا يفعل الكاشير إذا اختلف السعر الظاهر على الرف عن سعر النظام؟",
+   opts:["يعدّل السعر في النظام مباشرة حسب رأيه","يبيع المنتج بالسعر الأعلى دائمًا","يرفض بيع المنتج نهائيًا","يبلّغ المشرف للتحقق من السعر الصحيح"], a:3},
+  {q:"ما الإجراء الصحيح عند اكتشاف منتج تالف أثناء المسح؟",
+   opts:["بيعه للعميل بخصم","إعادته للرف كما هو","استبعاده من الفاتورة وإبلاغ المشرف","إخفاؤه وعدم ذكره"], a:2},
+  {q:"متى يجوز تطبيق عرض مثل «اشترِ قطعتين واحصل على الثالثة مجانًا»؟",
+   opts:["في أي وقت وبأي كمية","إذا طلب العميل ذلك","دائمًا بشكل تلقائي دون تحقق","فقط عند استيفاء شروط العرض والتاريخ الصحيح"], a:3},
+  {q:"ما الأصل عند التعامل مع أي حالة غير معتادة في المنتجات؟",
+   opts:["التسرع لإنهاء الطابور بسرعة","تجاهل الموقف والانتقال للعميل التالي","اتخاذ قرار فردي دون الرجوع لأحد","الهدوء وحل الموقف دون إحراج العميل، والرجوع للمشرف عند التردد"], a:3},
+];
+
+/* ============ CONTENT: LEVEL 4 ============ */
+const LEVEL4_LESSONS = [
+  {id:27, title:"طرق الدفع في السعودية", icon:"🏦", points:[
+    "يوفر البنك المركزي السعودي (ساما) عدة طرق دفع تشمل النقد، بطاقات مدى، والمحافظ الرقمية مثل Apple Pay وSamsung Pay وGoogle Pay.",
+    "منظومة مدى تشمل نقاط البيع العادية ومدى أثير للدفع اللاتلامسي.",
+    "على الكاشير معرفة كل طريقة دفع ليقدم خدمة سريعة ومريحة للعميل مهما كانت وسيلته."
+  ]},
+  {id:28, title:"الدفع النقدي", icon:"💵", points:[
+    "استلام المبلغ من العميل وعدّه بدقة أمام العميل قدر الإمكان.",
+    "إدخال المبلغ المستلم في نظام الكاشير لحساب الباقي تلقائيًا.",
+    "التأكد من صحة الأوراق النقدية، خاصة الفئات الكبيرة.",
+    "إعادة الباقي للعميل بوضوح مع ذكر المبلغ.",
+    "عند استلام مبالغ كبيرة، التأكد من توفر الفكة الكافية في الصندوق مسبقًا."
+  ]},
+  {id:29, title:"الدفع ببطاقة مدى", icon:"💳", points:[
+    "اختيار طريقة الدفع بالبطاقة في نظام الكاشير قبل تمرير المبلغ لجهاز الدفع.",
+    "تمرير أو إدخال البطاقة حسب نوع الجهاز (شريحة، شريط مغناطيسي، أو تلامسي).",
+    "مدى أثير تتيح الدفع اللاتلامسي بتقريب البطاقة من الجهاز مباشرة دون إدخالها.",
+    "انتظار ظهور نتيجة العملية على الشاشة قبل تسليم الفاتورة للعميل."
+  ]},
+  {id:30, title:"الدفع عبر الهاتف والساعة الذكية", icon:"📱", points:[
+    "تشمل Apple Pay وSamsung Pay وGoogle Pay، وجميعها تعتمد على تقريب الجهاز (هاتف أو ساعة) من نقطة الدفع.",
+    "من منظور الكاشير، خطوات القبول متشابهة تقريبًا بغض النظر عن نوع المحفظة الرقمية المستخدمة.",
+    "يجب انتظار إشعار نجاح العملية على جهاز الدفع قبل اعتبارها مكتملة.",
+    "أعلن البنك المركزي السعودي دعم Google Pay ضمن منظومة مدى في سبتمبر 2025، إضافة لدعم Apple Pay وSamsung Pay سابقًا."
+  ]},
+  {id:31, title:"نجاح ورفض عملية الدفع", icon:"✅", points:[
+    "تظهر على جهاز الدفع إحدى الحالات التالية: نجاح العملية، رفض العملية، تعذر الاتصال، أو إلغاء العملية.",
+    "عند نجاح العملية، تُسلَّم الفاتورة والمنتجات للعميل مباشرة.",
+    "عند رفض العملية، يُطلب من العميل تجربة بطاقة أو وسيلة دفع أخرى بلباقة.",
+    "لا يجوز اتهام العميل أو التعليق على سبب الرفض أمامه."
+  ]},
+  {id:32, title:"تعذر الاتصال بالشبكة", icon:"📶", points:[
+    "أحيانًا يتعذر اتصال جهاز الدفع بالشبكة، فتظهر رسالة تعذر اتصال بدل نجاح أو رفض واضح.",
+    "يُعاد المحاولة مرة أو مرتين، فإذا استمرت المشكلة يُقترح على العميل وسيلة دفع بديلة.",
+    "يُبلَّغ المشرف إذا تكررت المشكلة مع عدة عملاء، فقد تكون مشكلة عامة بالشبكة أو الجهاز."
+  ]},
+  {id:33, title:"أمان عمليات الدفع", icon:"🔒", points:[
+    "لا يجوز للكاشير معرفة أو طلب الرقم السري لبطاقة العميل تحت أي ظرف.",
+    "يجب أن يُجري العميل عملية إدخال الرقم السري بنفسه دون أن يراقبه الكاشير عن قرب.",
+    "عند الشك في عملية مشبوهة أو بطاقة غير مطابقة لحاملها، يُبلَّغ المشرف بهدوء دون إحراج العميل."
+  ]},
+  {id:34, title:"أفضل الممارسات في الدفع", icon:"⭐", points:[
+    "التأكد من صحة المبلغ الظاهر على شاشة الدفع قبل تأكيد العملية مهما كانت وسيلة الدفع.",
+    "عدم التسرع في تسليم المنتجات قبل التأكد من نجاح العملية فعليًا.",
+    "التعامل بنفس اللباقة والسرعة بغض النظر عن وسيلة الدفع التي يختارها العميل."
+  ]},
+];
+
+const LEVEL4_QUIZ = [
+  {q:"أي جهة تنظّم منظومة الدفع مدى في السعودية؟",
+   opts:["وزارة التجارة","هيئة الزكاة والضريبة والجمارك","البنك المركزي السعودي (ساما)","وزارة المالية"], a:2},
+  {q:"ما الفرق الأساسي بين مدى أثير والدفع بالبطاقة العادي؟",
+   opts:["مدى أثير يتطلب إدخال الرقم السري دائمًا","لا يوجد فرق بينهما","مدى أثير مخصص للشركات فقط","مدى أثير للدفع اللاتلامسي بتقريب البطاقة دون إدخالها"], a:3},
+  {q:"ماذا يشترك فيه Apple Pay وSamsung Pay وGoogle Pay من منظور الكاشير؟",
+   opts:["كل واحد يحتاج جهاز دفع مختلف تمامًا","لا يمكن قبولها في السعودية","جميعها تعتمد على تقريب الهاتف أو الساعة من نقطة الدفع","تتطلب توقيع العميل يدويًا"], a:2},
+  {q:"ماذا يفعل الكاشير عند رفض عملية الدفع؟",
+   opts:["يتهم العميل بعدم وجود رصيد","يعلّق على سبب الرفض أمام العملاء الآخرين","يلغي الفاتورة نهائيًا دون سؤال العميل","يطلب من العميل تجربة وسيلة دفع أخرى بلباقة"], a:3},
+  {q:"ماذا يفعل الكاشير عند تعذر اتصال جهاز الدفع بالشبكة بشكل متكرر مع عدة عملاء؟",
+   opts:["يتجاهل المشكلة","يغلق الصندوق فورًا","يبلّغ المشرف لاحتمال وجود مشكلة عامة","يطلب من كل عميل الانتظار لساعات"], a:2},
+  {q:"ما الصحيح بخصوص الرقم السري لبطاقة العميل؟",
+   opts:["يجوز للكاشير معرفته لتسريع العملية","يُكتب على الفاتورة للتوثيق","يُشارك مع المشرف فقط","لا يجوز للكاشير معرفته أو طلبه تحت أي ظرف"], a:3},
+];
+
+/* ============ CONTENT: LEVEL 5 ============ */
+const LEVEL5_LESSONS = [
+  {id:35, title:"أهمية الدقة في حساب الباقي", icon:"🎯", points:[
+    "الخطأ في حساب الباقي يسبب خسارة مباشرة على المتجر أو على العميل، وكلاهما يضر بثقة العميل بالمتجر.",
+    "حتى مع وجود أنظمة تحسب الباقي تلقائيًا، على الكاشير التأكد يدويًا من صحة المبلغ قبل تسليمه.",
+    "الدقة أهم من السرعة؛ ثوانٍ إضافية للتأكد أفضل من إرجاع باقٍ خاطئ."
+  ]},
+  {id:36, title:"فئات العملة السعودية", icon:"💴", points:[
+    "الأوراق النقدية المتداولة: 5، 10، 50، 100، 500 ريال.",
+    "العملات المعدنية الشائعة الاستخدام: 1 ريال، 2 ريال، 50 هللة، 10 هللة.",
+    "معرفة الفئات المتاحة تساعد الكاشير على اختيار أقل عدد ممكن من القطع عند إرجاع الباقي."
+  ]},
+  {id:37, title:"طريقة حساب الباقي يدويًا", icon:"🧮", points:[
+    "طريقة العدّ التصاعدي: البدء من مبلغ المشتريات والإضافة تدريجيًا حتى الوصول إلى المبلغ المدفوع.",
+    "مثال: مشتريات بـ73 ريال ودفع العميل 100 ريال، فيُضاف 2 ريال ثم 5 ثم 20 للوصول إلى 100، فيكون الباقي 27 ريال.",
+    "استخدام أكبر الفئات الممكنة أولًا يقلل عدد القطع المُرجعة للعميل."
+  ]},
+  {id:38, title:"التحقق من الباقي قبل التسليم", icon:"🔍", points:[
+    "عدّ الباقي مرة أخرى بصريًا قبل تسليمه للعميل.",
+    "ذكر المبلغ المُرجع للعميل بوضوح مع تسليمه، مثل: «الباقي 27 ريال، تفضل».",
+    "في حال الشك، يُفضَّل إعادة العدّ بدل التسرع في التسليم."
+  ]},
+  {id:39, title:"التعامل مع نقص الفكة في الصندوق", icon:"🪙", points:[
+    "عند نفاد فئة معينة من الفكة، يُستخدم مزيج من فئات أخرى يعطي نفس المبلغ.",
+    "إذا تعذر إيجاد الباقي بالفئات المتوفرة، يُبلَّغ المشرف لتوفير فكة إضافية.",
+    "لا يجوز تقريب الباقي لأعلى أو لأسفل دون موافقة العميل والمشرف."
+  ]},
+  {id:40, title:"أخطاء شائعة في حساب النقد", icon:"⚠️", points:[
+    "الخلط بين فئات متشابهة الشكل أو اللون.",
+    "نسيان عدّ الباقي قبل التسليم والاعتماد الكامل على شاشة النظام.",
+    "التسرع في التسليم دون التأكد من استلام العميل للمبلغ الصحيح فعليًا."
+  ]},
+];
+
+const LEVEL5_QUIZ = [
+  {q:"ما هي طريقة «العدّ التصاعدي» لحساب الباقي؟",
+   opts:["طرح المبلغ المدفوع من المشتريات مباشرة","تقريب المبلغ لأقرب رقم","البدء من مبلغ المشتريات والإضافة تدريجيًا حتى الوصول للمبلغ المدفوع","سؤال العميل عن الباقي"], a:2},
+  {q:"كم عدد فئات الأوراق النقدية السعودية المتداولة حاليًا؟",
+   opts:["3 فئات","6 فئات","4 فئات","5 فئات (5، 10، 50، 100، 500)"], a:3},
+  {q:"ماذا يجب فعله قبل تسليم الباقي للعميل؟",
+   opts:["تسليمه فورًا دون تأكيد","تقريبه لأقرب فئة متوفرة","عدّه مرة أخرى والتأكد من صحته قبل التسليم","سؤال المشرف في كل مرة"], a:2},
+  {q:"ماذا يفعل الكاشير عند نفاد فئة معينة من الفكة؟",
+   opts:["يعطي العميل مبلغًا أقل","يستخدم مزيجًا من فئات أخرى يعطي نفس المبلغ","يرفض إتمام عملية البيع","يقرّب المبلغ دون إذن"], a:1},
+  {q:"ما الأفضل عند اختيار فئات الباقي؟",
+   opts:["استخدام أصغر الفئات دائمًا","لا فرق في اختيار الفئات","استخدام فئة واحدة فقط بغض النظر عن العدد","استخدام أكبر الفئات الممكنة لتقليل عدد القطع"], a:3},
+  {q:"ما أحد الأخطاء الشائعة في حساب النقد؟",
+   opts:["التأكد من الباقي قبل التسليم","إبلاغ المشرف عند نقص الفكة","الاعتماد الكلي على شاشة النظام دون عدّ يدوي","استخدام العدّ التصاعدي"], a:2},
+];
+
+/* ============ CONTENT: LEVEL 6 ============ */
+const LEVEL6_LESSONS = [
+  {id:41, title:"دورة حياة الفاتورة", icon:"📄", points:[
+    "تبدأ الفاتورة بفتح عملية بيع، وتمر بمراحل إضافة المنتجات، ثم المراجعة، ثم الإصدار والطباعة.",
+    "بعد الطباعة، تصبح الفاتورة مستندًا رسميًا يوثّق العملية ويُستخدم لاحقًا في الإرجاع أو المطابقة.",
+    "فهم هذه المراحل يساعد الكاشير على معرفة أين يمكنه التعديل وأين يجب اتباع إجراء رسمي بدل التعديل المباشر."
+  ]},
+  {id:42, title:"مراجعة المنتجات قبل الإصدار", icon:"🔎", points:[
+    "التأكد من أن كل منتج بالفاتورة يطابق ما اشتراه العميل فعليًا، دون نقص أو تكرار.",
+    "التحقق من الكميات المدخلة لكل منتج قبل المتابعة للدفع.",
+    "تصحيح أي خطأ في هذه المرحلة أسهل بكثير من تصحيحه بعد إصدار الفاتورة."
+  ]},
+  {id:43, title:"مراجعة الإجمالي والضريبة قبل التسليم", icon:"🧾", points:[
+    "التأكد من أن الإجمالي المعروض يشمل الخصومات المطبّقة إن وجدت.",
+    "التحقق أن ضريبة القيمة المضافة محسوبة تلقائيًا وتظهر بوضوح على الفاتورة.",
+    "عرض الإجمالي النهائي للعميل قبل تأكيد الدفع لتفادي أي اعتراض لاحق."
+  ]},
+  {id:44, title:"إصدار الفاتورة وتسليمها للعميل", icon:"🖨️", points:[
+    "بعد تأكيد الدفع، تُصدر الفاتورة وتُطبع مباشرة.",
+    "تُسلَّم الفاتورة للعميل مع المنتجات مباشرة، وليس بعد مغادرته الصندوق.",
+    "الفاتورة المطبوعة يجب أن تكون واضحة القراءة، غير مقطوعة أو باهتة الحبر."
+  ]},
+  {id:45, title:"إعادة طباعة الإيصال", icon:"🔁", points:[
+    "يجوز إعادة طباعة نسخة من الإيصال إذا طلب العميل ذلك أو كانت النسخة الأصلية غير واضحة.",
+    "النسخة المعاد طباعتها تحمل نفس رقم الفاتورة الأصلي لضمان عدم الازدواجية في السجلات.",
+    "بعض الأنظمة تُظهر عبارة «نسخة» على الإيصال المعاد طباعته للتمييز بينه وبين الأصل."
+  ]},
+  {id:46, title:"التعامل مع خطأ في الفاتورة بعد الطباعة", icon:"⚠️", points:[
+    "لا يجوز للكاشير تعديل فاتورة مطبوعة بنفسه بعد إصدارها.",
+    "الإجراء الصحيح هو إبلاغ المشرف لإلغاء الفاتورة الخاطئة رسميًا وإصدار فاتورة جديدة صحيحة.",
+    "توثيق سبب الإلغاء مهم لأغراض المراجعة المحاسبية لاحقًا."
+  ]},
+  {id:47, title:"أرشفة ومطابقة الفواتير", icon:"🗂️", points:[
+    "تُحفظ نسخ الفواتير (ورقيًا أو إلكترونيًا حسب نظام المتجر) لأغراض المراجعة والإرجاع.",
+    "في نهاية الشفت، تُطابَق الفواتير الصادرة مع إجمالي المبيعات المسجل في النظام.",
+    "أي فرق بين عدد الفواتير والمبيعات المسجلة يجب الإبلاغ عنه فورًا."
+  ]},
+  {id:48, title:"أفضل الممارسات في إصدار الفواتير", icon:"⭐", points:[
+    "المراجعة قبل الإصدار أفضل دائمًا من التصحيح بعده.",
+    "التعامل بشفافية مع العميل بخصوص أي تفاصيل في الفاتورة يسأل عنها.",
+    "الحفاظ على سرعة الخدمة دون التضحية بدقة الفاتورة."
+  ]},
+];
+
+const LEVEL6_QUIZ = [
+  {q:"ماذا يجب فعله قبل إصدار الفاتورة نهائيًا؟",
+   opts:["تجاهل مراجعة المنتجات لتوفير الوقت","طباعتها مباشرة دون أي تحقق","مراجعة المنتجات والكميات والإجمالي","سؤال العميل عن كل شيء بدل التحقق بنفسه"], a:2},
+  {q:"ماذا يفعل الكاشير إذا اكتشف خطأ في فاتورة بعد طباعتها؟",
+   opts:["يعدّلها بخط اليد","يتجاهل الخطأ إن كان بسيطًا","يبلّغ المشرف لإلغائها رسميًا وإصدار فاتورة جديدة","يطلب من العميل تجاهل الفرق"], a:2},
+  {q:"متى يجوز إعادة طباعة الإيصال؟",
+   opts:["لا يجوز إعادة طباعته أبدًا","فقط بموافقة كتابية من الإدارة العليا","يعاد طباعته تلقائيًا كل ساعة","إذا طلب العميل ذلك أو كانت النسخة الأصلية غير واضحة"], a:3},
+  {q:"ما الهدف من مطابقة الفواتير في نهاية الشفت؟",
+   opts:["لا فائدة منها","لحساب راتب الكاشير","لإرضاء العميل فقط","التأكد من تطابق الفواتير الصادرة مع المبيعات المسجلة في النظام"], a:3},
+  {q:"متى تُسلَّم الفاتورة للعميل؟",
+   opts:["بعد مغادرته الصندوق","في نهاية اليوم","لا داعي لتسليمها إذا لم يطلبها","مع المنتجات مباشرة بعد إصدارها"], a:3},
+  {q:"ما الأفضل عند التعامل مع الفواتير؟",
+   opts:["التصحيح بعد الإصدار بدل المراجعة قبله","تجاهل دقة الفاتورة لصالح السرعة","عدم الاهتمام بوضوح الطباعة","المراجعة قبل الإصدار أفضل من التصحيح بعده"], a:3},
+];
+
+/* ============ CONTENT: LEVEL 7 ============ */
+const LEVEL7_LESSONS = [
+  {id:49, title:"أنواع الخصومات", icon:"🏷️", points:[
+    "الخصم إما نسبة مئوية من السعر الأصلي، أو مبلغ ثابت يُطرح من السعر مباشرة.",
+    "بعض المتاجر تستخدم كوبونات خصم برمز معين يُدخل في النظام لتطبيقه.",
+    "معرفة نوع الخصم المطلوب تطبيقه ضرورية لحساب السعر النهائي بدقة."
+  ]},
+  {id:50, title:"حساب الخصم بالنسبة المئوية", icon:"➗", points:[
+    "يُحسب مبلغ الخصم بضرب السعر الأصلي في نسبة الخصم مقسومة على 100.",
+    "مثال: منتج سعره 200 ريال بخصم 15%، فمبلغ الخصم = 200 × 15 ÷ 100 = 30 ريالًا، والسعر النهائي = 170 ريالًا.",
+    "يعتمد النظام غالبًا على حساب هذا تلقائيًا، لكن معرفة الطريقة تساعد الكاشير على التحقق من صحة النتيجة."
+  ]},
+  {id:51, title:"حساب الخصم بمبلغ ثابت", icon:"➖", points:[
+    "الخصم الثابت يُطرح مباشرة من السعر الأصلي بغض النظر عن قيمته.",
+    "مثال: منتج سعره 150 ريالًا وخصم ثابت 20 ريالًا، فالسعر النهائي = 130 ريالًا.",
+    "يجب التأكد أن مبلغ الخصم الثابت لا يتجاوز سعر المنتج نفسه."
+  ]},
+  {id:52, title:"كوبونات الخصم", icon:"🎟️", points:[
+    "الكوبون رمز أو بطاقة تمنح خصمًا محددًا عند إدخالها في النظام.",
+    "يجب التحقق من صلاحية الكوبون (تاريخ الانتهاء وشروط الاستخدام) قبل تطبيقه.",
+    "بعض الكوبونات تُستخدم مرة واحدة فقط؛ يرفضها النظام تلقائيًا إذا استُخدمت مسبقًا."
+  ]},
+  {id:53, title:"عروض الشراء المتعدد", icon:"🎁", points:[
+    "مثل عرض «اشترِ قطعتين واحصل على الثالثة مجانًا»، حيث تُحسب القطع المجانية تلقائيًا حسب الكمية المشتراة.",
+    "مثال: شراء 9 قطع مع هذا العرض يعني دفع ثمن 6 قطع فقط (3 مجانية).",
+    "يجب التأكد أن جميع القطع من نفس المنتج المشمول بالعرض، إلا إذا ذُكر خلاف ذلك."
+  ]},
+  {id:54, title:"التحقق من شروط العرض قبل التطبيق", icon:"✅", points:[
+    "التأكد من أن المنتج المشمول بالعرض يطابق ما يحمله العميل فعليًا.",
+    "التحقق من تاريخ سريان العرض قبل تطبيقه على الفاتورة.",
+    "عند الشك في انطباق شروط عرض معين، يُرجع للمشرف بدل تطبيقه أو رفضه اجتهادًا."
+  ]},
+  {id:55, title:"أخطاء شائعة في تطبيق الخصومات", icon:"⚠️", points:[
+    "الخلط بين نوع الخصم (نسبة أم مبلغ ثابت) عند إدخاله بالنظام.",
+    "تطبيق خصم منتهي الصلاحية أو غير مخصص للمنتج الحالي.",
+    "نسيان التحقق من السعر النهائي بعد تطبيق الخصم قبل تأكيد الدفع."
+  ]},
+];
+
+const LEVEL7_QUIZ = [
+  {q:"منتج سعره 200 ريال وخصم 15%. كم مبلغ الخصم؟",
+   opts:["15 ريال","30 ريال","170 ريال","185 ريال"], a:1},
+  {q:"منتج سعره 150 ريالًا وخصم ثابت 20 ريالًا. كم السعر النهائي؟",
+   opts:["130 ريال","170 ريال","20 ريال","150 ريال"], a:0},
+  {q:"ما الذي يجب التحقق منه قبل تطبيق كوبون خصم؟",
+   opts:["لا داعي للتحقق من أي شيء","صلاحية الكوبون وشروط استخدامه","لون الكوبون فقط","اسم العميل المطبوع على الكوبون"], a:1},
+  {q:"في عرض «اشترِ قطعتين واحصل على الثالثة مجانًا»، إذا اشترى العميل 9 قطع، كم قطعة يدفع ثمنها؟",
+   opts:["9 قطع","3 قطع","6 قطع","صفر"], a:2},
+  {q:"ماذا يفعل الكاشير عند الشك في انطباق شروط عرض على منتج معين؟",
+   opts:["يطبّق العرض مباشرة","يرفض العرض من تلقاء نفسه","يرجع للمشرف للتأكد","يسأل عميلًا آخر في الطابور"], a:2},
+  {q:"ما أحد الأخطاء الشائعة في تطبيق الخصومات؟",
+   opts:["التحقق من صلاحية الكوبون","الخلط بين نوع الخصم (نسبة أم مبلغ ثابت)","مراجعة السعر النهائي بعد الخصم","التأكد من تاريخ سريان العرض"], a:1},
+];
+
+/* ============ CONTENT: LEVEL 8 ============ */
+const LEVEL8_LESSONS = [
+  {id:56, title:"سياسة الإرجاع والاستبدال", icon:"↩️", points:[
+    "لكل متجر سياسة واضحة تحدد المدة المسموحة للإرجاع والاستبدال، وأنواع المنتجات المستثناة.",
+    "على الكاشير معرفة هذه السياسة جيدًا للرد على استفسارات العملاء دون تردد.",
+    "الإرجاع يعني استرداد المبلغ بالكامل، بينما الاستبدال يعني استبدال المنتج بآخر."
+  ]},
+  {id:57, title:"التحقق من الفاتورة عند الإرجاع", icon:"🧾", points:[
+    "طلب الفاتورة الأصلية أو رقمها للتأكد من أن المنتج اشتُري فعلًا من هذا المتجر.",
+    "التحقق من تاريخ الشراء للتأكد أن الإرجاع ضمن المدة المسموحة.",
+    "إذا لم تتوفر الفاتورة، تُطبَّق سياسة المتجر الخاصة بالإرجاع بدون فاتورة إن وُجدت."
+  ]},
+  {id:58, title:"التحقق من حالة المنتج المرتجع", icon:"🔍", points:[
+    "التأكد من أن المنتج بحالته الأصلية دون استخدام أو تلف، حسب سياسة المتجر.",
+    "التحقق من وجود الملصقات والتغليف الأصلي إذا كانت الشروط تتطلب ذلك.",
+    "إذا كان المنتج تالفًا لأسباب تصنيع، يُتبع إجراء مختلف عن الإرجاع العادي."
+  ]},
+  {id:59, title:"إجراءات استرجاع المبلغ", icon:"💰", points:[
+    "بعد التأكد من صحة الإرجاع، يُسجَّل في النظام لإصدار مرتجع رسمي.",
+    "يُعاد المبلغ للعميل حسب سياسة المتجر (نقدًا أو عبر نفس وسيلة الدفع الأصلية).",
+    "يجب تسليم إيصال يوثّق عملية الإرجاع للعميل."
+  ]},
+  {id:60, title:"الاستبدال بدل الإرجاع", icon:"🔄", points:[
+    "إذا رغب العميل باستبدال المنتج بدل استرداد المبلغ، يُسجَّل ذلك كعملية استبدال منفصلة.",
+    "إذا كان سعر المنتج الجديد مختلفًا، يُدفع الفرق أو يُرد للعميل حسب الحالة.",
+    "يجب التأكد من توفر المنتج البديل قبل إتمام عملية الاستبدال."
+  ]},
+  {id:61, title:"اختلاف طريقة الدفع الأصلية عن طريقة الاسترجاع", icon:"💳", points:[
+    "الأصل أن يُعاد المبلغ بنفس طريقة الدفع التي استخدمها العميل أصلًا.",
+    "بعض الأنظمة لا تسمح برد مبلغ نقدي لعملية دُفعت بالبطاقة، والعكس صحيح.",
+    "عند وجود أي قيد تقني أو سياسي يمنع الاسترجاع بنفس الطريقة، يُبلَّغ المشرف لتحديد الحل المناسب."
+  ]},
+  {id:62, title:"متى يحتاج الكاشير إلى موافقة المشرف", icon:"🧑‍💼", points:[
+    "المبالغ الكبيرة أو الحالات غير المعتادة تتطلب غالبًا موافقة المشرف قبل إتمام الإرجاع.",
+    "عند غياب الفاتورة أو انتهاء مدة الإرجاع المسموحة، يُرجع للمشرف لاتخاذ القرار.",
+    "الشك في محاولة احتيال أو إساءة استخدام سياسة الإرجاع يستدعي إبلاغ المشرف فورًا دون مواجهة العميل مباشرة."
+  ]},
+];
+
+const LEVEL8_QUIZ = [
+  {q:"ما الفرق بين الإرجاع والاستبدال؟",
+   opts:["لا فرق بينهما","الاستبدال دائمًا أغلى من الإرجاع","الإرجاع استرداد للمبلغ، والاستبدال تبديل بمنتج آخر","الإرجاع يحتاج فاتورة والاستبدال لا يحتاجها أبدًا"], a:2},
+  {q:"ما أول شيء يُطلب من العميل عند طلب الإرجاع؟",
+   opts:["دفع رسوم إضافية","لا شيء، يُقبل الإرجاع مباشرة","الفاتورة الأصلية أو رقمها","إحضار بطاقة الهوية فقط"], a:2},
+  {q:"بأي طريقة يُفضَّل رد المبلغ للعميل؟",
+   opts:["نقدًا دائمًا بغض النظر عن طريقة الدفع الأصلية","بأي طريقة يختارها الكاشير","لا يُرد المبلغ أبدًا","بنفس طريقة الدفع التي استخدمها العميل أصلًا"], a:3},
+  {q:"متى يحتاج الكاشير لموافقة المشرف في حالات الإرجاع؟",
+   opts:["في كل عملية إرجاع مهما كانت بسيطة","لا يحتاج أبدًا لموافقة المشرف","فقط إذا طلب العميل ذلك","عند المبالغ الكبيرة أو الحالات غير المعتادة أو غياب الفاتورة"], a:3},
+  {q:"ماذا يفعل الكاشير عند الشك في محاولة احتيال بالإرجاع؟",
+   opts:["يواجه العميل مباشرة ويتهمه","يقبل الإرجاع لتجنب المشاكل","يتجاهل الأمر تمامًا","يبلّغ المشرف بهدوء دون مواجهة العميل مباشرة"], a:3},
+  {q:"ما الذي يجب التحقق منه في حالة المنتج المرتجع؟",
+   opts:["لا داعي للتحقق من حالته","أن يكون العميل قد استخدمه لفترة طويلة","لون المنتج فقط","أن يكون بحالته الأصلية دون استخدام أو تلف حسب سياسة المتجر"], a:3},
+];
+
+/* ============ CONTENT: LEVEL 9 ============ */
+const LEVEL9_LESSONS = [
+  {id:63, title:"أساسيات خدمة العملاء المتقدمة", icon:"🤝", points:[
+    "خدمة العملاء الجيدة تبني ثقة العميل بالمتجر وتزيد من احتمال عودته للشراء مرة أخرى.",
+    "الاستماع الفعلي لملاحظة العميل قبل الرد يمنع كثيرًا من سوء الفهم.",
+    "نبرة الصوت وتعابير الوجه لا تقل أهمية عن الكلام نفسه في التعامل مع العملاء."
+  ]},
+  {id:64, title:"التعامل مع اعتراض العميل على السعر", icon:"💬", points:[
+    "الاعتراض على السعر لا يعني بالضرورة خطأ من العميل أو من المتجر؛ قد يكون هناك تحديث لم يُطبَّق على الرف.",
+    "التحقق الهادئ بدل الجدال المباشر يحافظ على رضا العميل ريثما يتضح السبب.",
+    "إذا تبيّن أن السعر بالنظام خاطئ فعلًا، يُبلَّغ المشرف لتصحيحه."
+  ]},
+  {id:65, title:"التعامل مع عميل غاضب", icon:"😤", points:[
+    "الهدوء والاستماع دون مقاطعة يهدئ الموقف في أغلب الأحيان.",
+    "التعاطف مع شعور العميل لا يعني بالضرورة الموافقة على كل ما يقوله.",
+    "إذا تصاعد الموقف رغم محاولات التهدئة، يُستدعى المشرف بدل الدخول في جدال مع العميل."
+  ]},
+  {id:66, title:"التعامل مع طلب إلغاء منتج أثناء الخدمة", icon:"❌", points:[
+    "يمكن حذف أي منتج من الفاتورة قبل إنهائها دون مشكلة.",
+    "الرد بسرعة وبساطة على طلب الإلغاء يريح العميل ويحافظ على سير الخدمة.",
+    "لا داعي للتشكيك في سبب رغبة العميل بإلغاء منتج معين."
+  ]},
+  {id:67, title:"التعامل مع اعتراض العميل على إجمالي الفاتورة", icon:"🧮", points:[
+    "مراجعة الفاتورة بند ببند مع العميل تساعد على تحديد سبب الفرق إن وُجد بسرعة ووضوح.",
+    "الأصل التعامل بشفافية، سواء كان الخطأ من النظام أو من فهم العميل للأسعار.",
+    "تفادي الرد الدفاعي المباشر مثل «النظام ما يغلط» دون تحقق فعلي."
+  ]},
+  {id:68, title:"التعامل مع ضغط الطابور وأعطال الأجهزة", icon:"⏳", points:[
+    "طول الطابور لا يبرر التسرع على حساب دقة الخدمة للعميل الحالي.",
+    "عند تعطل جهاز، الاعتذار الهادئ ومحاولة الحل السريع أفضل من إظهار الانزعاج أمام العملاء.",
+    "طلب مساعدة كاشير آخر أو مشرف عند الضغط الشديد أفضل من التضحية بجودة الخدمة."
+  ]},
+];
+
+const LEVEL9_QUIZ = [
+  {q:"كيف يُفضَّل التعامل مع اعتراض عميل على سعر منتج؟",
+   opts:["الجدال المباشر معه","تجاهله والانتقال للعميل التالي","التحقق الهادئ من السعر قبل الرد النهائي","اتهامه بأنه مخطئ فورًا"], a:2},
+  {q:"ما الأفضل عند التعامل مع عميل غاضب؟",
+   opts:["رفع الصوت بالمقابل","إنهاء الخدمة فورًا دون كلام","تجاهل ما يقوله تمامًا","الهدوء والاستماع دون مقاطعة"], a:3},
+  {q:"ماذا يفعل الكاشير إذا طلب العميل إلغاء منتج أثناء الخدمة؟",
+   opts:["يرفض الطلب","يسأله عن سبب الإلغاء بإصرار","يطلب منه دفع ثمنه رغم الإلغاء","يحذف المنتج من الفاتورة دون تعقيد"], a:3},
+  {q:"كيف يُفضَّل التعامل مع اعتراض عميل على إجمالي الفاتورة؟",
+   opts:["الرد بأن النظام لا يخطئ أبدًا دون تحقق","تجاهل الاعتراض","إنهاء الحديث فورًا","مراجعة الفاتورة بند ببند معه"], a:3},
+  {q:"هل يبرر طول الطابور التسرع على حساب دقة الخدمة؟",
+   opts:["نعم دائمًا","فقط في أوقات الذروة","حسب مزاج الكاشير","لا، الدقة أهم من السرعة حتى مع وجود طابور"], a:3},
+  {q:"ماذا يفعل الكاشير عند تعطل جهاز أثناء خدمة عميل؟",
+   opts:["يظهر انزعاجه أمام العميل","يتجاهل العطل ويكمل كأن شيئًا لم يحدث","يطلب من العميل حل المشكلة بنفسه","يعتذر بهدوء ويحاول الحل أو يطلب المساعدة"], a:3},
+];
+
+/* interactive customer scenarios ("محاكي العملاء") — each has 3 responses, one marked best-practice */
+const CUSTOMER_SCENARIOS = [
+  {image:`<svg viewBox="0 0 100 70" width="80" height="56"><rect x="5" y="10" width="90" height="50" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="3"/><circle cx="20" cy="25" r="5" fill="#2563EB"/><text x="60" y="46" font-size="28" font-weight="800" fill="#2563EB" text-anchor="middle">؟</text></svg>`,
+   customerLine:"السعر على الرف كان 10 ريال، ليش طلع معي 15 ريال؟", options:[
+    {text:"هذا مو مشكلتي، السعر بالنظام هو الصحيح.", feedback:"ردة فعل غير مناسبة — الرفض المباشر دون تحقق يزعج العميل بلا داعٍ.", good:false},
+    {text:"أعتذر، خلني أتأكد من السعر بسرعة وأرجع لك خبر.", feedback:"ممتاز — تحقق هادئ يحفظ ثقة العميل ريثما يتضح السبب.", good:true},
+    {text:"أكيد أنت غلطان، الرف مكتوب عليه غلط.", feedback:"لا يجوز اتهام العميل أو الجزم بدون تحقق فعلي.", good:false},
+  ]},
+  {image:`<svg viewBox="0 0 80 80" width="72" height="72"><circle cx="40" cy="40" r="34" fill="#FEE2E2" stroke="#B3261E" stroke-width="3"/><line x1="22" y1="30" x2="34" y2="36" stroke="#B3261E" stroke-width="4" stroke-linecap="round"/><line x1="58" y1="30" x2="46" y2="36" stroke="#B3261E" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="42" r="3" fill="#B3261E"/><circle cx="50" cy="42" r="3" fill="#B3261E"/><path d="M24 58 Q40 46 56 58" fill="none" stroke="#B3261E" stroke-width="4" stroke-linecap="round"/></svg>`,
+   customerLine:"(عميل غاضب يرفع صوته بسبب تأخر الخدمة)", options:[
+    {text:"ارفع صوتك علي عادي، أنا برضو أقدر أرفع صوتي.", feedback:"يصعّد الموقف بدل تهدئته.", good:false},
+    {text:"أتفهم انزعاجك، خليني أساعدك بأسرع وقت ممكن.", feedback:"ممتاز — تعاطف وهدوء يهدّئان الموقف غالبًا.", good:true},
+    {text:"إذا مو عاجبك الوضع، تقدر تروح مكان ثاني.", feedback:"رد غير مهني ويضر بسمعة المتجر.", good:false},
+  ]},
+  {image:`<svg viewBox="0 0 80 80" width="72" height="72"><path d="M20 30 L24 16 H56 L60 30 Z" fill="none" stroke="#16324F" stroke-width="3" stroke-linejoin="round"/><rect x="16" y="30" width="48" height="38" rx="4" fill="#F8FAFC" stroke="#16324F" stroke-width="3"/><line x1="30" y1="42" x2="50" y2="58" stroke="#B3261E" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="42" x2="30" y2="58" stroke="#B3261E" stroke-width="4" stroke-linecap="round"/></svg>`,
+   customerLine:"ما أبغى هذا المنتج، الغيه من الفاتورة.", options:[
+    {text:"ما ينفع تلغيه الحين، خلاص انمسح.", feedback:"غير صحيح — يمكن حذف أي منتج قبل إنهاء الفاتورة.", good:false},
+    {text:"تمام، بحذفه من الفاتورة الحين.", feedback:"ممتاز — رد سريع وبسيط يحافظ على سير الخدمة.", good:true},
+    {text:"لازم تدفع ثمنه أول لأنه انمسح.", feedback:"معلومة خاطئة تربك العميل دون داعٍ.", good:false},
+  ]},
+  {image:`<svg viewBox="0 0 80 80" width="72" height="72"><rect x="18" y="10" width="44" height="58" rx="4" fill="#F8FAFC" stroke="#16324F" stroke-width="3"/><line x1="26" y1="24" x2="54" y2="24" stroke="#16324F" stroke-width="3"/><line x1="26" y1="34" x2="54" y2="34" stroke="#16324F" stroke-width="3"/><line x1="26" y1="44" x2="42" y2="44" stroke="#16324F" stroke-width="3"/><circle cx="58" cy="56" r="14" fill="#FEE2E2" stroke="#B3261E" stroke-width="3"/><text x="58" y="62" font-size="18" font-weight="800" fill="#B3261E" text-anchor="middle">!</text></svg>`,
+   customerLine:"الحساب مو صح، أنا متأكد الإجمالي أكثر من اللازم.", options:[
+    {text:"النظام ما يغلط، الحساب صحيح 100%.", feedback:"رد دفاعي دون تحقق فعلي، قد يكون هناك خطأ فعلًا.", good:false},
+    {text:"خلني أراجع الفاتورة معك بند بند نتأكد سوا.", feedback:"ممتاز — مراجعة شفافة تحل الموقف بسرعة ووضوح.", good:true},
+    {text:"إذا ما عندك اعتراض موثّق، ادفع وخلاص.", feedback:"رد غير لبق يضر بثقة العميل بالمتجر.", good:false},
+  ]},
+  {image:`<svg viewBox="0 0 120 70" width="96" height="56"><g fill="#7C3AED"><circle cx="20" cy="20" r="10"/><rect x="10" y="32" width="20" height="28" rx="6"/><circle cx="55" cy="20" r="10"/><rect x="45" y="32" width="20" height="28" rx="6"/><circle cx="90" cy="20" r="10"/><rect x="80" y="32" width="20" height="28" rx="6"/></g></svg>`,
+   customerLine:"(طابور طويل خلفك، وخدمة العميل الحالي تأخذ وقتًا أطول من المعتاد)", options:[
+    {text:"تسرّع بالخدمة عشان تخلّص العملاء، حتى لو صار خطأ بسيط.", feedback:"التضحية بالدقة لأجل السرعة قد تسبب أخطاء أكبر لاحقًا.", good:false},
+    {text:"تكمل الخدمة بدقة وهدوء، وتطلب مساعدة مشرف أو كاشير آخر إذا طال الوقت.", feedback:"ممتاز — يوازن بين السرعة والدقة دون التضحية بأي منهما.", good:true},
+    {text:"تطلب من العميل الحالي يستعجل أمام بقية الطابور.", feedback:"يسبب إحراجًا للعميل ويبدو غير مهني.", good:false},
+  ]},
+  {image:`<svg viewBox="0 0 80 80" width="72" height="72"><rect x="16" y="14" width="48" height="52" rx="6" fill="#F8FAFC" stroke="#16324F" stroke-width="3"/><rect x="24" y="22" width="32" height="20" rx="2" fill="#E5E7EB"/><line x1="30" y1="28" x2="42" y2="36" stroke="#B3261E" stroke-width="3" stroke-linecap="round"/><line x1="42" y1="28" x2="30" y2="36" stroke="#B3261E" stroke-width="3" stroke-linecap="round"/><circle cx="30" cy="54" r="3" fill="#16324F"/><circle cx="40" cy="54" r="3" fill="#16324F"/><circle cx="50" cy="54" r="3" fill="#16324F"/></svg>`,
+   customerLine:"(جهاز الدفع تعطل فجأة أثناء عملية دفع عميل)", options:[
+    {text:"تخبر العميل إن المتجر ما يقدر يبيعه اليوم وتلغي كل شي.", feedback:"ردة فعل مبالغ فيها قبل تجربة أي حل.", good:false},
+    {text:"تعتذر للعميل، تجرب إعادة التشغيل أو تقترح وسيلة دفع بديلة، وتبلغ المشرف إذا استمرت المشكلة.", feedback:"ممتاز — تعامل هادئ ومنظم مع عطل تقني.", good:true},
+    {text:"تتجاهل العطل وتطلب من العميل يجرب البطاقة عدة مرات بدون توضيح.", feedback:"يترك العميل في حيرة دون تفسير واضح.", good:false},
+  ]},
+];
+
+/* ============ CONTENT: LEVEL 10 ============ */
+const LEVEL10_LESSONS = [
+  {id:69, title:"جهاز POS متوقف عن العمل", icon:"🔌", points:[
+    "الحفاظ على الهدوء أول خطوة؛ التوتر أمام العميل يزيد الموقف سوءًا.",
+    "تجربة إعادة تشغيل الجهاز مرة واحدة إن كان ذلك مسموحًا بسياسة المتجر.",
+    "إبلاغ المشرف فورًا واستخدام جهاز احتياطي إن وُجد، مع الاعتذار للعملاء المنتظرين."
+  ]},
+  {id:70, title:"انقطاع الإنترنت أو الشبكة", icon:"📡", points:[
+    "التحقق أولًا هل المشكلة مؤقتة أم مستمرة قبل اتخاذ أي إجراء.",
+    "اقتراح الدفع النقدي كبديل مؤقت للعملاء أثناء انقطاع الشبكة إن كان ذلك ممكنًا.",
+    "إبلاغ المشرف إذا طال الانقطاع لتفعيل الخطة البديلة المعتمدة في المتجر."
+  ]},
+  {id:71, title:"رفض عملية الدفع", icon:"🚫", points:[
+    "طلب تجربة وسيلة دفع أخرى من العميل بلباقة دون افتراض السبب.",
+    "عدم التعليق على سبب الرفض أمام العميل أو أمام عملاء آخرين.",
+    "تكرار الرفض مع عدة عملاء متتاليين قد يشير لعطل بالجهاز يستدعي إبلاغ المشرف."
+  ]},
+  {id:72, title:"المنتج غير موجود في النظام أو اختلاف سعره", icon:"❓", points:[
+    "عدم تخمين السعر أو بيع المنتج مجانًا في أي حال من الأحوال.",
+    "إبلاغ المشرف فورًا للتحقق من السعر الصحيح أو إدخال المنتج في النظام.",
+    "تسجيل هذه الحالة يساعد المتجر على تصحيح قاعدة بيانات المنتجات لاحقًا."
+  ]},
+  {id:73, title:"نقص أو زيادة النقد في الصندوق", icon:"💵", points:[
+    "إعادة عدّ النقدية بدقة قبل افتراض وجود نقص أو زيادة فعلية.",
+    "مراجعة آخر العمليات للتأكد من عدم وجود خطأ في إرجاع الباقي.",
+    "إبلاغ المشرف فورًا بأي فرق، سواء كان نقصًا أو زيادة، دون التصرف فيه بنفسه."
+  ]},
+  {id:74, title:"خطأ مكتشف في الفاتورة بعد إصدارها", icon:"⚠️", points:[
+    "عدم تعديل الفاتورة المطبوعة يدويًا بأي حال من الأحوال.",
+    "إبلاغ المشرف فورًا لإلغاء الفاتورة الخاطئة رسميًا وإصدار فاتورة صحيحة بدلًا منها.",
+    "توثيق ما حدث يساعد على تفادي تكرار نفس الخطأ مستقبلًا."
+  ]},
+  {id:75, title:"العميل نسي أغراضه أو عاد بمنتج", icon:"🎒", points:[
+    "الأغراض المنسية تُحفظ في مكان مخصص لها ويُبلَّغ عنها المشرف حسب سياسة المتجر.",
+    "إذا عاد العميل يطلب غرضًا منسيًا، يُتحقق من وصفه قبل تسليمه له.",
+    "عودة العميل بمنتج بعد الشراء تُعامل حسب سياسة الإرجاع والاستبدال المعتادة."
+  ]},
+  {id:76, title:"متى تستدعي المشرف فورًا؟", icon:"🧑‍💼", points:[
+    "عند أي عطل بالجهاز أو الشبكة يؤثر على استمرار الخدمة.",
+    "عند وجود فرق في النقدية، مهما كان صغيرًا.",
+    "عند الشك في محاولة احتيال أو موقف قد يتصاعد مع عميل.",
+    "الأصل دائمًا: عند التردد بين التصرف بنفسك أو استدعاء المشرف، استدعِ المشرف."
+  ]},
+];
+
+const LEVEL10_QUIZ = [
+  {q:"ما أول خطوة عند توقف جهاز POS عن العمل؟",
+   opts:["الصراخ على العميل","إغلاق المتجر فورًا","الحفاظ على الهدوء ومحاولة إعادة التشغيل إن كان مسموحًا","تجاهل المشكلة والاستمرار كأن شيئًا لم يحدث"], a:2},
+  {q:"ماذا يفعل الكاشير عند انقطاع الإنترنت مؤقتًا؟",
+   opts:["إيقاف البيع نهائيًا","إخبار العملاء إن المتجر سيغلق","تجاهل الانقطاع تمامًا","اقتراح الدفع النقدي كبديل مؤقت إن أمكن"], a:3},
+  {q:"ماذا يفعل الكاشير عند اكتشاف فرق في النقدية (نقص أو زيادة)؟",
+   opts:["يتصرف فيه بنفسه دون إبلاغ أحد","يخفي الأمر لتجنب المساءلة","يقتطعه من راتبه مباشرة","يبلّغ المشرف فورًا بالفرق مهما كان صغيرًا"], a:3},
+  {q:"ماذا يفعل الكاشير إذا اكتشف خطأ في فاتورة بعد طباعتها؟",
+   opts:["يعدّلها بنفسه بخط اليد","يتجاهل الخطأ إن كان بسيطًا","يطلب من العميل تجاهل الفرق","يبلّغ المشرف لإلغائها رسميًا وإصدار فاتورة صحيحة"], a:3},
+  {q:"ما الأصل عند التردد بين التصرف بنفسك أو استدعاء المشرف؟",
+   opts:["التصرف دائمًا بمفردك لتوفير الوقت","تجاهل الموقف كليًا","سؤال عميل آخر في الطابور","استدعاء المشرف عند التردد"], a:3},
+  {q:"كيف يتم التعامل مع غرض نسيه عميل في المتجر؟",
+   opts:["رميه فورًا","الاحتفاظ به شخصيًا","تجاهله وعدم إخبار أحد","حفظه في مكان مخصص وإبلاغ المشرف حسب سياسة المتجر"], a:3},
+];
+
+/* ============ CONTENT: LEVEL 11 ============ */
+const LEVEL11_LESSONS = [
+  {id:77, title:"أهمية إغلاق الصندوق بدقة", icon:"🔒", points:[
+    "إغلاق الصندوق بدقة يحمي الكاشير من أي مسؤولية عن فروقات غير موثقة.",
+    "يساعد المتجر على معرفة الأداء الفعلي للمبيعات في كل شفت.",
+    "أي إهمال في هذه الخطوة قد يسبب مشاكل محاسبية يصعب حلها لاحقًا."
+  ]},
+  {id:78, title:"عدّ النقدية في نهاية الشفت", icon:"🔢", points:[
+    "تُعدّ النقدية الموجودة فعليًا في الصندوق فئة فئة بدقة.",
+    "يُفضَّل العدّ مرتين للتأكد من صحة الرقم النهائي قبل تسجيله.",
+    "يُستثنى من العدّ أي مبلغ عهدة ثابتة يُعاد للصندوق في اليوم التالي حسب سياسة المتجر."
+  ]},
+  {id:79, title:"مطابقة المبيعات النقدية", icon:"💵", points:[
+    "تُقارن النقدية الفعلية المعدودة مع مبيعات النقد المسجلة في النظام لنفس الشفت.",
+    "التطابق التام يعني أن كل عملية نقدية سُجّلت وحُسبت بشكل صحيح.",
+    "أي فرق، ولو بسيط، يجب تسجيله وليس تجاهله."
+  ]},
+  {id:80, title:"مطابقة المدفوعات الإلكترونية", icon:"💳", points:[
+    "تُقارن مبيعات البطاقات والمحافظ الرقمية المسجلة في النظام مع تقرير جهاز الدفع.",
+    "عادةً ما تكون هذه المطابقة أدق من النقد لأنها تُسجَّل إلكترونيًا في الطرفين.",
+    "أي فرق هنا غالبًا يشير لخطأ تقني يستدعي إبلاغ المشرف أو الدعم الفني."
+  ]},
+  {id:81, title:"التعامل مع العجز في الصندوق", icon:"📉", points:[
+    "العجز يعني أن النقدية الفعلية أقل من المسجل بالنظام.",
+    "يُعاد العدّ والتحقق من العمليات قبل الجزم بوجود عجز فعلي.",
+    "يُبلَّغ المشرف فورًا بأي عجز مؤكد لتوثيقه واتخاذ الإجراء المناسب."
+  ]},
+  {id:82, title:"التعامل مع الزيادة في الصندوق", icon:"📈", points:[
+    "الزيادة تعني أن النقدية الفعلية أكثر من المسجل بالنظام.",
+    "قد تكون الزيادة نتيجة خطأ في إرجاع الباقي لعميل سابق.",
+    "لا يجوز للكاشير الاحتفاظ بالزيادة؛ يجب تسليمها وتوثيقها مثل العجز تمامًا."
+  ]},
+  {id:83, title:"تسليم العهدة وتقرير نهاية الشفت", icon:"📋", points:[
+    "تُسلَّم النقدية والتقرير النهائي للمشرف أو المسؤول المختص بنهاية كل شفت.",
+    "يوضّح التقرير إجمالي المبيعات، تفصيلها حسب طريقة الدفع، وأي فروقات مسجلة.",
+    "توقيع أو تأكيد الاستلام من الطرفين يوثّق تسليم العهدة بشكل رسمي."
+  ]},
+];
+
+const LEVEL11_QUIZ = [
+  {q:"ماذا يعني تطابق الصندوق في نهاية الشفت؟",
+   opts:["أن المبيعات كانت أعلى من المتوقع","أن النقدية الفعلية تساوي المسجل في النظام","أن كل العملاء دفعوا نقدًا","أن الكاشير أنهى شفته بسرعة"], a:1},
+  {q:"ماذا يعني العجز في الصندوق؟",
+   opts:["أن النقدية الفعلية أكثر من المسجل","أن النقدية الفعلية أقل من المسجل بالنظام","أن كل المبيعات كانت بالبطاقة","لا يوجد له تعريف محدد"], a:1},
+  {q:"ماذا يفعل الكاشير عند اكتشاف زيادة في الصندوق؟",
+   opts:["يحتفظ بها لنفسه","يتجاهلها لأنها ليست مشكلة","يسلّمها ويوثّقها مثل العجز تمامًا","يعيدها لأول عميل يقابله"], a:2},
+  {q:"كيف تُطابق المدفوعات الإلكترونية عادةً؟",
+   opts:["لا يمكن مطابقتها أبدًا","بمقارنة مبيعات النظام مع تقرير جهاز الدفع","بسؤال العملاء عن كل عملية","بتخمين المبلغ التقريبي"], a:1},
+  {q:"ما الذي يجب فعله قبل الجزم بوجود عجز فعلي؟",
+   opts:["إبلاغ المشرف مباشرة دون تحقق","إعادة العدّ والتحقق من العمليات أولًا","تجاهل الأمر إذا كان بسيطًا","خصمه من راتب موظف آخر"], a:1},
+  {q:"ما الذي يوضحه تقرير نهاية الشفت عادةً؟",
+   opts:["فقط اسم الكاشير","إجمالي المبيعات وتفصيلها وأي فروقات مسجلة","عدد ساعات عمل الكاشير فقط","قائمة بأسماء العملاء"], a:1},
+];
+
+/* ============ CONTENT: LEVEL 12 — FINAL SIMULATION ============ */
+const LEVEL12_LESSONS = [
+  {id:84, title:"نظرة عامة على المحاكاة النهائية", icon:"🏆", points:[
+    "في هذه المحاكاة، يتنقل المتدرب بين 8 عملاء افتراضيين، كل واحد يمثل موقفًا مختلفًا مما تم تدريبه عليه خلال الدورة.",
+    "الهدف ليس حفظ الإجابات، بل تطبيق المبادئ التي تعلّمتها في كل مستوى سابق على مواقف واقعية متنوعة.",
+    "بعد إنهاء العملاء الثمانية، يظهر تقييم شامل لأدائك في عدة محاور مختلفة."
+  ]},
+  {id:85, title:"فهم نظام التقييم", icon:"📊", points:[
+    "يقيس التقييم عدة محاور: سرعة التنفيذ، دقة الحساب، التعامل مع العملاء، استخدام جهاز POS، الدفع، وحل المشاكل.",
+    "النتيجة النهائية هي متوسط هذه المحاور، وتحدد مستوى الأداء العام.",
+    "الهدف من هذا المستوى هو معرفة نقاط القوة والمجالات التي تحتاج مزيدًا من التدريب، لا مجرد الحصول على درجة عالية."
+  ]},
+];
+
+const ALL_CATEGORIES = ["سرعة التنفيذ","دقة الحساب","التعامل مع العملاء","استخدام POS","الدفع","حل المشاكل"];
+
+const FINAL_SIM_SCENARIOS = [
+  {situation:"العميل الأول: اشترى 3 منتجات ودفع نقدًا بورقة فئة 100 ريال، والإجمالي 73 ريالًا.", categories:["استخدام POS","دقة الحساب"], options:[
+    {text:"تعطيه الباقي مباشرة دون التأكد من عدّه.", feedback:"لازم تتأكد من الباقي بالعدّ قبل التسليم.", good:false},
+    {text:"تحسب الباقي (27 ريالًا)، تعدّه بدقة، وتذكر المبلغ للعميل عند التسليم.", feedback:"ممتاز — دقة في الحساب والتسليم معًا.", good:true},
+    {text:"تقرّب الباقي لأقرب رقم لتوفير الوقت.", feedback:"التقريب غير مسموح ويُفقد العميل حقه بالضبط.", good:false},
+  ]},
+  {situation:"العميل الثاني: اشترى 5 منتجات وطلب الدفع ببطاقة مدى.", categories:["استخدام POS","الدفع"], options:[
+    {text:"تأخذ البطاقة وتدخل الرقم السري بنفسك لتسريع العملية.", feedback:"لا يجوز للكاشير معرفة أو إدخال الرقم السري للعميل.", good:false},
+    {text:"تختار الدفع بالبطاقة بالنظام، ويُدخل العميل رقمه بنفسه، وتنتظر تأكيد نجاح العملية.", feedback:"ممتاز — الإجراء الصحيح والآمن للدفع بالبطاقة.", good:true},
+    {text:"تسلّمه المنتجات قبل ظهور نتيجة عملية الدفع.", feedback:"يجب التأكد من نجاح العملية قبل التسليم.", good:false},
+  ]},
+  {situation:"العميل الثالث: منتج سعره 200 ريال وعليه خصم 20%.", categories:["دقة الحساب"], options:[
+    {text:"تطبّق الخصم دون التأكد أنه ينطبق على هذا المنتج فعلًا.", feedback:"يجب التأكد من انطباق الخصم قبل تطبيقه.", good:false},
+    {text:"تتأكد أن الخصم ينطبق على المنتج، وتحسب: 200 − (200×20٪) = 160 ريالًا.", feedback:"ممتاز — تحقق صحيح وحساب دقيق.", good:true},
+    {text:"تفترض أن الخصم 20 ريالًا ثابتة وليس نسبة.", feedback:"خلط بين نوعي الخصم يؤدي لحساب خاطئ.", good:false},
+  ]},
+  {situation:"العميل الرابع: يريد الدفع عبر Apple Pay بالساعة الذكية.", categories:["الدفع"], options:[
+    {text:"تطلب منه إدخال رقم بطاقته يدويًا بدل الدفع اللاتلامسي.", feedback:"غير ضروري؛ الدفع اللاتلامسي يكفي وحده.", good:false},
+    {text:"تتركه يقرّب ساعته من جهاز الدفع، وتنتظر إشعار نجاح العملية قبل التسليم.", feedback:"ممتاز — نفس مبدأ التعامل مع كل المحافظ الرقمية.", good:true},
+    {text:"ترفض Apple Pay وتطلب دفعًا نقديًا فقط.", feedback:"رفض وسيلة دفع مدعومة دون سبب مبرر.", good:false},
+  ]},
+  {situation:"العميل الخامس: عملية الدفع انرفضت من الجهاز.", categories:["الدفع","حل المشاكل"], options:[
+    {text:"تخبره أمام الجميع إنه ما معه رصيد كافٍ.", feedback:"لا يجوز الجزم بالسبب أو إحراج العميل.", good:false},
+    {text:"تطلب منه بلباقة تجربة وسيلة دفع أخرى دون افتراض السبب.", feedback:"ممتاز — تعامل مهني مع رفض الدفع.", good:true},
+    {text:"تلغي الفاتورة كاملة وتطلب منه العودة لاحقًا.", feedback:"ردة فعل مبالغ فيها قبل تجربة حل بديل.", good:false},
+  ]},
+  {situation:"العميل السادس: يطلب حذف منتج من فاتورته قبل إنهائها.", categories:["استخدام POS","حل المشاكل"], options:[
+    {text:"تخبره أنه لا يمكن حذفه لأنه انمسح بالفعل.", feedback:"غير صحيح؛ يمكن حذف أي منتج قبل إنهاء الفاتورة.", good:false},
+    {text:"تحذف المنتج من الفاتورة مباشرة دون تعقيد.", feedback:"ممتاز — إجراء بسيط وسريع.", good:true},
+    {text:"تطلب منه دفع ثمنه أولًا ثم استرجاعه لاحقًا.", feedback:"إجراء غير ضروري ويربك العميل.", good:false},
+  ]},
+  {situation:"العميل السابع: يشتكي أن السعر بالفاتورة يختلف عن سعر الرف.", categories:["التعامل مع العملاء","حل المشاكل"], options:[
+    {text:"تخبره أن النظام لا يخطئ أبدًا دون تحقق.", feedback:"رد دفاعي دون تحقق فعلي من السعر.", good:false},
+    {text:"تعتذر وتتحقق من السعر الصحيح، وتبلّغ المشرف لتصحيحه إذا وُجد خطأ فعلي.", feedback:"ممتاز — تحقق شفاف يحل الموقف بثقة.", good:true},
+    {text:"تتجاهل شكواه وتنتقل للعميل التالي.", feedback:"تجاهل شكوى العميل يضر بثقته بالمتجر.", good:false},
+  ]},
+  {situation:"العميل الثامن: يريد استبدال منتج اشتراه بمنتج آخر.", categories:["التعامل مع العملاء","حل المشاكل"], options:[
+    {text:"ترفض الاستبدال مباشرة دون مراجعة سياسة المتجر.", feedback:"يجب مراجعة سياسة الاستبدال أولًا.", good:false},
+    {text:"تتحقق من سياسة الاستبدال وتوفر المنتج البديل، وتسجّل العملية كاستبدال منفصل.", feedback:"ممتاز — الإجراء الصحيح والكامل للاستبدال.", good:true},
+    {text:"تطلب منه دفع سعر المنتج الجديد بالكامل دون حساب الفرق.", feedback:"يجب حساب الفرق فقط، لا السعر الكامل.", good:false},
+  ]},
+];
+
+/* ============ LEVELS REGISTRY ============ */
+const LEVELS_CONTENT = {
+  1: {lessons: LEVEL1_LESSONS, quiz: LEVEL1_QUIZ},
+  2: {lessons: LEVEL2_LESSONS, quiz: LEVEL2_QUIZ},
+  3: {lessons: LEVEL3_LESSONS, quiz: LEVEL3_QUIZ},
+  4: {lessons: LEVEL4_LESSONS, quiz: LEVEL4_QUIZ},
+  5: {lessons: LEVEL5_LESSONS, quiz: LEVEL5_QUIZ},
+  6: {lessons: LEVEL6_LESSONS, quiz: LEVEL6_QUIZ},
+  7: {lessons: LEVEL7_LESSONS, quiz: LEVEL7_QUIZ},
+  8: {lessons: LEVEL8_LESSONS, quiz: LEVEL8_QUIZ},
+  9: {lessons: LEVEL9_LESSONS, quiz: LEVEL9_QUIZ},
+  10: {lessons: LEVEL10_LESSONS, quiz: LEVEL10_QUIZ},
+  11: {lessons: LEVEL11_LESSONS, quiz: LEVEL11_QUIZ},
+  12: {lessons: LEVEL12_LESSONS, quiz: []},
+};
+
+const ALL_LEVELS = [
+  {n:1, title:"أساسيات مهنة الكاشير", desc:"8 دروس + اختبار", hasContent:true},
+  {n:2, title:"جهاز الكاشير POS", desc:"10 دروس + محاكي POS + اختبار", hasContent:true},
+  {n:3, title:"المنتجات والباركود", desc:"8 دروس + اختبار", hasContent:true},
+  {n:4, title:"طرق الدفع في السعودية", desc:"8 دروس + اختبار", hasContent:true},
+  {n:5, title:"الحساب والنقد", desc:"6 دروس + محاكي حساب الباقي + اختبار", hasContent:true},
+  {n:6, title:"الفواتير", desc:"8 دروس + اختبار", hasContent:true},
+  {n:7, title:"الخصومات والعروض", desc:"7 دروس + تمرين حساب الخصم + اختبار", hasContent:true},
+  {n:8, title:"المرتجعات والاستبدال", desc:"7 دروس + اختبار", hasContent:true},
+  {n:9, title:"التعامل مع العملاء", desc:"6 دروس + محاكي سيناريوهات + اختبار", hasContent:true},
+  {n:10, title:"المواقف الطارئة والأخطاء", desc:"8 دروس + اختبار", hasContent:true},
+  {n:11, title:"إغلاق الصندوق", desc:"7 دروس + تمرين مطابقة الصندوق + اختبار", hasContent:true},
+  {n:12, title:"المحاكاة النهائية", desc:"2 درس + محاكاة شاملة مع 8 عملاء + شهادة", hasContent:true},
+];
+
+/* VAT in Saudi Arabia is 15%, and shelf/menu prices are normally VAT-inclusive,
+   so the receipt extracts the VAT portion from the final amount rather than adding it on top. */
+const VAT_RATE = 0.15;
+function extractVat(grossAmount){ return grossAmount - (grossAmount / (1 + VAT_RATE)); }
+
+/* sample product catalog for the POS simulator */
+const POS_PRODUCTS = [
+  {barcode:"1001", name:"عباية سوداء كلاسيك", price:180.00},
+  {barcode:"1002", name:"عباية مطرزة فاخرة", price:350.00},
+  {barcode:"1003", name:"شيلة حرير فاخرة", price:45.00},
+  {barcode:"1004", name:"حقيبة يد نسائية", price:220.00},
+  {barcode:"1005", name:"عطر نسائي فرنسي", price:95.00},
+  {barcode:"1006", name:"طقم إكسسوارات (خواتم وأساور)", price:60.00},
+  {barcode:"1007", name:"قفازات نسائية", price:25.00},
+  {barcode:"1008", name:"برقع شيفون", price:35.00},
+];
+
+/* ============ STATE ============ */
+const STORE_KEY = "ksrAcademyState_v1";
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      if(parsed.quiz1 && !parsed.quizzes){
+        parsed.quizzes = {1: parsed.quiz1};
+        delete parsed.quiz1;
+      }
+      parsed.quizzes = parsed.quizzes || {};
+      parsed.completed = parsed.completed || [];
+      parsed.xp = parsed.xp || 0;
+      return parsed;
+    }
+  }catch(e){}
+  return {name:null, completed:[], quizzes:{}, xp:0};
+}
+function saveState(s){
+  // never let a storage failure (private browsing, file:// restrictions, disabled storage, etc.)
+  // break the rest of the app — saving is best-effort, the UI must still update either way.
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify(s));
+  }catch(e){
+    console.warn("تعذّر حفظ التقدم محليًا:", e);
+  }
+}
+let state = loadState();
+
+function levelLabel(xp){
+  if(xp>=1500) return "جاهز للعمل";
+  if(xp>=1000) return "كاشير محترف";
+  if(xp>=600) return "كاشير متقدم";
+  if(xp>=300) return "كاشير";
+  if(xp>=100) return "متدرب";
+  return "مبتدئ";
+}
+
+/* ---- content helpers (level-agnostic, so levels 3-12 can plug in later) ---- */
+function lessonsForLevel(n){ return (LEVELS_CONTENT[n] && LEVELS_CONTENT[n].lessons) || []; }
+function totalLessonsForLevel(n){ return lessonsForLevel(n).length; }
+function completedCountForLevel(n){ return lessonsForLevel(n).filter(l=>state.completed.includes(l.id)).length; }
+function totalLessonsBuilt(){ return Object.values(LEVELS_CONTENT).reduce((s,d)=>s+d.lessons.length,0); }
+function overallProgressPct(){ return Math.round((state.completed.length/totalLessonsBuilt())*100); }
+function quizzesPassedCount(){ return Object.values(state.quizzes||{}).filter(q=>q.passed).length; }
+function totalQuizzesBuilt(){ return Object.keys(LEVELS_CONTENT).length; }
+function isLevelUnlocked(n){
+  if(n===1) return true;
+  const prevQuiz = state.quizzes && state.quizzes[n-1];
+  return !!(prevQuiz && prevQuiz.passed);
+}
+function findLessonById(id){
+  for(const lvl of Object.keys(LEVELS_CONTENT)){
+    const l = LEVELS_CONTENT[lvl].lessons.find(x=>x.id===id);
+    if(l) return {lesson:l, level:parseInt(lvl)};
+  }
+  return null;
+}
+
+/* ============ ROUTER ============ */
+function navigate(hash){
+  const normalized = "#" + hash;
+  if(location.hash === normalized){
+    // hash isn't actually changing, so the browser's hashchange event never fires —
+    // re-render manually or the click (e.g. "إعادة المحاولة" on a result screen) would do nothing
+    render();
+  }else{
+    location.hash = hash;
+  }
+}
+window.addEventListener("hashchange", render);
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-nav]");
+  if(b){ navigate(b.dataset.nav); }
+});
+document.addEventListener("click", e=>{
+  const simEl = e.target.closest("[data-sim]");
+  if(!simEl) return;
+  const [action, key] = simEl.dataset.sim.split(":");
+  if(action==="scan") scanProduct(key);
+  else if(action==="qtyinc") changeQty(key, 1);
+  else if(action==="qtydec") changeQty(key, -1);
+  else if(action==="remove") removeItem(key);
+  else if(action==="discount-apply") applyDiscountFromInputs();
+  else if(action==="finalize") finalizeInvoice();
+  else if(action==="cancel") cancelInvoice();
+  else if(action==="cancel-confirm") cancelInvoiceConfirm();
+  else if(action==="cancel-abort") cancelInvoiceAbort();
+  else if(action==="new-invoice") startNewInvoice();
+  else if(action==="print") window.print();
+});
+document.addEventListener("click", e=>{
+  const cashEl = e.target.closest("[data-cash]");
+  if(!cashEl) return;
+  const [action, key] = cashEl.dataset.cash.split(":");
+  if(action==="diff") cashSetDifficulty(key);
+  else if(action==="add") cashAddDenom(key);
+  else if(action==="remove") cashRemoveDenom(key);
+  else if(action==="submit") cashSubmit();
+  else if(action==="next") cashNext();
+  else if(action==="confirm-payment") cashConfirmPayment();
+  else if(action==="reset-payment") cashResetPayment();
+});
+document.addEventListener("click", e=>{
+  const dEl = e.target.closest("[data-discount]");
+  if(!dEl) return;
+  if(dEl.dataset.discount==="submit") discountSubmit();
+  else if(dEl.dataset.discount==="next") discountNext();
+});
+document.addEventListener("click", e=>{
+  const cEl = e.target.closest("[data-customer]");
+  if(!cEl) return;
+  const [action, key] = cEl.dataset.customer.split(":");
+  if(action==="pick") customerPick(key);
+  else if(action==="next") customerNext();
+  else if(action==="restart") customerRestart();
+});
+document.addEventListener("click", e=>{
+  const clEl = e.target.closest("[data-closing]");
+  if(!clEl) return;
+  const val = clEl.dataset.closing;
+  if(val==="submit") closingSubmit();
+  else if(val==="next") closingNext();
+  else if(val.startsWith("network:")) closingChooseNetwork(val.split(":")[1]);
+});
+document.addEventListener("click", e=>{
+  const fEl = e.target.closest("[data-finalsim]");
+  if(!fEl) return;
+  const [action, key] = fEl.dataset.finalsim.split(":");
+  if(action==="pick") finalSimPick(key);
+  else if(action==="next") finalSimNext();
+  else if(action==="restart") finalSimRestart();
+});
+document.addEventListener("click", e=>{
+  const sEl = e.target.closest("[data-story]");
+  if(!sEl) return;
+  const [action, key] = sEl.dataset.story.split(":");
+  if(action==="next") storyNext();
+  else if(action==="add") storyAdd(key);
+  else if(action==="remove") storyRemove(key);
+  else if(action==="restart") storyRestart();
+});
+document.addEventListener("click", e=>{
+  const pEl = e.target.closest("[data-payment]");
+  if(!pEl) return;
+  const [action, key] = pEl.dataset.payment.split(":");
+  if(action==="method") paymentChooseMethod(key);
+  else if(action==="pick") paymentPick(key);
+  else if(action==="next") paymentNext();
+});
+document.addEventListener("click", e=>{
+  const rEl = e.target.closest("[data-returns]");
+  if(!rEl) return;
+  const [action, key] = rEl.dataset.returns.split(":");
+  if(action==="pick") returnsPick(key);
+  else if(action==="next") returnsNext();
+  else if(action==="restart") returnsRestart();
+});
+document.addEventListener("click", e=>{
+  const tEl = e.target.closest("[data-terminal]");
+  if(!tEl) return;
+  const val = tEl.dataset.terminal;
+  if(val==="tap") terminalTap();
+  else if(val==="cancel") terminalCancel();
+  else if(val==="enter") terminalEnter();
+  else if(val==="reset") terminalReset();
+  else if(val==="confirm-amount") terminalConfirmAmount();
+  else if(val==="print-receipt") terminalPrintReceipt();
+  else if(val==="home") terminalGoHome();
+  else if(val.startsWith("key:")) terminalKeyPress(val.split(":")[1]);
+  else if(val.startsWith("mcq:")) terminalMcqPick(val.split(":")[1]);
+  else if(val.startsWith("app:")) terminalOpenApp(val.slice("app:".length));
+  else if(val.startsWith("refund:")) terminalDoRefund(val.slice("refund:".length));
+});
+
+function currentRoute(){
+  const h = location.hash.replace("#","") || "home";
+  const [route, param] = h.split("/");
+  return {route, param};
+}
+
+/* ============ RENDER HELPERS ============ */
+function setActiveNav(route){
+  document.querySelectorAll("[data-nav]").forEach(b=>{
+    b.classList.toggle("active", b.dataset.nav===route);
+  });
+}
+
+function app(){ return document.getElementById("app"); }
+
+function mount(html){
+  const el = app();
+  el.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+  requestAnimationFrame(()=>{
+    el.querySelectorAll(".stagger").forEach((node,i)=>{
+      node.style.setProperty("--d", (i*40)+"ms");
+    });
+    el.querySelectorAll("[data-countup]").forEach(node=>{
+      countUp(node, parseInt(node.dataset.countup,10)||0, node.dataset.suffix||"");
+    });
+  });
+}
+
+function countUp(el, to, suffix){
+  const start = performance.now();
+  const duration = 500;
+  function step(now){
+    const p = Math.min((now-start)/duration, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.round(to*eased) + suffix;
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function render(){
+  const {route, param} = currentRoute();
+  setActiveNav(route);
+  if(route==="home") return renderHome();
+  if(route==="course") return renderCourse();
+  if(route==="lesson") return renderLesson(parseInt(param));
+  if(route==="quiz") return renderQuiz(parseInt(param) || 1);
+  if(route==="profile") return renderProfile();
+  if(route==="simulator") return renderSimulator();
+  if(route==="finalsim") return renderFinalSim();
+  if(route==="learnmore") return renderLearnMore();
+  if(route==="tests") return renderComingSoon("الاختبارات", [
+    "متاح الآن: اختبار كل مستوى من صفحة الدورة مباشرة بعد دروسه",
+    "قادم: اختبار سريع عام يجمع أسئلة عشوائية من كل المستويات",
+  ]);
+  renderHome();
+}
+
+/* ---------- HOME ---------- */
+function renderHome(){
+  const hasName = !!state.name;
+  mount(`
+    <div class="hero stagger">
+      <h1>تعلم مهنة الكاشير من الصفر حتى الاحتراف</h1>
+      <p class="sub">دورة عملية تفاعلية تحاكي بيئة العمل الحقيقية في المتاجر السعودية.</p>
+      ${!hasName ? `
+        <div class="login-box">
+          <input id="nameInput" placeholder="اكتب اسمك للبدء">
+          <button class="btn btn-primary" id="startBtn">ابدأ الآن</button>
+        </div>
+      ` : `
+        <div class="cta-row">
+          <button class="btn btn-primary" data-nav="course">متابعة التدريب</button>
+          <button class="btn btn-outline" data-nav="simulator">محاكي الكاشير</button>
+          <button class="btn btn-outline" data-nav="tests">الاختبارات</button>
+        </div>
+      `}
+    </div>
+
+    <div class="divider"></div>
+
+    ${hasName ? `
+      <div class="receipt-wrap stagger">
+        <div class="receipt">
+          <div class="section-head"><h2>مرحبًا، ${escapeHtml(state.name)}</h2></div>
+          <div class="progress-track"><div class="progress-fill" style="width:${overallProgressPct()}%"></div></div>
+          <p class="muted" style="margin-top:8px;">تقدمك في الدورة: <span data-countup="${overallProgressPct()}" data-suffix="%">0%</span></p>
+          <div class="stat-grid" style="margin-top:18px;">
+            <div class="stat"><div class="num">${levelLabel(state.xp)}</div><div class="lbl">المستوى الحالي</div></div>
+            <div class="stat"><div class="num" data-countup="${state.xp}">0</div><div class="lbl">النقاط XP</div></div>
+            <div class="stat"><div class="num"><span data-countup="${state.completed.length}">0</span>/${totalLessonsBuilt()}</div><div class="lbl">الدروس المكتملة</div></div>
+            <div class="stat"><div class="num">${quizzesPassedCount()}/${totalQuizzesBuilt()}</div><div class="lbl">الاختبارات الناجحة</div></div>
+          </div>
+        </div>
+      </div>
+    ` : `
+      <div class="empty-name stagger">أدخل اسمك بالأعلى لبدء تتبع تقدمك ونقاطك.</div>
+    `}
+
+    <div class="stagger">
+      <div class="section-head" style="margin-top:20px;"><h2>خريطة الأكاديمية</h2><span class="count">12 مستوى</span></div>
+      <p class="muted">الدورة كاملة بمستوياتها الـ12 — تُفتح تباعًا كل ما اجتزت اختبار المستوى السابق.</p>
+    </div>
+  `);
+
+  const startBtn = document.getElementById("startBtn");
+  if(startBtn){
+    startBtn.addEventListener("click", ()=>{
+      const val = document.getElementById("nameInput").value.trim();
+      if(!val) return;
+      state.name = val;
+      saveState(state);
+      render();
+    });
+  }
+}
+
+/* ---------- COURSE ---------- */
+function levelBlockHTML(lv){
+  const lessons = lessonsForLevel(lv.n);
+  const doneCount = completedCountForLevel(lv.n);
+  const lessonsDone = doneCount===lessons.length;
+  const isFinalSim = lv.n===12;
+  const quizState = state.quizzes[lv.n];
+  const quizPassed = !!(quizState && quizState.passed);
+  let tag = "ابدأ", tagBg = "var(--accent-soft)", tagColor = "var(--accent)";
+  if(quizPassed){ tag = "مكتمل"; tagBg = "var(--success-soft)"; tagColor = "var(--success)"; }
+  else if(lessonsDone){ tag = isFinalSim ? "ابدأ المحاكاة" : "أنهِ الاختبار"; }
+  else if(doneCount>0){ tag = "قيد التقدم"; }
+  // once all lessons are done, clicking the row should jump straight to the quiz/final-sim — not restart lesson 1
+  const finalTarget = isFinalSim ? "finalsim" : `quiz/${lv.n}`;
+  const headerTarget = lessonsDone ? finalTarget : `lesson/${lessons[0].id}`;
+  return `
+    <div>
+      <div class="level open" data-nav="${headerTarget}">
+        <div class="idx">${lv.n}</div>
+        <div>
+          <div class="title">${lv.title}</div>
+          <div class="desc">${lv.desc}</div>
+        </div>
+        <div class="tag" style="background:${tagBg};color:${tagColor};">${tag}</div>
+      </div>
+      <div class="lesson-list">
+        ${lessons.map(l=>`
+          <div class="lesson-row ${state.completed.includes(l.id)?'done':''}">
+            <div class="check">${state.completed.includes(l.id)?'✓':''}</div>
+            <div class="lesson-link" data-nav="lesson/${l.id}">${l.title}</div>
+          </div>
+        `).join("")}
+        <div class="lesson-row">
+          <div class="check">${quizPassed ? '✓' : ''}</div>
+          <div class="lesson-link" data-nav="${finalTarget}">${isFinalSim ? `🏆 المحاكاة النهائية ${quizState ? `(نتيجتك: ${quizState.score}%)` : ""}` : `اختبار المستوى ${lv.n} ${quizState ? `(نتيجتك: ${quizState.score}/${quizState.total})` : ""}`}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+function lockedLevelHTML(lv, reason){
+  return `
+    <div class="level locked">
+      <div class="idx">${lv.n}</div>
+      <div>
+        <div class="title">${lv.title}</div>
+        <div class="desc">${lv.desc}</div>
+      </div>
+      <div class="tag" style="background:var(--line);color:var(--ink-soft);">${reason}</div>
+    </div>
+  `;
+}
+function renderCourse(){
+  const rows = ALL_LEVELS.map(lv=>{
+    if(!lv.hasContent) return lockedLevelHTML(lv, "قريبًا");
+    if(!isLevelUnlocked(lv.n)) return lockedLevelHTML(lv, "أكمل المستوى السابق");
+    return levelBlockHTML(lv);
+  }).join("");
+
+  mount(`
+    <div class="section-head"><h2>الدورة الأساسية</h2><span class="count">${state.completed.length}/${totalLessonsBuilt()} درس مكتمل</span></div>
+    <div class="receipt-wrap stagger"><div class="receipt">${rows}</div></div>
+  `);
+}
+
+/* ---------- LESSON ---------- */
+function renderLesson(id){
+  const found = findLessonById(id);
+  if(!found) return navigate("course");
+  const {lesson, level} = found;
+  const levelLessons = lessonsForLevel(level);
+  const idx = levelLessons.findIndex(l=>l.id===id);
+  const done = state.completed.includes(id);
+  const prev = levelLessons[idx-1];
+  const next = levelLessons[idx+1];
+
+  const dots = levelLessons.map((l,i)=>{
+    const cls = i===idx ? "current" : (state.completed.includes(l.id) ? "done" : "");
+    return `<span class="dot ${cls}"></span>`;
+  }).join("");
+
+  mount(`
+    <button class="btn btn-outline" data-nav="course" style="margin-bottom:16px;">→ رجوع للدورة</button>
+    <div class="receipt-wrap stagger">
+      <div class="receipt lesson-detail">
+        <p class="muted">المستوى ${level} · الدرس ${idx+1} من ${levelLessons.length}</p>
+        <div class="lesson-progress-dots">${dots}</div>
+        <div class="lesson-title-row">
+          <div class="lesson-icon-badge">${lesson.icon || "📘"}</div>
+          <h2>${lesson.title}</h2>
+        </div>
+        <ul>
+          ${lesson.points.map((p,i)=>`
+            <li><span class="lesson-point-num">${i+1}</span><span class="lesson-point-text">${p}</span></li>
+          `).join("")}
+        </ul>
+        ${done ? `
+          <div class="lesson-done-banner">✓ تم إنهاء هذا الدرس</div>
+        ` : `
+          <button class="btn btn-primary btn-block" id="doneBtn">تم الانتهاء من الدرس (+40 XP)</button>
+        `}
+        <div class="lesson-nav">
+          <button class="btn btn-outline" ${prev? `data-nav="lesson/${prev.id}"`:"disabled"}>الدرس السابق</button>
+          <button class="btn btn-outline" ${next? `data-nav="lesson/${next.id}"`: `data-nav="quiz/${level}"`}>${next? "الدرس التالي" : "الذهاب للاختبار"}</button>
+        </div>
+      </div>
+    </div>
+  `);
+
+  const doneBtn = document.getElementById("doneBtn");
+  if(doneBtn){
+    doneBtn.addEventListener("click", ()=>{
+      state.completed.push(id);
+      state.xp += 40;
+      saveState(state);
+      renderLesson(id);
+    });
+  }
+}
+
+/* ---------- QUIZ ---------- */
+function renderQuiz(levelN){
+  const quiz = (LEVELS_CONTENT[levelN] && LEVELS_CONTENT[levelN].quiz) || [];
+  const ARABIC_LETTERS = ["أ","ب","ج","د","هـ","و"];
+  mount(`
+    <button class="btn btn-outline" data-nav="course" style="margin-bottom:16px;">→ رجوع للدورة</button>
+    <div class="receipt-wrap stagger">
+      <div class="receipt">
+        <h2 style="margin-bottom:16px;">${levelN===12 ? "الاختبار النهائي الشامل" : `اختبار المستوى ${levelN}`}</h2>
+        <div id="quizError" style="display:none;color:var(--danger);font-weight:600;margin-bottom:14px;"></div>
+        <div id="quizForm">
+          ${quiz.map((q,i)=>`
+            <div class="q-block" id="qBlock${i}">
+              <div class="q-header">
+                <span class="q-num">${i+1}</span>
+                <span class="q-text">${q.q}</span>
+              </div>
+              ${q.opts.map((o,j)=>`
+                <label class="opt">
+                  <input type="radio" name="q${i}" value="${j}">
+                  <span class="opt-letter">${ARABIC_LETTERS[j] || j+1}</span>
+                  ${o}
+                </label>
+              `).join("")}
+            </div>
+          `).join("")}
+          <button type="button" id="quizSubmitBtn" class="btn btn-primary btn-block">تسليم الاختبار</button>
+        </div>
+      </div>
+    </div>
+  `);
+
+  document.getElementById("quizSubmitBtn").addEventListener("click", ()=>{
+    const errorBox = document.getElementById("quizError");
+    try{
+      // find the first unanswered question and stop with a clear message instead of relying on
+      // native "required" validation, which can silently jump focus off-screen with no visible cue
+      let firstUnanswered = -1;
+      for(let i=0;i<quiz.length;i++){
+        if(!document.querySelector(`input[name="q${i}"]:checked`)){ firstUnanswered = i; break; }
+      }
+      if(firstUnanswered !== -1){
+        errorBox.textContent = `لم تُجب على السؤال رقم ${firstUnanswered+1} — يرجى الإجابة عليه قبل التسليم`;
+        errorBox.style.display = "block";
+        const block = document.getElementById(`qBlock${firstUnanswered}`);
+        if(block && typeof block.scrollIntoView === "function"){
+          block.scrollIntoView({behavior:"smooth", block:"center"});
+        }
+        if(block){
+          block.style.outline = "2px solid var(--danger)";
+          block.style.borderRadius = "8px";
+          setTimeout(()=>{ block.style.outline = ""; }, 1800);
+        }
+        return;
+      }
+      errorBox.style.display = "none";
+
+      let score = 0;
+      quiz.forEach((q,i)=>{
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if(sel && parseInt(sel.value)===q.a) score++;
+      });
+      const total = quiz.length;
+      const threshold = QUIZ_PASS_THRESHOLD[levelN] || 0.66;
+      const passed = score/total >= threshold;
+      state.quizzes = state.quizzes || {};
+      const already = state.quizzes[levelN] && state.quizzes[levelN].passed;
+      state.quizzes[levelN] = {score, total, passed};
+      if(passed && !already) state.xp += 150;
+      if(levelN===12 && passed && !state.certificateNumber){
+        state.certificateNumber = "CERT-" + Date.now().toString().slice(-6);
+        state.certificateDate = formatArabicDate(new Date());
+      }
+      saveState(state);
+      renderQuizResult(score, total, passed, levelN);
+    }catch(err){
+      // surface any unexpected failure visibly instead of the button silently doing nothing
+      errorBox.style.display = "block";
+      errorBox.textContent = "حدث خطأ تقني غير متوقع: " + (err && err.message ? err.message : String(err));
+      console.error("Quiz submit error:", err);
+    }
+  });
+}
+
+function renderQuizResult(score, total, passed, levelN){
+  const isFinal = levelN===12;
+  mount(`
+    <div class="receipt-wrap stagger">
+      <div class="receipt quiz-result">
+        <p class="muted">نتيجتك</p>
+        <div class="score"><span data-countup="${score}">0</span>/${total}</div>
+        <p class="${passed?'badge-pass':'badge-fail'}">${passed
+          ? (isFinal ? "ناجح — استحقيت شهادة إتمام الدورة 🎓" : "ناجح — تم منحك 150 XP")
+          : "لم تجتز الحد الأدنى، حاول مرة أخرى"}</p>
+        <div class="cta-row" style="margin-top:18px;">
+          <button class="btn btn-outline" data-nav="quiz/${levelN}">إعادة المحاولة</button>
+          <button class="btn btn-primary" data-nav="course">رجوع للدورة</button>
+          ${isFinal && passed ? `<button class="btn btn-primary" data-nav="certificate">🎓 عرض الشهادة</button>` : ""}
+        </div>
+      </div>
+    </div>
+  `);
+}
+
+/* ---------- PROFILE ---------- */
+function renderProfile(){
+  if(!state.name){
+    mount(`<div class="empty-name stagger">سجّل اسمك من الصفحة الرئيسية أولًا.</div>`);
+    return;
+  }
+  mount(`
+    <div class="section-head"><h2>حسابي</h2></div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt">
+        <h2>${escapeHtml(state.name)}</h2>
+        <p class="muted">${levelLabel(state.xp)} · <span data-countup="${state.xp}">0</span> XP</p>
+        <div class="progress-track"><div class="progress-fill" style="width:${overallProgressPct()}%"></div></div>
+        <p class="muted" style="margin-top:8px;"><span data-countup="${overallProgressPct()}" data-suffix="%">0%</span> من الدورة ككل</p>
+        <div class="stat-grid" style="margin-top:18px;">
+          <div class="stat"><div class="num" data-countup="${state.completed.length}">0</div><div class="lbl">دروس مكتملة</div></div>
+          <div class="stat"><div class="num">${quizzesPassedCount()}/${totalQuizzesBuilt()}</div><div class="lbl">اختبارات ناجحة</div></div>
+        </div>
+        <div class="cta-row" style="margin-top:22px;">
+          <button class="btn btn-outline" id="resetBtn">تصفير كل البيانات</button>
+        </div>
+        <div id="resetConfirmBox" style="display:none;margin-top:14px;">
+          <p style="color:var(--danger);font-weight:600;margin-bottom:10px;">⚠️ سيُحذف كل تقدمك (الدروس، الاختبارات، النقاط) نهائيًا. هل أنت متأكد؟</p>
+          <div class="cta-row">
+            <button class="btn btn-outline" id="cancelResetBtn">إلغاء</button>
+            <button class="btn btn-primary" id="confirmResetBtn" style="background:var(--danger);">نعم، احذف كل شيء</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `);
+  document.getElementById("resetBtn").addEventListener("click", ()=>{
+    document.getElementById("resetBtn").style.display = "none";
+    document.getElementById("resetConfirmBox").style.display = "block";
+  });
+  document.getElementById("cancelResetBtn").addEventListener("click", ()=>{
+    document.getElementById("resetConfirmBox").style.display = "none";
+    document.getElementById("resetBtn").style.display = "";
+  });
+  document.getElementById("confirmResetBtn").addEventListener("click", ()=>{
+    state = {name:null, completed:[], quizzes:{}, xp:0};
+    saveState(state);
+    navigate("home");
+  });
+}
+
+/* ---------- POS SIMULATOR ---------- */
+let simState = null;
+function freshSimState(){ return {cart:[], discountType:"percent", discountValue:0, invoice:null, confirmingCancel:false, paymentMethod:"نقد", cashReceived:null}; }
+
+function productListHTML(list){
+  if(list.length===0) return `<p class="muted" style="padding:10px 4px;">لا توجد منتجات مطابقة.</p>`;
+  return list.map(p=>`
+    <div class="sim-product">
+      <div class="pname">${p.name}</div>
+      <div class="pprice">${p.price.toFixed(2)} ر.س</div>
+      <button type="button" class="sim-scan-btn" data-sim="scan:${p.barcode}">مسح</button>
+    </div>
+  `).join("");
+}
+function filterProducts(q){
+  const query = q.trim();
+  const filtered = query ? POS_PRODUCTS.filter(p=>p.name.includes(query)) : POS_PRODUCTS;
+  document.getElementById("simProductList").innerHTML = productListHTML(filtered);
+}
+
+function cartAreaHTML(){
+  if(simState.invoice) return receiptHTML(simState.invoice);
+  const cart = simState.cart;
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discountAmt = simState.discountType==="percent" ? subtotal*simState.discountValue/100 : simState.discountValue;
+  const total = Math.max(subtotal-discountAmt,0);
+  const vatAmt = extractVat(total);
+  return `
+    <div>
+      ${cart.length===0 ? `<p class="muted" style="padding:14px 4px;">السلة فارغة — امسح منتجًا من القائمة.</p>` : cart.map(i=>`
+        <div class="sim-cart-row">
+          <div class="cname">${i.name}</div>
+          <div class="qty-ctrl">
+            <button type="button" class="qty-btn" data-sim="qtydec:${i.barcode}">−</button>
+            <span>${i.qty}</span>
+            <button type="button" class="qty-btn" data-sim="qtyinc:${i.barcode}">+</button>
+          </div>
+          <div style="min-width:60px;text-align:left;">${(i.price*i.qty).toFixed(2)}</div>
+          <button type="button" class="remove-btn" data-sim="remove:${i.barcode}">✕</button>
+        </div>
+      `).join("")}
+      <div class="discount-row">
+        <select class="field" id="discType">
+          <option value="percent" ${simState.discountType==="percent"?"selected":""}>خصم %</option>
+          <option value="fixed" ${simState.discountType==="fixed"?"selected":""}>خصم ثابت (ر.س)</option>
+        </select>
+        <input class="field" id="discValue" type="number" min="0" step="0.5" value="${simState.discountValue||""}" placeholder="القيمة">
+        <button type="button" class="btn btn-outline" data-sim="discount-apply">تطبيق الخصم</button>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="sim-totals-row muted-row"><span>الإجمالي الفرعي (شامل الضريبة)</span><span>${subtotal.toFixed(2)} ر.س</span></div>
+        <div class="sim-totals-row row-discount"><span>الخصم</span><span>-${discountAmt.toFixed(2)} ر.س</span></div>
+        <div class="sim-totals-row muted-row"><span>المبلغ قبل الضريبة</span><span>${(total-vatAmt).toFixed(2)} ر.س</span></div>
+        <div class="sim-totals-row row-vat"><span>ضريبة القيمة المضافة (15%)</span><span>${vatAmt.toFixed(2)} ر.س</span></div>
+        <div class="sim-totals-row total"><span>الإجمالي شامل الضريبة</span><span>${total.toFixed(2)} ر.س</span></div>
+      </div>
+      <div class="discount-row" style="margin-top:14px;">
+        <select class="field" id="payMethod" onchange="setPaymentMethod(this.value)">
+          <option value="نقد" ${simState.paymentMethod==="نقد" ? "selected" : ""}>طريقة الدفع: نقد</option>
+          <option value="شبكة" ${simState.paymentMethod==="شبكة" ? "selected" : ""}>طريقة الدفع: شبكة</option>
+        </select>
+      </div>
+      ${simState.paymentMethod==="نقد" ? `
+        <div class="discount-row">
+          <input class="field" id="cashReceivedInput" type="number" step="0.01" min="0" placeholder="المبلغ الذي دفعه العميل (إلزامي)" value="${simState.cashReceived!==null ? simState.cashReceived : ""}" oninput="updateCashLive(this.value)">
+        </div>
+        <div id="changeDisplay">${simState.cashReceived!==null ? (
+          simState.cashReceived>=total
+            ? `<div class="sim-totals-row row-vat"><span>الباقي المستحق للعميل</span><span>${(simState.cashReceived-total).toFixed(2)} ر.س</span></div>`
+            : `<p style="color:var(--danger);font-size:.8rem;margin-top:4px;">المبلغ المُدخل أقل من الإجمالي المطلوب.</p>`
+        ) : ""}</div>
+      ` : ""}
+      <div id="cashRequiredError" style="display:none;color:var(--danger);font-weight:600;font-size:.85rem;margin-top:8px;"></div>
+      <div class="cta-row" style="margin-top:16px;justify-content:flex-start;">
+        ${simState.confirmingCancel ? `
+          <div style="width:100%;">
+            <p style="color:var(--danger);font-weight:600;margin:0 0 10px;">⚠️ سيتم إفراغ السلة بالكامل. متأكد؟</p>
+            <div class="cta-row" style="justify-content:flex-start;">
+              <button type="button" class="btn btn-outline" data-sim="cancel-abort">تراجع</button>
+              <button type="button" class="btn btn-primary" data-sim="cancel-confirm" style="background:var(--danger);">نعم، أفرغ السلة</button>
+            </div>
+          </div>
+        ` : `
+          <button type="button" class="btn btn-primary" data-sim="finalize" ${cart.length===0?"disabled":""}>إنهاء الفاتورة</button>
+          <button type="button" class="btn btn-outline" data-sim="cancel" ${cart.length===0?"disabled":""}>إلغاء العملية</button>
+        `}
+      </div>
+    </div>
+  `;
+}
+
+/* generates a decorative, QR-code-LOOKING pattern (correct finder-pattern corners, pseudo-random
+   data modules seeded from the invoice number) — visual only, not a real scannable QR code */
+function generateQrLikeSVG(seedStr){
+  const size = 21;
+  const cell = 4;
+  const dim = size*cell;
+  let seed = 0;
+  for(let i=0;i<seedStr.length;i++) seed = (seed*31 + seedStr.charCodeAt(i)) % 100000;
+  function rnd(){ seed = (seed*9301+49297) % 233280; return seed/233280; }
+  const cells = new Array(size*size).fill(false);
+  for(let y=0;y<size;y++){
+    for(let x=0;x<size;x++){
+      cells[y*size+x] = rnd()<0.5;
+    }
+  }
+  function drawFinder(ox,oy){
+    for(let y=0;y<7;y++){
+      for(let x=0;x<7;x++){
+        const isBorder = x===0||x===6||y===0||y===6;
+        const isInner = x>=2&&x<=4&&y>=2&&y<=4;
+        cells[(oy+y)*size+(ox+x)] = isBorder||isInner;
+      }
+    }
+  }
+  drawFinder(0,0);
+  drawFinder(size-7,0);
+  drawFinder(0,size-7);
+  let rects = "";
+  for(let y=0;y<size;y++){
+    for(let x=0;x<size;x++){
+      if(cells[y*size+x]) rects += `<rect x="${x*cell}" y="${y*cell}" width="${cell}" height="${cell}"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${dim} ${dim}" width="84" height="84" fill="currentColor"><rect x="0" y="0" width="${dim}" height="${dim}" fill="#fff"/>${rects}</svg>`;
+}
+function receiptHTML(inv){
+  const netBeforeVat = inv.total - inv.vatAmt;
+  const itemsHtml = inv.items.map(i=>`
+    <div class="thermal-item">
+      <div class="thermal-item-name">${i.name}</div>
+      <div class="thermal-item-calc">
+        <span>${i.qty} × ${i.price.toFixed(2)}</span>
+        <span>${(i.price*i.qty).toFixed(2)}</span>
+      </div>
+    </div>
+  `).join("");
+  return `
+    <div class="sim-receipt">
+      <div class="thermal-slip">
+        <div class="thermal-store">🛍️ أسيل للعبايات الراقية</div>
+        <div class="thermal-sub">فاتورة ضريبية مبسطة</div>
+        <div class="thermal-meta">رقم الفاتورة: ${inv.number}</div>
+        <div class="thermal-meta">التاريخ: ${inv.dateStr} — ${inv.timeStr}</div>
+        <div class="thermal-meta">الكاشير: ${escapeHtml(inv.cashierName)}</div>
+        <div class="thermal-divider"></div>
+        ${itemsHtml}
+        <div class="thermal-divider"></div>
+        <div class="t-row muted-row"><span>الإجمالي الفرعي</span><span>${inv.subtotal.toFixed(2)}</span></div>
+        <div class="t-row row-discount"><span>الخصم</span><span>-${inv.discountAmt.toFixed(2)}</span></div>
+        <div class="t-row muted-row"><span>المبلغ قبل الضريبة</span><span>${netBeforeVat.toFixed(2)}</span></div>
+        <div class="t-row row-vat"><span>ضريبة القيمة المضافة (15%)</span><span>${inv.vatAmt.toFixed(2)}</span></div>
+        <div class="thermal-divider"></div>
+        <div class="thermal-total-final"><span>الإجمالي شامل الضريبة</span><span>${inv.total.toFixed(2)} ر.س</span></div>
+        <div class="t-row muted-row" style="margin-top:6px;"><span>طريقة الدفع</span><span>${inv.paymentMethod}</span></div>
+        ${inv.paymentMethod==="نقد" && inv.cashReceived!==null ? `
+          <div class="t-row muted-row"><span>المبلغ المدفوع</span><span>${inv.cashReceived.toFixed(2)}</span></div>
+          <div class="t-row row-vat"><span>الباقي للعميل</span><span>${inv.change.toFixed(2)}</span></div>
+        ` : ""}
+        <div class="thermal-divider"></div>
+        <p class="thermal-policy">سياسة الإرجاع والاستبدال: يمكن الإرجاع أو الاستبدال خلال 7 أيام من تاريخ الشراء بإبراز الفاتورة الأصلية، وأن يكون المنتج بحالته الأصلية مع البطاقة والتغليف دون استخدام. العطور المفتوحة غير قابلة للإرجاع. يُعاد المبلغ بنفس طريقة الدفع الأصلية.</p>
+        <div class="thermal-qr">${generateQrLikeSVG(inv.number)}</div>
+        <div class="thermal-footer">شكرًا لزيارتكم<br>نتشرف بخدمتكم دائمًا</div>
+      </div>
+    </div>
+    <div class="cta-row" style="margin-top:14px;justify-content:flex-start;">
+      <button type="button" class="btn btn-outline" data-sim="print">طباعة الإيصال</button>
+      <button type="button" class="btn btn-primary" data-sim="new-invoice">فاتورة جديدة</button>
+    </div>
+  `;
+}
+
+function updateSimCart(){
+  const el = document.getElementById("simCartArea");
+  if(el) el.innerHTML = cartAreaHTML();
+}
+function scanProduct(barcode){
+  const p = POS_PRODUCTS.find(x=>x.barcode===barcode);
+  if(!p) return;
+  const existing = simState.cart.find(i=>i.barcode===barcode);
+  if(existing) existing.qty++;
+  else simState.cart.push({barcode:p.barcode, name:p.name, price:p.price, qty:1});
+  updateSimCart();
+}
+function changeQty(barcode, delta){
+  const item = simState.cart.find(i=>i.barcode===barcode);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) simState.cart = simState.cart.filter(i=>i.barcode!==barcode);
+  updateSimCart();
+}
+function removeItem(barcode){
+  simState.cart = simState.cart.filter(i=>i.barcode!==barcode);
+  updateSimCart();
+}
+function applyDiscountFromInputs(){
+  const type = document.getElementById("discType").value;
+  const val = parseFloat(document.getElementById("discValue").value) || 0;
+  simState.discountType = type;
+  simState.discountValue = val;
+  updateSimCart();
+}
+function setPaymentMethod(method){
+  simState.paymentMethod = method;
+  if(method!=="نقد") simState.cashReceived = null;
+  updateSimCart();
+}
+function updateCashLive(val){
+  const numVal = parseFloat(val);
+  simState.cashReceived = isNaN(numVal) ? null : numVal;
+  const display = document.getElementById("changeDisplay");
+  if(!display) return;
+  const subtotal = simState.cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discountAmt = simState.discountType==="percent" ? subtotal*simState.discountValue/100 : simState.discountValue;
+  const total = Math.max(subtotal-discountAmt,0);
+  if(simState.cashReceived===null){
+    display.innerHTML = "";
+  }else if(simState.cashReceived>=total){
+    display.innerHTML = `<div class="sim-totals-row row-vat"><span>الباقي المستحق للعميل</span><span>${(simState.cashReceived-total).toFixed(2)} ر.س</span></div>`;
+  }else{
+    display.innerHTML = `<p style="color:var(--danger);font-size:.8rem;margin-top:4px;">المبلغ المُدخل أقل من الإجمالي المطلوب.</p>`;
+  }
+}
+function cancelInvoice(){
+  if(simState.cart.length===0) return;
+  simState.confirmingCancel = true;
+  updateSimCart();
+}
+function cancelInvoiceConfirm(){
+  simState.cart = [];
+  simState.discountValue = 0;
+  simState.confirmingCancel = false;
+  updateSimCart();
+  syncCashGameWithInvoice();
+}
+function cancelInvoiceAbort(){
+  simState.confirmingCancel = false;
+  updateSimCart();
+}
+function finalizeInvoice(){
+  if(simState.cart.length===0) return;
+  const subtotal = simState.cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discountAmt = simState.discountType==="percent" ? subtotal*simState.discountValue/100 : simState.discountValue;
+  const total = Math.max(subtotal-discountAmt,0);
+
+  if(simState.paymentMethod==="نقد" && (simState.cashReceived===null || simState.cashReceived<total)){
+    const err = document.getElementById("cashRequiredError");
+    if(err){
+      err.textContent = "الدفع نقدًا: يجب إدخال المبلغ الذي دفعه العميل والضغط على \"احسب الباقي\" قبل إنهاء الفاتورة.";
+      err.style.display = "block";
+    }
+    return;
+  }
+
+  const vatAmt = extractVat(total);
+  const paymentMethod = simState.paymentMethod;
+  const cashReceived = (paymentMethod==="نقد" && simState.cashReceived!==null && simState.cashReceived>=total) ? simState.cashReceived : null;
+  const change = cashReceived!==null ? cashReceived-total : null;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString("ar-SA", {year:"numeric", month:"2-digit", day:"2-digit"});
+  const timeStr = now.toLocaleTimeString("ar-SA", {hour:"2-digit", minute:"2-digit"});
+  simState.invoice = {
+    number: "INV-"+Date.now().toString().slice(-6),
+    items: simState.cart.slice(),
+    subtotal, discountAmt, vatAmt, total, paymentMethod, cashReceived, change,
+    dateStr, timeStr, cashierName: state.name || "—"
+  };
+  if(!state.simPosBonusGiven){
+    state.simPosBonusGiven = true;
+    state.xp += 60;
+    saveState(state);
+  }
+  updateSimCart();
+  syncCashGameWithInvoice();
+}
+function startNewInvoice(){
+  simState = freshSimState();
+  updateSimCart();
+  syncCashGameWithInvoice();
+}
+
+/* ---------- CASH CHANGE-CALCULATOR GAME ---------- */
+/* amounts are tracked in halala units internally (100 halala = 1 SAR) to avoid floating-point rounding issues.
+   Colors approximate the real Saudi banknote/coin appearance (100=blue, 500=red per SAMA/Ministry of
+   Education teaching materials); this is a stylized swatch, not a reproduction of the actual note artwork. */
+const CASH_DENOMS = [
+  {units:50000, label:"500 ريال", value:"500", unit:"ريال", type:"note", bg:"#DC2626", fg:"#fff"},
+  {units:20000, label:"200 ريال", value:"200", unit:"ريال", type:"note", bg:"#78350F", fg:"#fff"},
+  {units:10000, label:"100 ريال", value:"100", unit:"ريال", type:"note", bg:"#2563EB", fg:"#fff"},
+  {units:5000,  label:"50 ريال",  value:"50",  unit:"ريال", type:"note", bg:"#7C3AED", fg:"#fff"},
+  {units:1000,  label:"10 ريال",  value:"10",  unit:"ريال", type:"note", bg:"#16A34A", fg:"#fff"},
+  {units:500,   label:"5 ريال",   value:"5",   unit:"ريال", type:"note", bg:"#F97316", fg:"#fff"},
+  {units:200,   label:"2 ريال",   value:"2",   unit:"ريال", type:"coin", bg:"#D1D5DB", fg:"#374151", ring:"#CA8A04"},
+  {units:100,   label:"1 ريال",   value:"1",   unit:"ريال", type:"coin", bg:"#CA8A04", fg:"#fff",    ring:"#D1D5DB"},
+  {units:50,    label:"50 هللة",  value:"50",  unit:"هللة", type:"coin", bg:"#E5E7EB", fg:"#374151"},
+  {units:25,    label:"25 هللة",  value:"25",  unit:"هللة", type:"coin", bg:"#FDE68A", fg:"#78350F"},
+  {units:10,    label:"10 هللة",  value:"10",  unit:"هللة", type:"coin", bg:"#E5E7EB", fg:"#374151"},
+];
+/* the 25-halala coin is real and pickable, but excluded from the auto-generated "correct breakdown"
+   hint since it can't cleanly resolve every multiple-of-10 remainder on its own (any answer that
+   sums correctly is still accepted — this only affects the suggested hint shown after a wrong answer) */
+const CASH_BREAKDOWN_DENOMS = CASH_DENOMS.filter(d => d.units !== 25);
+const CASH_XP = {easy:10, medium:15, hard:20, pro:30};
+
+function rndInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+function generateCashRound(difficulty){
+  const halalaOpts = [0,10,20,30,40,50,60,70,80,90];
+  let purchase, payment;
+  if(difficulty==="easy"){
+    purchase = rndInt(5,90)*100;
+    payment = Math.ceil((purchase+100)/5000)*5000;
+  }else if(difficulty==="medium"){
+    purchase = rndInt(50,450)*100;
+    payment = Math.ceil((purchase+100)/10000)*10000;
+  }else if(difficulty==="hard"){
+    const rem = halalaOpts[rndInt(0,9)];
+    purchase = rndInt(10,200)*100 + rem;
+    payment = Math.ceil((purchase+1)/5000)*5000;
+  }else{ // pro
+    const rem = halalaOpts[rndInt(0,9)];
+    purchase = rndInt(20,480)*100 + rem;
+    const wholeUp = Math.ceil(purchase/100)*100;
+    const bumps = [500,1000,2000,5000,10000];
+    payment = wholeUp + bumps[rndInt(0,4)];
+  }
+  return {purchase, payment, correctChange: payment-purchase};
+}
+
+function greedyBreakdown(units){
+  let remaining = units;
+  const result = [];
+  for(const d of CASH_BREAKDOWN_DENOMS){
+    while(remaining >= d.units){ result.push(d); remaining -= d.units; }
+  }
+  return result;
+}
+
+function freshCashGame(difficulty){
+  return Object.assign({mode:"practice", difficulty, selected:[], result:null}, generateCashRound(difficulty));
+}
+
+let cashGame = null;
+const cashFmt = u => (u/100).toFixed(2);
+
+/* keeps the change-calculator in sync with the POS invoice above it: once a real invoice is
+   finalized, the game switches to "linked" mode and uses that invoice's actual total instead
+   of a randomly generated purchase amount */
+function syncCashGameWithInvoice(){
+  if(simState.invoice){
+    if(!cashGame || cashGame.mode!=="linked" || cashGame.linkedInvoiceNumber!==simState.invoice.number){
+      cashGame = {
+        mode:"linked",
+        linkedInvoiceNumber: simState.invoice.number,
+        purchase: Math.round(simState.invoice.total*100),
+        payment:null, correctChange:null, selected:[], result:null
+      };
+    }
+  }else if(!cashGame || cashGame.mode!=="practice"){
+    cashGame = freshCashGame("easy");
+  }
+  renderCashGame();
+}
+
+function cashDenomPickerHTML(){
+  return `
+    <div class="cash-picker">
+      ${CASH_DENOMS.map(d=>`
+        <button type="button" class="cash-denom ${d.type}" data-cash="add:${d.units}"
+          style="background:${d.bg};color:${d.fg};${d.ring ? `border:3px solid ${d.ring};` : "border:none;"}">
+          <span class="cash-denom-value">${d.value}</span>
+          <span class="cash-denom-unit">${d.unit}</span>
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function cashRoundAreaHTML(){
+  const g = cashGame;
+  if(g.result==="correct"){
+    return `
+      <div class="cash-scenario">
+        <div class="cash-line"><span>المشتريات</span><span>${cashFmt(g.purchase)} ر.س</span></div>
+        <div class="cash-line"><span>دفع العميل</span><span>${cashFmt(g.payment)} ر.س</span></div>
+      </div>
+      <div class="cash-feedback correct">✅ صحيح! الباقي هو ${cashFmt(g.correctChange)} ر.س</div>
+      <button type="button" class="btn btn-primary btn-block" data-cash="next">السؤال التالي</button>
+    `;
+  }
+  if(g.result==="wrong"){
+    const breakdown = greedyBreakdown(g.correctChange);
+    return `
+      <div class="cash-scenario">
+        <div class="cash-line"><span>المشتريات</span><span>${cashFmt(g.purchase)} ر.س</span></div>
+        <div class="cash-line"><span>دفع العميل</span><span>${cashFmt(g.payment)} ر.س</span></div>
+      </div>
+      <div class="cash-feedback wrong">الباقي الصحيح ${cashFmt(g.correctChange)} ر.س — أنت اخترت ${cashFmt(g.selected.reduce((s,d)=>s+d.units,0))} ر.س</div>
+      <p class="muted" style="margin-bottom:6px;">تكوين صحيح للباقي:</p>
+      <div class="cash-selected">${breakdown.map(d=>`<span class="chip">${d.label}</span>`).join("")}</div>
+      <button type="button" class="btn btn-primary btn-block" data-cash="next" style="margin-top:12px;">السؤال التالي</button>
+    `;
+  }
+  const total = g.selected.reduce((s,d)=>s+d.units,0);
+  return `
+    <div class="cash-scenario">
+      <div class="cash-line"><span>المشتريات</span><span>${cashFmt(g.purchase)} ر.س</span></div>
+      <div class="cash-line"><span>دفع العميل</span><span>${cashFmt(g.payment)} ر.س</span></div>
+    </div>
+    <p class="muted" style="text-align:center;">كم الباقي؟ اختر الفئات لتكوين المبلغ</p>
+    ${cashDenomPickerHTML()}
+    <div class="cash-selected">
+      ${g.selected.length===0 ? `<span class="muted">لم تختر أي فئة بعد</span>` : g.selected.map((d,i)=>`<span class="chip">${d.label} <button type="button" data-cash="remove:${i}">✕</button></span>`).join("")}
+    </div>
+    <div class="cash-total-row"><span>مجموع ما اخترته</span><span>${cashFmt(total)} ر.س</span></div>
+    <button type="button" class="btn btn-primary btn-block" data-cash="submit">تحقق من الإجابة</button>
+  `;
+}
+
+function cashLinkedHTML(){
+  const g = cashGame;
+  const banner = `<div class="cash-linked-banner">🔗 مرتبط بفاتورتك الحالية — رقم ${g.linkedInvoiceNumber}</div>`;
+
+  if(g.payment===null){
+    return `
+      ${banner}
+      <div class="cash-scenario">
+        <div class="cash-line"><span>إجمالي الفاتورة (المشتريات)</span><span>${cashFmt(g.purchase)} ر.س</span></div>
+      </div>
+      <p class="muted" style="margin-bottom:8px;">كم دفع العميل نقدًا؟</p>
+      <div style="display:flex;gap:8px;">
+        <input class="field" id="cashPaymentInput" type="number" step="0.5" min="${cashFmt(g.purchase)}" placeholder="مثال: ${Math.ceil(g.purchase/1000)*10}">
+        <button type="button" class="btn btn-primary" data-cash="confirm-payment">تأكيد</button>
+      </div>
+      <div id="cashPayError" style="display:none;color:var(--danger);font-weight:600;margin-top:8px;font-size:.85rem;"></div>
+    `;
+  }
+  if(g.result==="correct"){
+    return `
+      ${banner}
+      <div class="cash-scenario">
+        <div class="cash-line"><span>إجمالي الفاتورة</span><span>${cashFmt(g.purchase)} ر.س</span></div>
+        <div class="cash-line"><span>دفع العميل</span><span>${cashFmt(g.payment)} ر.س</span></div>
+      </div>
+      <div class="cash-feedback correct">✅ صحيح! الباقي هو ${cashFmt(g.correctChange)} ر.س</div>
+      <button type="button" class="btn btn-outline btn-block" data-cash="reset-payment">إدخال مبلغ آخر</button>
+    `;
+  }
+  if(g.result==="wrong"){
+    const breakdown = greedyBreakdown(g.correctChange);
+    return `
+      ${banner}
+      <div class="cash-scenario">
+        <div class="cash-line"><span>إجمالي الفاتورة</span><span>${cashFmt(g.purchase)} ر.س</span></div>
+        <div class="cash-line"><span>دفع العميل</span><span>${cashFmt(g.payment)} ر.س</span></div>
+      </div>
+      <div class="cash-feedback wrong">الباقي الصحيح ${cashFmt(g.correctChange)} ر.س — أنت اخترت ${cashFmt(g.selected.reduce((s,d)=>s+d.units,0))} ر.س</div>
+      <p class="muted" style="margin-bottom:6px;">تكوين صحيح للباقي:</p>
+      <div class="cash-selected">${breakdown.map(d=>`<span class="chip">${d.label}</span>`).join("")}</div>
+      <button type="button" class="btn btn-outline btn-block" data-cash="reset-payment" style="margin-top:12px;">إدخال مبلغ آخر</button>
+    `;
+  }
+  const total = g.selected.reduce((s,d)=>s+d.units,0);
+  return `
+    ${banner}
+    <div class="cash-scenario">
+      <div class="cash-line"><span>إجمالي الفاتورة</span><span>${cashFmt(g.purchase)} ر.س</span></div>
+      <div class="cash-line"><span>دفع العميل</span><span>${cashFmt(g.payment)} ر.س</span></div>
+    </div>
+    <p class="muted" style="text-align:center;">كم الباقي؟ اختر الفئات لتكوين المبلغ</p>
+    ${cashDenomPickerHTML()}
+    <div class="cash-selected">
+      ${g.selected.length===0 ? `<span class="muted">لم تختر أي فئة بعد</span>` : g.selected.map((d,i)=>`<span class="chip">${d.label} <button type="button" data-cash="remove:${i}">✕</button></span>`).join("")}
+    </div>
+    <div class="cash-total-row"><span>مجموع ما اخترته</span><span>${cashFmt(total)} ر.س</span></div>
+    <button type="button" class="btn btn-primary btn-block" data-cash="submit">تحقق من الإجابة</button>
+  `;
+}
+
+function cashGameHTML(){
+  if(cashGame.mode==="linked") return cashLinkedHTML();
+  const diffs = [["easy","🟢 سهل"],["medium","🟡 متوسط"],["hard","🔴 صعب"],["pro","🔥 احترافي"]];
+  return `
+    <div class="diff-row">
+      ${diffs.map(([key,label])=>`<button type="button" class="diff-btn ${cashGame.difficulty===key?'active':''}" data-cash="diff:${key}">${label}</button>`).join("")}
+    </div>
+    ${cashRoundAreaHTML()}
+  `;
+}
+
+function renderCashGame(){
+  const el = document.getElementById("cashGameContainer");
+  if(el) el.innerHTML = cashGameHTML();
+}
+function cashSetDifficulty(diff){ cashGame = freshCashGame(diff); renderCashGame(); }
+function cashConfirmPayment(){
+  const input = document.getElementById("cashPaymentInput");
+  const val = parseFloat(input.value);
+  const purchaseSar = cashGame.purchase/100;
+  if(isNaN(val) || val < purchaseSar){
+    const err = document.getElementById("cashPayError");
+    err.textContent = `يجب أن يكون المبلغ ${purchaseSar.toFixed(2)} ر.س أو أكثر`;
+    err.style.display = "block";
+    return;
+  }
+  cashGame.payment = Math.round(val*100);
+  cashGame.correctChange = cashGame.payment - cashGame.purchase;
+  cashGame.selected = [];
+  cashGame.result = null;
+  renderCashGame();
+}
+function cashResetPayment(){
+  cashGame.payment = null;
+  cashGame.correctChange = null;
+  cashGame.selected = [];
+  cashGame.result = null;
+  renderCashGame();
+}
+function cashAddDenom(units){
+  const d = CASH_DENOMS.find(x=>x.units===parseInt(units,10));
+  if(!d) return;
+  cashGame.selected.push(d);
+  renderCashGame();
+}
+function cashRemoveDenom(idx){
+  cashGame.selected.splice(parseInt(idx,10),1);
+  renderCashGame();
+}
+function cashSubmit(){
+  const total = cashGame.selected.reduce((s,d)=>s+d.units,0);
+  const correct = total===cashGame.correctChange;
+  cashGame.result = correct ? "correct" : "wrong";
+  if(correct){
+    state.xp += CASH_XP[cashGame.difficulty] || 10;
+    saveState(state);
+  }
+  renderCashGame();
+}
+function cashNext(){ cashGame = freshCashGame(cashGame.difficulty); renderCashGame(); }
+
+/* ---------- DISCOUNT CALCULATION PRACTICE ---------- */
+function generateDiscountRound(){
+  const type = ["percent","fixed","multibuy"][rndInt(0,2)];
+  if(type==="percent"){
+    const price = rndInt(20,300);
+    const pct = [10,15,20,25,30,50][rndInt(0,5)];
+    const discountAmt = Math.round(price*pct/100*100)/100;
+    const answer = Math.round((price-discountAmt)*100)/100;
+    return {
+      type, answer,
+      prompt:`سعر المنتج ${price} ر.س، والخصم ${pct}%. كم السعر النهائي بعد الخصم؟`,
+      formula:`السعر النهائي = السعر الأصلي − (السعر الأصلي × النسبة ÷ 100)`,
+      steps:[
+        `مبلغ الخصم = ${price} × ${pct} ÷ 100 = ${discountAmt.toFixed(2)} ر.س`,
+        `السعر النهائي = ${price} − ${discountAmt.toFixed(2)} = ${answer.toFixed(2)} ر.س`
+      ]
+    };
+  }
+  if(type==="fixed"){
+    const disc = [5,10,15,20,25,50][rndInt(0,5)];
+    const price = disc + rndInt(20,200);
+    const answer = price-disc;
+    return {
+      type, answer,
+      prompt:`سعر المنتج ${price} ر.س، وخصم ثابت ${disc} ر.س. كم السعر النهائي بعد الخصم؟`,
+      formula:`السعر النهائي = السعر الأصلي − مبلغ الخصم الثابت`,
+      steps:[`السعر النهائي = ${price} − ${disc} = ${answer.toFixed(2)} ر.س`]
+    };
+  }
+  const unitPrice = rndInt(10,80);
+  const qty = rndInt(3,9);
+  const freeCount = Math.floor(qty/3);
+  const payableCount = qty-freeCount;
+  const answer = payableCount*unitPrice;
+  return {
+    type, answer,
+    prompt:`اشترى العميل ${qty} قطع من منتج سعر القطعة ${unitPrice} ر.س، والعرض: اشترِ قطعتين واحصل على الثالثة مجانًا. كم الإجمالي الذي يدفعه العميل؟`,
+    formula:`كل 3 قطع = قطعتان مدفوعتان + قطعة مجانية`,
+    steps:[
+      `عدد القطع المجانية = ${qty} ÷ 3 (بالقسمة الصحيحة) = ${freeCount}`,
+      `عدد القطع المدفوعة = ${qty} − ${freeCount} = ${payableCount}`,
+      `الإجمالي = ${payableCount} × ${unitPrice} = ${answer.toFixed(2)} ر.س`
+    ]
+  };
+}
+let discountGame = null;
+function freshDiscountGame(){ return Object.assign({result:null, userAnswer:""}, generateDiscountRound()); }
+
+function discountGameHTML(){
+  const g = discountGame;
+  if(g.result==="correct" || g.result==="wrong"){
+    const cls = g.result;
+    const msg = g.result==="correct"
+      ? `✅ صحيح! الإجابة ${g.answer.toFixed(2)} ر.س`
+      : `الإجابة الصحيحة ${g.answer.toFixed(2)} ر.س — أنت أدخلت ${g.userAnswer || "—"}`;
+    return `
+      <div class="cash-scenario"><p style="margin:0;">${g.prompt}</p></div>
+      <div class="cash-feedback ${cls}">${msg}</div>
+      <div class="discount-steps">
+        <p class="discount-steps-title">خطوات الحل:</p>
+        <ol>${g.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" data-discount="next">سؤال آخر${g.result==="correct" ? " (+15 XP)" : ""}</button>
+    `;
+  }
+  return `
+    <div class="cash-scenario"><p style="margin:0;">${g.prompt}</p></div>
+    <p class="muted" style="margin:8px 2px 0;font-size:.82rem;">💡 ${g.formula}</p>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <input class="field" id="discountAnswerInput" type="number" step="0.01" placeholder="السعر أو الإجمالي بالريال">
+      <button type="button" class="btn btn-primary" data-discount="submit">تحقق</button>
+    </div>
+  `;
+}
+function renderDiscountGame(){
+  const el = document.getElementById("discountGameContainer");
+  if(el) el.innerHTML = discountGameHTML();
+}
+function discountSubmit(){
+  const input = document.getElementById("discountAnswerInput");
+  const val = parseFloat(input.value);
+  discountGame.userAnswer = input.value;
+  const correct = !isNaN(val) && Math.abs(val-discountGame.answer) < 0.01;
+  discountGame.result = correct ? "correct" : "wrong";
+  if(correct){ state.xp += 15; saveState(state); }
+  renderDiscountGame();
+}
+function discountNext(){ discountGame = freshDiscountGame(); renderDiscountGame(); }
+
+/* ---------- CUSTOMER SCENARIOS PRACTICE ---------- */
+let customerGame = null;
+function shuffledIndices(n){
+  const arr = Array.from({length:n}, (_,i)=>i);
+  for(let i=arr.length-1;i>0;i--){
+    const j = rndInt(0,i);
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function freshCustomerGame(){
+  return {order: shuffledIndices(CUSTOMER_SCENARIOS.length), pos:0, chosen:null, correctCount:0, finished:false};
+}
+
+function customerGameHTML(){
+  const g = customerGame;
+  const total = CUSTOMER_SCENARIOS.length;
+  if(g.finished){
+    const perfect = g.correctCount===total;
+    return `
+      <div class="quiz-result" style="padding:6px 0;">
+        <p class="muted">نتيجتك في محاكي العملاء</p>
+        <div class="score">${g.correctCount}/${total}</div>
+        <p class="${perfect ? "badge-pass" : "muted"}">${perfect ? "ممتاز! اخترت أفضل ردة فعل في كل موقف 🎉" : "راجع الملاحظات وحاول تحسّن نتيجتك"}</p>
+        <button type="button" class="btn btn-primary btn-block" data-customer="restart" style="margin-top:14px;">🔄 إعادة المحاولة</button>
+      </div>
+    `;
+  }
+  const scenario = CUSTOMER_SCENARIOS[g.order[g.pos]];
+  const isLast = g.pos === g.order.length-1;
+  return `
+    <p class="muted" style="margin-bottom:8px;">السيناريو ${g.pos+1} من ${total}</p>
+    <div class="cash-scenario" style="text-align:center;">
+      <div class="scenario-image">${scenario.image}</div>
+      <p style="margin:8px 0 0;font-weight:600;">🗣️ العميل: "${scenario.customerLine}"</p>
+    </div>
+    <p class="muted" style="margin:8px 0;">وش أفضل ردة فعل؟</p>
+    <div class="scenario-options">
+      ${scenario.options.map((o,i)=>{
+        const chosen = g.chosen===i;
+        const cls = chosen ? (o.good ? "good" : "bad") : "";
+        return `
+          <button type="button" class="scenario-opt ${cls}" data-customer="pick:${i}" ${g.chosen!==null ? "disabled" : ""}>
+            ${o.text}
+            ${chosen ? `<span class="scenario-feedback">${o.good ? "✅" : "⚠️"} ${o.feedback}</span>` : ""}
+          </button>
+        `;
+      }).join("")}
+    </div>
+    ${g.chosen!==null ? `<button type="button" class="btn btn-primary btn-block" data-customer="next" style="margin-top:14px;">${isLast ? "عرض النتيجة النهائية" : "السيناريو التالي"}</button>` : ""}
+  `;
+}
+function renderCustomerGame(){
+  const el = document.getElementById("customerGameContainer");
+  if(el) el.innerHTML = customerGameHTML();
+}
+function customerPick(i){
+  if(customerGame.chosen!==null || customerGame.finished) return;
+  customerGame.chosen = parseInt(i,10);
+  const scenario = CUSTOMER_SCENARIOS[customerGame.order[customerGame.pos]];
+  if(scenario.options[customerGame.chosen].good){
+    customerGame.correctCount++;
+    state.xp += 15; saveState(state);
+  }
+  renderCustomerGame();
+}
+function customerNext(){
+  if(customerGame.pos >= customerGame.order.length-1){
+    customerGame.finished = true;
+  }else{
+    customerGame.pos++;
+    customerGame.chosen = null;
+  }
+  renderCustomerGame();
+}
+function customerRestart(){ customerGame = freshCustomerGame(); renderCustomerGame(); }
+
+/* ---------- REGISTER-CLOSING RECONCILIATION EXERCISE ---------- */
+function generateClosingRound(){
+  const cash = rndInt(500,3000);
+  const card = rndInt(500,3000);
+  const total = cash+card;
+  const discrepancyOptions = [0,0,0,0,-50,-30,-20,-10,10,20,30,50];
+  const discrepancy = discrepancyOptions[rndInt(0,discrepancyOptions.length-1)];
+  const actualCash = cash+discrepancy;
+  // network/card settlement report — usually matches the recorded card sales,
+  // but occasionally shows a technical discrepancy the cashier must flag (not fix themselves)
+  const networkDiscOptions = [0,0,0,0,0,0,-15,15,-40,40];
+  const networkDiscrepancy = networkDiscOptions[rndInt(0,networkDiscOptions.length-1)];
+  const networkReport = card+networkDiscrepancy;
+  return {cash, card, total, actualCash, discrepancy, networkReport, networkDiscrepancy};
+}
+let closingGame = null;
+function freshClosingGame(){ return Object.assign({result:null, userAnswer:"", networkChoice:null}, generateClosingRound()); }
+
+function closingStatusText(discrepancy){
+  if(discrepancy===0) return "✅ الصندوق متطابق (الفرق = 0)";
+  if(discrepancy<0) return `⚠️ يوجد عجز بمقدار ${Math.abs(discrepancy)} ر.س`;
+  return `🔺 يوجد زيادة بمقدار ${discrepancy} ر.س`;
+}
+function closingBreakdownHTML(g){
+  return `
+    <div class="closing-scenario">
+      <div class="cash-line"><span>إجمالي المبيعات المسجل</span><span>${g.total} ر.س</span></div>
+      <div class="cash-line"><span>نقدًا (بالنظام)</span><span>${g.cash} ر.س</span></div>
+      <div class="cash-line"><span>بطاقات (بالنظام)</span><span>${g.card} ر.س</span></div>
+      <div class="cash-line"><span>النقد الفعلي بعد العدّ</span><span>${g.actualCash} ر.س</span></div>
+      <div class="cash-line"><span>تقرير الشبكة (جهاز الدفع)</span><span>${g.networkReport} ر.س</span></div>
+    </div>
+  `;
+}
+function closingGameHTML(){
+  const g = closingGame;
+  if(g.result){
+    const cashCls = g.result==="correct" ? "correct" : "wrong";
+    const cashStatus = closingStatusText(g.discrepancy);
+    const cashMsg = g.result==="correct"
+      ? `✅ صحيح! ${cashStatus}`
+      : `الإجابة الصحيحة: الفرق = ${g.discrepancy} — ${cashStatus} (أنت أدخلت ${g.userAnswer || "—"})`;
+
+    const networkMatches = g.networkDiscrepancy===0;
+    const correctChoice = networkMatches ? "match" : "mismatch";
+    const networkCorrect = g.networkChoice===correctChoice;
+    const networkStatus = networkMatches
+      ? "تقرير الشبكة مطابق لمبيعات البطاقات المسجلة."
+      : `تقرير الشبكة غير مطابق (الفرق ${g.networkDiscrepancy>0?"+":""}${g.networkDiscrepancy} ر.س) — يستدعي إبلاغ المشرف أو الدعم الفني، وليس تصحيحه بنفسك.`;
+    const networkMsg = networkCorrect ? `✅ صحيح! ${networkStatus}` : `❌ غير صحيح — ${networkStatus}`;
+
+    return `
+      ${closingBreakdownHTML(g)}
+      <div class="cash-feedback ${cashCls}">${cashMsg}</div>
+      <div class="cash-feedback ${networkCorrect ? "correct" : "wrong"}" style="margin-top:8px;">${networkMsg}</div>
+      <button type="button" class="btn btn-primary btn-block" data-closing="next" style="margin-top:10px;">شفت جديد</button>
+    `;
+  }
+  return `
+    ${closingBreakdownHTML(g)}
+    <div id="closingValidationError" style="display:none;color:var(--danger);font-weight:600;margin-bottom:10px;font-size:.85rem;"></div>
+    <p class="muted" style="margin:8px 2px;">١) قارن النقد الفعلي بالمسجل. أدخل الفرق (سالب = عجز، موجب = زيادة، 0 = متطابق):</p>
+    <div style="margin-bottom:14px;">
+      <input class="field" id="closingAnswerInput" type="number" step="1" placeholder="مثال: -20 أو 0 أو 30" value="${g.userAnswer||""}">
+    </div>
+    <p class="muted" style="margin:8px 2px;">٢) قارن تقرير الشبكة بمبيعات البطاقات المسجلة. هل هو مطابق؟</p>
+    <div class="cta-row" style="margin-bottom:14px;">
+      <button type="button" class="btn ${g.networkChoice==="match" ? "btn-primary" : "btn-outline"}" data-closing="network:match">✅ متطابق</button>
+      <button type="button" class="btn ${g.networkChoice==="mismatch" ? "btn-primary" : "btn-outline"}" data-closing="network:mismatch">⚠️ غير متطابق</button>
+    </div>
+    <button type="button" class="btn btn-primary btn-block" data-closing="submit">تحقق</button>
+  `;
+}
+function renderClosingGame(){
+  const el = document.getElementById("closingGameContainer");
+  if(el) el.innerHTML = closingGameHTML();
+}
+function closingChooseNetwork(choice){
+  if(closingGame.result) return;
+  const input = document.getElementById("closingAnswerInput");
+  if(input) closingGame.userAnswer = input.value;
+  closingGame.networkChoice = choice;
+  renderClosingGame();
+}
+function closingSubmit(){
+  const input = document.getElementById("closingAnswerInput");
+  const val = parseInt(input.value,10);
+  closingGame.userAnswer = input.value;
+  if(isNaN(val) || closingGame.networkChoice===null){
+    const err = document.getElementById("closingValidationError");
+    err.textContent = "يرجى إدخال فرق النقد واختيار حالة تطابق الشبكة قبل التحقق.";
+    err.style.display = "block";
+    return;
+  }
+  const cashCorrect = val===closingGame.discrepancy;
+  closingGame.result = cashCorrect ? "correct" : "wrong";
+  const networkCorrect = closingGame.networkChoice === (closingGame.networkDiscrepancy===0 ? "match" : "mismatch");
+  if(cashCorrect && networkCorrect){ state.xp += 20; saveState(state); }
+  else if(cashCorrect || networkCorrect){ state.xp += 10; saveState(state); }
+  renderClosingGame();
+}
+function closingNext(){ closingGame = freshClosingGame(); renderClosingGame(); }
+
+/* ---------- PAYMENT DEVICE SIMULATOR ---------- */
+const PAYMENT_METHODS = ["مدى","Apple Pay","Samsung Pay","Google Pay"];
+const PAYMENT_STATE_INFO = {
+  success:{icon:"✅", label:"مقبول", color:"var(--success)", bg:"var(--success-soft)", options:[
+    {text:"تسلّم الفاتورة والمنتجات للعميل مباشرة.", good:true, feedback:"ممتاز — الإجراء الصحيح فور نجاح العملية."},
+    {text:"تطلب من العميل الدفع مرة ثانية للتأكد.", good:false, feedback:"غير ضروري ويسبب ازدواجية في الدفع."},
+    {text:"تنتظر عدة دقائق قبل تسليم أي شيء للعميل.", good:false, feedback:"تأخير غير مبرر بعد ظهور النجاح."},
+  ]},
+  declined:{icon:"❌", label:"العملية مرفوضة", color:"var(--danger)", bg:"#FEE2E2", options:[
+    {text:"تخبر العميل أمام الجميع أن بطاقته فارغة.", good:false, feedback:"لا يجوز الجزم بالسبب أو إحراج العميل."},
+    {text:"تطلب من العميل بلباقة تجربة وسيلة دفع أخرى.", good:true, feedback:"ممتاز — الرد المهني المناسب."},
+    {text:"تلغي البيع بالكامل فورًا دون تجربة بديل.", good:false, feedback:"ردة فعل مبالغ فيها قبل تجربة حل بديل."},
+  ]},
+  network:{icon:"⚠️", label:"تعذر الاتصال بالشبكة", color:"#B45309", bg:"#FEF3C7", options:[
+    {text:"تعيد المحاولة، وإذا استمرت المشكلة تقترح وسيلة دفع بديلة.", good:true, feedback:"ممتاز — التصرف الصحيح خطوة بخطوة."},
+    {text:"تخبر العميل أن المتجر مغلق اليوم.", good:false, feedback:"معلومة غير صحيحة ومبالغ فيها."},
+    {text:"تتجاهل المشكلة وتطلب من العميل الانتظار دون توضيح.", good:false, feedback:"يترك العميل في حيرة دون تفسير."},
+  ]},
+  cancelled:{icon:"🔵", label:"تم إلغاء العملية", color:"var(--accent)", bg:"var(--accent-soft)", options:[
+    {text:"تسأل العميل بأدب إن كان يريد المتابعة بوسيلة أخرى أو إلغاء الشراء.", good:true, feedback:"ممتاز — يعطي العميل الخيار بوضوح."},
+    {text:"تفترض أن العميل غيّر رأيه وتنهي الفاتورة تلقائيًا.", good:false, feedback:"لا تفترض نية العميل؛ اسأله مباشرة."},
+    {text:"تتجاهل الإلغاء وتحاول تمرير الدفع مرة أخرى دون سؤاله.", good:false, feedback:"يجب التأكد من رغبته أولًا."},
+  ]},
+  insufficient_balance:{icon:"🚫", label:"الرصيد غير كافٍ", color:"var(--danger)", bg:"#FEE2E2", options:[
+    {text:"تخبر العميل أمام الجميع أن حسابه فاضٍ.", good:false, feedback:"لا يجوز إحراج العميل أو الجزم بتفاصيل حسابه أمام الآخرين."},
+    {text:"تعتذر بلطف وتطلب من العميل تجربة بطاقة أو وسيلة دفع أخرى.", good:true, feedback:"ممتاز — تعامل مهني ولبق."},
+    {text:"تكرر تمرير نفس البطاقة عدة مرات أملًا في نجاحها.", good:false, feedback:"إعادة المحاولة بنفس البطاقة لن تغيّر النتيجة."},
+  ]},
+  wrong_pin:{icon:"❌", label:"الرقم السري غير صحيح", color:"var(--danger)", bg:"#FEE2E2", options:[
+    {text:"تطلب من العميل قول الرقم السري بصوت مرتفع لتتأكد منه بنفسك.", good:false, feedback:"لا يجوز للكاشير معرفة الرقم السري تحت أي ظرف."},
+    {text:"تدع العميل يعيد إدخال الرقم بنفسه دون أن تراقبه عن قرب.", good:true, feedback:"ممتاز — يحافظ على خصوصية العميل ويمنحه فرصة أخرى."},
+    {text:"تلغي العملية فورًا دون منحه فرصة لإعادة المحاولة.", good:false, feedback:"عادة تُمنح فرصة أو فرصتان قبل إلغاء العملية."},
+  ]},
+};
+function generatePaymentOutcome(){
+  const r = Math.random();
+  if(r<0.55) return "success";
+  if(r<0.70) return "declined";
+  if(r<0.85) return "network";
+  return "cancelled";
+}
+/* the realistic terminal (in "تعلم أكثر") distinguishes contactless (no PIN) from chip+PIN,
+   since only the PIN path can fail with a wrong PIN */
+function generateContactlessOutcome(){
+  const r = Math.random();
+  if(r<0.65) return "success";
+  if(r<0.78) return "declined";
+  if(r<0.90) return "network";
+  return "insufficient_balance";
+}
+function generatePinOutcome(){
+  const r = Math.random();
+  if(r<0.60) return "success";
+  if(r<0.72) return "declined";
+  if(r<0.82) return "network";
+  if(r<0.92) return "insufficient_balance";
+  return "wrong_pin";
+}
+let paymentGame = null;
+function freshPaymentGame(){ return {amount: rndInt(20,500), method:null, state:null, chosen:null}; }
+function paymentGameHTML(){
+  const g = paymentGame;
+  if(g.method===null){
+    return `
+      <div class="cash-scenario" style="text-align:center;">
+        <p class="muted" style="margin:0;">المبلغ المطلوب</p>
+        <p style="font-size:1.4rem;font-weight:800;color:var(--primary);margin:4px 0 0;">${g.amount} ر.س</p>
+      </div>
+      <p class="muted" style="margin:8px 0;">اختر وسيلة الدفع التي استخدمها العميل:</p>
+      <div class="payment-methods">
+        ${PAYMENT_METHODS.map(m=>`<button type="button" class="btn btn-outline" data-payment="method:${m}">${m}</button>`).join("")}
+      </div>
+    `;
+  }
+  const info = PAYMENT_STATE_INFO[g.state];
+  if(g.chosen===null){
+    return `
+      <div class="cash-scenario" style="text-align:center;"><p class="muted" style="margin:0;">${g.method} — ${g.amount} ر.س</p></div>
+      <div class="payment-status" style="background:${info.bg};color:${info.color};">${info.icon} ${info.label}</div>
+      <p class="muted" style="margin:10px 0 8px;">ماذا تفعل الآن؟</p>
+      <div class="scenario-options">
+        ${info.options.map((o,i)=>`<button type="button" class="scenario-opt" data-payment="pick:${i}">${o.text}</button>`).join("")}
+      </div>
+    `;
+  }
+  const chosenOpt = info.options[g.chosen];
+  return `
+    <div class="cash-scenario" style="text-align:center;"><p class="muted" style="margin:0;">${g.method} — ${g.amount} ر.س</p></div>
+    <div class="payment-status" style="background:${info.bg};color:${info.color};">${info.icon} ${info.label}</div>
+    <div class="cash-feedback ${chosenOpt.good ? "correct" : "wrong"}" style="margin-top:10px;">${chosenOpt.good ? "✅" : "⚠️"} ${chosenOpt.feedback}</div>
+    <button type="button" class="btn btn-primary btn-block" data-payment="next" style="margin-top:12px;">معاملة جديدة</button>
+  `;
+}
+function renderPaymentGame(){
+  const el = document.getElementById("paymentGameContainer");
+  if(el) el.innerHTML = paymentGameHTML();
+}
+function paymentChooseMethod(m){
+  paymentGame.method = m;
+  paymentGame.state = generatePaymentOutcome();
+  renderPaymentGame();
+}
+function paymentPick(i){
+  if(paymentGame.chosen!==null) return;
+  paymentGame.chosen = parseInt(i,10);
+  if(PAYMENT_STATE_INFO[paymentGame.state].options[paymentGame.chosen].good){ state.xp += 15; saveState(state); }
+  renderPaymentGame();
+}
+function paymentNext(){ paymentGame = freshPaymentGame(); renderPaymentGame(); }
+
+/* ---------- RETURNS SIMULATOR ---------- */
+const RETURN_SCENARIOS = [
+  {situation:"عميل يرجع منتجًا اشتراه قبل يومين، ومعه الفاتورة الأصلية، والمنتج بحالته الأصلية دون استخدام.", options:[
+    {text:"ترفض الإرجاع لأنك لا تعرف العميل شخصيًا.", good:false, feedback:"لا مبرر للرفض؛ كل الشروط مستوفاة."},
+    {text:"تتحقق من الفاتورة وحالة المنتج، ثم تُتم الإرجاع وتُعيد المبلغ بنفس طريقة الدفع الأصلية.", good:true, feedback:"ممتاز — الإجراء الصحيح الكامل."},
+    {text:"تطلب منه دفع رسوم إضافية مقابل الإرجاع.", good:false, feedback:"غير مبرر ما لم تكن هذه سياسة معلنة للمتجر."},
+  ]},
+  {situation:"عميل يريد إرجاع منتج لكنه لا يملك الفاتورة الأصلية إطلاقًا.", options:[
+    {text:"ترفض الإرجاع فورًا دون التحقق من سياسة المتجر لهذه الحالة.", good:false, feedback:"يجب معرفة سياسة المتجر أولًا؛ قد يوجد بديل."},
+    {text:"تتحقق من سياسة المتجر الخاصة بالإرجاع بدون فاتورة، وتستشير المشرف إذا لزم الأمر.", good:true, feedback:"ممتاز — التصرف الصحيح عند غياب الفاتورة."},
+    {text:"تقبل الإرجاع مباشرة دون أي تحقق.", good:false, feedback:"قد يخالف سياسة المتجر ويعرضك للمساءلة."},
+  ]},
+  {situation:"عميل يرجع منتجًا يبدو عليه أثر استخدام واضح، ويطلب استرداد كامل المبلغ.", options:[
+    {text:"تقبل الإرجاع كامل المبلغ دون أي تحفظ.", good:false, feedback:"يخالف سياسة أغلب المتاجر بشأن حالة المنتج."},
+    {text:"توضح للعميل بلباقة أن حالة المنتج قد تؤثر على قبول الإرجاع حسب السياسة، وتستشير المشرف عند الحاجة.", good:true, feedback:"ممتاز — تعامل شفاف يحترم السياسة والعميل معًا."},
+    {text:"تتجاهل حالة المنتج تمامًا وتوافق فورًا لتفادي أي نقاش.", good:false, feedback:"يفتح الباب لسوء استخدام سياسة الإرجاع."},
+  ]},
+  {situation:"عميل يطلب إرجاع منتج اشتراه قبل شهرين، وسياسة المتجر تحدد مدة الإرجاع بـ14 يومًا فقط.", options:[
+    {text:"ترفض الإرجاع مباشرة دون أي توضيح للعميل.", good:false, feedback:"يجب التوضيح والتصرف بلباقة حتى مع الرفض المبدئي."},
+    {text:"توضح للعميل أن المدة انتهت حسب السياسة، وتستشير المشرف إذا رغب العميل بتصعيد الطلب.", good:true, feedback:"ممتاز — وضوح مع إتاحة مسار للتصعيد إن لزم."},
+    {text:"تقبل الإرجاع بأي حال لتفادي إزعاج العميل.", good:false, feedback:"يخالف سياسة المتجر المعلنة بدون سبب مبرر."},
+  ]},
+  {situation:"عميل يريد استبدال منتج بمقاس مختلف من نفس النوع، والمنتج البديل متوفر.", options:[
+    {text:"ترفض الاستبدال وتطلب منه إرجاع المنتج فقط دون استبدال.", good:false, feedback:"الاستبدال المباشر أسهل للعميل ومتاح هنا."},
+    {text:"تتحقق من توفر المقاس، وتُتم عملية الاستبدال كعملية منفصلة موثقة.", good:true, feedback:"ممتاز — الإجراء الصحيح والمباشر للاستبدال."},
+    {text:"تطلب منه دفع سعر المنتج الجديد بالكامل دون خصم قيمة المرتجع.", good:false, feedback:"يجب حساب الفرق فقط بين المنتجين إن وجد."},
+  ]},
+  {situation:"عميل يرجع منتجًا، لكن الوصف الذي يعطيه لا يطابق تفاصيل الفاتورة المقدَّمة إطلاقًا.", options:[
+    {text:"تواجهه مباشرة وتتهمه بمحاولة احتيال أمام العملاء الآخرين.", good:false, feedback:"المواجهة المباشرة قد تصعّد الموقف وتحرج الجميع."},
+    {text:"تتعامل بهدوء، وتستشير المشرف بأدب دون اتهام العميل مباشرة.", good:true, feedback:"ممتاز — تعامل حذر ومهني مع موقف مشبوه."},
+    {text:"تتجاهل التناقض وتقبل الإرجاع كما هو.", good:false, feedback:"يفتح الباب لسوء استخدام سياسة الإرجاع دون تحقق."},
+  ]},
+];
+let returnsGame = null;
+function freshReturnsGame(){ return {order: shuffledIndices(RETURN_SCENARIOS.length), pos:0, chosen:null, correctCount:0, finished:false}; }
+function returnsGameHTML(){
+  const g = returnsGame;
+  const total = RETURN_SCENARIOS.length;
+  if(g.finished){
+    const perfect = g.correctCount===total;
+    return `
+      <div class="quiz-result" style="padding:6px 0;">
+        <p class="muted">نتيجتك في محاكي المرتجعات</p>
+        <div class="score">${g.correctCount}/${total}</div>
+        <p class="${perfect ? "badge-pass" : "muted"}">${perfect ? "ممتاز! تعاملت مع كل حالات الإرجاع بشكل صحيح 🎉" : "راجع الملاحظات وحاول تحسّن نتيجتك"}</p>
+        <button type="button" class="btn btn-primary btn-block" data-returns="restart" style="margin-top:14px;">🔄 إعادة المحاولة</button>
+      </div>
+    `;
+  }
+  const scenario = RETURN_SCENARIOS[g.order[g.pos]];
+  const isLast = g.pos === g.order.length-1;
+  return `
+    <p class="muted" style="margin-bottom:8px;">الحالة ${g.pos+1} من ${total}</p>
+    <div class="cash-scenario"><p style="margin:0;font-weight:600;">↩️ ${scenario.situation}</p></div>
+    <p class="muted" style="margin:8px 0;">وش الإجراء الصحيح؟</p>
+    <div class="scenario-options">
+      ${scenario.options.map((o,i)=>{
+        const chosen = g.chosen===i;
+        const cls = chosen ? (o.good ? "good" : "bad") : "";
+        return `
+          <button type="button" class="scenario-opt ${cls}" data-returns="pick:${i}" ${g.chosen!==null ? "disabled" : ""}>
+            ${o.text}
+            ${chosen ? `<span class="scenario-feedback">${o.good ? "✅" : "⚠️"} ${o.feedback}</span>` : ""}
+          </button>
+        `;
+      }).join("")}
+    </div>
+    ${g.chosen!==null ? `<button type="button" class="btn btn-primary btn-block" data-returns="next" style="margin-top:14px;">${isLast ? "عرض النتيجة النهائية" : "الحالة التالية"}</button>` : ""}
+  `;
+}
+function renderReturnsGame(){
+  const el = document.getElementById("returnsGameContainer");
+  if(el) el.innerHTML = returnsGameHTML();
+}
+function returnsPick(i){
+  if(returnsGame.chosen!==null || returnsGame.finished) return;
+  returnsGame.chosen = parseInt(i,10);
+  const scenario = RETURN_SCENARIOS[returnsGame.order[returnsGame.pos]];
+  if(scenario.options[returnsGame.chosen].good){ returnsGame.correctCount++; state.xp += 15; saveState(state); }
+  renderReturnsGame();
+}
+function returnsNext(){
+  if(returnsGame.pos >= returnsGame.order.length-1){ returnsGame.finished = true; }
+  else{ returnsGame.pos++; returnsGame.chosen = null; }
+  renderReturnsGame();
+}
+function returnsRestart(){ returnsGame = freshReturnsGame(); renderReturnsGame(); }
+
+function renderSimulator(){
+  simState = freshSimState();
+  cashGame = freshCashGame("easy");
+  discountGame = freshDiscountGame();
+  customerGame = freshCustomerGame();
+  closingGame = freshClosingGame();
+  paymentGame = freshPaymentGame();
+  returnsGame = freshReturnsGame();
+  mount(`
+    <div class="section-head"><h2>محاكي POS</h2><span class="count">نفّذ عملية بيع كاملة بنفسك</span></div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt sim-section sim-section-pos">
+        <div class="sim-grid">
+          <div class="sim-products-panel">
+            <p class="sim-panel-label">📦 المنتجات</p>
+            <input class="field" id="posSearch" placeholder="ابحث عن منتج بالاسم..." oninput="filterProducts(this.value)">
+            <div id="simProductList" style="margin-top:10px;">${productListHTML(POS_PRODUCTS)}</div>
+          </div>
+          <div class="sim-cart-panel">
+            <p class="sim-panel-label">🛒 السلة</p>
+            <div id="simCartArea">${cartAreaHTML()}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt sim-section sim-section-cash">
+        <div class="section-head"><h2 style="font-size:1.05rem;">محاكي النقد — حساب الباقي</h2></div>
+        <div id="cashGameContainer">${cashGameHTML()}</div>
+      </div>
+    </div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt sim-section sim-section-discount">
+        <div class="section-head"><h2 style="font-size:1.05rem;">تمرين حساب الخصم</h2></div>
+        <div id="discountGameContainer">${discountGameHTML()}</div>
+      </div>
+    </div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt sim-section sim-section-customer">
+        <div class="section-head"><h2 style="font-size:1.05rem;">محاكي العملاء — سيناريوهات</h2></div>
+        <div id="customerGameContainer">${customerGameHTML()}</div>
+      </div>
+    </div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt sim-section sim-section-closing">
+        <div class="section-head"><h2 style="font-size:1.05rem;">تمرين مطابقة الصندوق</h2></div>
+        <div id="closingGameContainer">${closingGameHTML()}</div>
+      </div>
+    </div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt sim-section sim-section-payment">
+        <div class="section-head"><h2 style="font-size:1.05rem;">محاكي جهاز الدفع</h2></div>
+        <div id="paymentGameContainer">${paymentGameHTML()}</div>
+      </div>
+    </div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt sim-section sim-section-returns">
+        <div class="section-head"><h2 style="font-size:1.05rem;">محاكي المرتجعات</h2></div>
+        <div id="returnsGameContainer">${returnsGameHTML()}</div>
+      </div>
+    </div>
+  `);
+}
+
+/* ---------- FINAL SIMULATION (LEVEL 12) ---------- */
+let finalSimGame = null;
+function freshFinalSimGame(){
+  const categoryHits = {}, categoryTotals = {};
+  ALL_CATEGORIES.forEach(c=>{ categoryHits[c]=0; categoryTotals[c]=0; });
+  FINAL_SIM_SCENARIOS.forEach(s=>{ s.categories.forEach(c=>{ categoryTotals[c] = (categoryTotals[c]||0)+1; }); });
+  return {
+    pos:0, chosen:null, finished:false,
+    categoryHits, categoryTotals, speedScores:[],
+    qStart: performance.now(),
+  };
+}
+
+function computeFinalSimEvaluation(g){
+  const categoryScores = {};
+  ALL_CATEGORIES.forEach(c=>{
+    if(c==="سرعة التنفيذ"){
+      categoryScores[c] = g.speedScores.length ? Math.round(g.speedScores.reduce((s,v)=>s+v,0)/g.speedScores.length) : 0;
+    }else{
+      const total = g.categoryTotals[c]||0;
+      categoryScores[c] = total>0 ? Math.round((g.categoryHits[c]/total)*100) : 0;
+    }
+  });
+  const overall = Math.round(ALL_CATEGORIES.reduce((s,c)=>s+categoryScores[c],0)/ALL_CATEGORIES.length);
+  let label;
+  if(overall>=90) label = "ممتاز جدًا 🏆";
+  else if(overall>=75) label = "جيد جدًا 👏";
+  else if(overall>=60) label = "جيد، يحتاج بعض التحسين";
+  else label = "يحتاج مراجعة وإعادة تدريب";
+  return {categoryScores, overall, label, certNumber:"CERT-"+Date.now().toString().slice(-6)};
+}
+
+function finalSimGameHTML(){
+  const g = finalSimGame;
+  if(g.finished){
+    const ev = state.finalSimResult;
+    return `
+      <div class="quiz-result" style="padding:6px 0;">
+        <p class="muted">🏆 تقييم التدريب</p>
+        ${ALL_CATEGORIES.map(c=>`<div class="cash-line"><span>${c}</span><span>${ev.categoryScores[c]}%</span></div>`).join("")}
+        <div class="thermal-divider"></div>
+        <div class="score">${ev.overall}%</div>
+        <p class="badge-pass">${ev.label}</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-title">🎓 شهادة إتمام دورة الكاشير</p>
+        <p class="cert-name">${escapeHtml(state.name || "")}</p>
+        <p class="cert-line">أكاديمية أسيل للكاشير</p>
+        <p class="cert-line">النتيجة النهائية: ${ev.overall}% — ${ev.label}</p>
+        <p class="cert-line">رقم الشهادة: ${ev.certNumber}</p>
+      </div>
+      <button type="button" class="btn btn-outline btn-block" data-finalsim="restart" style="margin-top:14px;">إعادة المحاكاة</button>
+    `;
+  }
+  const scenario = FINAL_SIM_SCENARIOS[g.pos];
+  const isLast = g.pos === FINAL_SIM_SCENARIOS.length-1;
+  return `
+    <p class="muted" style="margin-bottom:8px;">العميل ${g.pos+1} من ${FINAL_SIM_SCENARIOS.length}</p>
+    <div class="cash-scenario"><p style="margin:0;font-weight:600;">🛒 ${scenario.situation}</p></div>
+    <p class="muted" style="margin:8px 0;">وش الإجراء الصحيح؟</p>
+    <div class="scenario-options">
+      ${scenario.options.map((o,i)=>{
+        const chosen = g.chosen===i;
+        const cls = chosen ? (o.good ? "good" : "bad") : "";
+        return `
+          <button type="button" class="scenario-opt ${cls}" data-finalsim="pick:${i}" ${g.chosen!==null ? "disabled" : ""}>
+            ${o.text}
+            ${chosen ? `<span class="scenario-feedback">${o.good ? "✅" : "⚠️"} ${o.feedback}</span>` : ""}
+          </button>
+        `;
+      }).join("")}
+    </div>
+    ${g.chosen!==null ? `<button type="button" class="btn btn-primary btn-block" data-finalsim="next" style="margin-top:14px;">${isLast ? "عرض التقييم النهائي" : "العميل التالي"}</button>` : ""}
+  `;
+}
+function updateFinalSimContainer(){
+  const el = document.getElementById("finalSimContainer");
+  if(el) el.innerHTML = finalSimGameHTML();
+}
+function finalSimPick(i){
+  if(finalSimGame.chosen!==null || finalSimGame.finished) return;
+  finalSimGame.chosen = parseInt(i,10);
+  const scenario = FINAL_SIM_SCENARIOS[finalSimGame.pos];
+  if(scenario.options[finalSimGame.chosen].good){
+    scenario.categories.forEach(c=>{ finalSimGame.categoryHits[c]++; });
+  }
+  const elapsedSec = (performance.now()-finalSimGame.qStart)/1000;
+  let speedScore;
+  if(elapsedSec<15) speedScore=100;
+  else if(elapsedSec<30) speedScore=85;
+  else if(elapsedSec<60) speedScore=70;
+  else speedScore=50;
+  finalSimGame.speedScores.push(speedScore);
+  updateFinalSimContainer();
+}
+function finalSimNext(){
+  if(finalSimGame.pos >= FINAL_SIM_SCENARIOS.length-1){
+    finalSimGame.finished = true;
+    const ev = computeFinalSimEvaluation(finalSimGame);
+    state.finalSimResult = ev;
+    state.quizzes = state.quizzes || {};
+    state.quizzes[12] = {score: ev.overall, total: 100, passed: true};
+    state.xp += 200;
+    saveState(state);
+  }else{
+    finalSimGame.pos++;
+    finalSimGame.chosen = null;
+    finalSimGame.qStart = performance.now();
+  }
+  updateFinalSimContainer();
+}
+function finalSimRestart(){ finalSimGame = freshFinalSimGame(); updateFinalSimContainer(); }
+
+function renderFinalSim(){
+  finalSimGame = freshFinalSimGame();
+  mount(`
+    <button class="btn btn-outline" data-nav="course" style="margin-bottom:16px;">→ رجوع للدورة</button>
+    <div class="receipt-wrap stagger">
+      <div class="receipt">
+        <h2 style="margin-bottom:16px;">🏆 المحاكاة النهائية</h2>
+        <div id="finalSimContainer">${finalSimGameHTML()}</div>
+      </div>
+    </div>
+  `);
+}
+
+/* ---------- REALISTIC PAYMENT TERMINAL REPLICA (for "تعلم أكثر") ---------- */
+let terminalGame = null;
+let terminalTxnLog = [];
+function freshTerminalGame(){
+  return {screen:"home", amount:null, stage:"enter_amount", authMethod:null, pin:"", outcome:null, chosen:null, refundDone:null, receiptPrinted:false};
+}
+/* real terminals beep on every key and give a distinct success/error tone — built with
+   the Web Audio API so no external sound files are needed */
+function playBeep(freq, duration, type){
+  try{
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type || "square";
+    osc.frequency.value = freq;
+    gain.gain.value = 0.06;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    setTimeout(()=>{ osc.stop(); ctx.close(); }, duration);
+  }catch(e){ /* audio not available in this environment — fail silently */ }
+}
+function terminalKeyBeep(){ playBeep(1000, 55); }
+function terminalSuccessTone(){ playBeep(1500, 160); }
+function terminalErrorTone(){ playBeep(220, 320, "sawtooth"); }
+function logTerminalTransaction(entry){ terminalTxnLog.unshift(entry); }
+
+function terminalShell(screenHtml, bodyHtml){
+  return `
+    <div class="pos-terminal-body">
+      <div class="pos-brand-row">
+        <span class="pos-brand-name">محمد<span>باي</span></span>
+        <span class="pos-signal">📶 🔋</span>
+      </div>
+      <div class="pos-card-slot"></div>
+      ${screenHtml}
+      ${bodyHtml}
+    </div>
+  `;
+}
+
+/* ---- home screen ---- */
+function terminalHomeScreenHTML(){
+  const timeStr = new Date().toLocaleTimeString("ar-SA",{hour:"2-digit",minute:"2-digit"});
+  return `
+    <div class="pos-screen pos-home-screen">
+      <div class="pos-statusbar"><span>${timeStr}</span><span>📶 🔋</span></div>
+      <div class="pos-home-title">نقطة البيع POS</div>
+    </div>
+  `;
+}
+function terminalHomeBodyHTML(){
+  const icoSale = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 2.5h3l2.68 12.4a2 2 0 0 0 2 1.6h8.64a2 2 0 0 0 2-1.6L23 6H6"/></svg>`;
+  const icoReturns = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h10a5 5 0 0 1 0 10H7"/><path d="M7 6l-4 4 4 4"/></svg>`;
+  const icoTxns = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>`;
+  const icoSettings = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
+  return `
+    <div class="pos-app-grid">
+      <button type="button" class="pos-app-btn" data-terminal="app:sale"><span class="pos-app-icon">${icoSale}</span><span>بيع</span></button>
+      <button type="button" class="pos-app-btn" data-terminal="app:returns"><span class="pos-app-icon">${icoReturns}</span><span>إرجاع</span></button>
+      <button type="button" class="pos-app-btn" data-terminal="app:transactions"><span class="pos-app-icon">${icoTxns}</span><span>عمليات</span></button>
+      <button type="button" class="pos-app-btn" data-terminal="app:settings"><span class="pos-app-icon">${icoSettings}</span><span>الإعدادات</span></button>
+    </div>
+  `;
+}
+
+/* ---- transactions screen ---- */
+function terminalTxnRowHTML(t, clickable){
+  const label = t.type==="refund" ? "↩️ استرجاع" : "🛒 بيع";
+  const inner = `<span>${label} — ${t.method}</span><span>${t.amount} ر.س${t.refunded ? " (مسترجعة)" : ""}</span>`;
+  return clickable
+    ? `<button type="button" class="pos-txn-row" data-terminal="refund:${t.id}">${inner}</button>`
+    : `<div class="pos-txn-row">${inner}</div>`;
+}
+function terminalTransactionsBodyHTML(){
+  if(terminalTxnLog.length===0){
+    return `
+      <p class="muted" style="text-align:center;padding:16px 0;">لا توجد عمليات في هذه الجلسة بعد.</p>
+      <button type="button" class="btn btn-outline btn-block" data-terminal="home">🏠 رجوع للرئيسية</button>
+    `;
+  }
+  return `
+    <div class="pos-txn-list">${terminalTxnLog.map(t=>terminalTxnRowHTML(t,false)).join("")}</div>
+    <button type="button" class="btn btn-outline btn-block" data-terminal="home" style="margin-top:12px;">🏠 رجوع للرئيسية</button>
+  `;
+}
+
+/* ---- returns screen ---- */
+function terminalReturnsBodyHTML(g){
+  if(g.refundDone){
+    return `
+      <div class="cash-feedback correct">✅ تم استرجاع المبلغ ${g.refundDone.amount} ر.س بنجاح</div>
+      <button type="button" class="btn btn-outline btn-block" data-terminal="home" style="margin-top:10px;">🏠 رجوع للرئيسية</button>
+    `;
+  }
+  const eligible = terminalTxnLog.filter(t=>t.type==="sale" && !t.refunded);
+  if(eligible.length===0){
+    return `
+      <p class="muted" style="text-align:center;padding:16px 0;">لا توجد عمليات بيع قابلة للاسترجاع حاليًا.</p>
+      <button type="button" class="btn btn-outline btn-block" data-terminal="home">🏠 رجوع للرئيسية</button>
+    `;
+  }
+  return `
+    <p class="muted" style="margin-bottom:8px;">اختر العملية المطلوب استرجاعها:</p>
+    <div class="pos-txn-list">${eligible.map(t=>terminalTxnRowHTML(t,true)).join("")}</div>
+  `;
+}
+
+/* ---- settings screen ---- */
+function terminalSettingsBodyHTML(){
+  return `
+    <div class="pos-txn-list">
+      <div class="pos-txn-row"><span>اسم الجهاز</span><span>محمد باي</span></div>
+      <div class="pos-txn-row"><span>الإصدار</span><span>1.0.0</span></div>
+      <div class="pos-txn-row"><span>الصوت</span><span>مفعّل</span></div>
+    </div>
+    <button type="button" class="btn btn-outline btn-block" data-terminal="home" style="margin-top:12px;">🏠 رجوع للرئيسية</button>
+  `;
+}
+
+/* ---- sale app (existing flow) ---- */
+function terminalScreenHTML(g){
+  let statusLine;
+  if(g.stage==="enter_amount") statusLine = "أدخل مبلغ العملية";
+  else if(g.stage==="awaiting_card") statusLine = "مرر أو أدخل أو قرّب البطاقة";
+  else if(g.stage==="connecting") statusLine = "💳 جاري قراءة البطاقة...";
+  else if(g.stage==="processing") statusLine = "⏳ جارِ معالجة العملية...";
+  else statusLine = PAYMENT_STATE_INFO[g.outcome].label;
+  const showPinDots = g.stage==="awaiting_card";
+  return `
+    <div class="pos-screen">
+      <div class="pos-screen-txntype">بيع</div>
+      <div class="pos-screen-amount">${g.amount!==null ? g.amount+" ر.س" : "٠.٠٠"}</div>
+      <div class="pos-screen-status">${statusLine}</div>
+      ${showPinDots ? `
+        <div class="pos-pin-dots">
+          ${[0,1,2,3].map(i=>`<span class="pos-pin-dot ${i<g.pin.length ? "filled" : ""}"></span>`).join("")}
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
+function terminalReceiptHTML(g){
+  const ref = "REF-"+Date.now().toString().slice(-6);
+  const methodLabel = g.authMethod==="chip" ? "بطاقة (شريحة ورقم سري)" : "بطاقة (لاتلامسي)";
+  return `
+    <div class="pos-receipt">
+      <p class="pos-receipt-title">✅ تمت عملية الدفع بنجاح</p>
+      <div class="pos-receipt-line"><span>المبلغ</span><span>${g.amount} ر.س</span></div>
+      <div class="pos-receipt-line"><span>طريقة الدفع</span><span>${methodLabel}</span></div>
+      <div class="pos-receipt-line"><span>رقم المرجع</span><span>${ref}</span></div>
+    </div>
+  `;
+}
+function saleBodyContent(g){
+  if(g.stage==="enter_amount"){
+    return `
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <input class="field" id="terminalAmountInput" type="number" step="0.01" min="0.01" placeholder="مثال: 45.00">
+        <button type="button" class="btn btn-primary" data-terminal="confirm-amount">تأكيد</button>
+      </div>
+      <div id="terminalAmountError" style="display:none;color:#FCA5A5;font-size:.78rem;margin-top:6px;text-align:center;"></div>
+    `;
+  }
+  if(g.stage==="awaiting_card"){
+    return `
+      <div class="pos-nfc-area" data-terminal="tap">
+        <div class="nfc-icon">📶</div>
+        <p>مرّر أو أدخل أو قرّب البطاقة هنا</p>
+      </div>
+      <div class="pos-keypad">
+        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" class="pos-key" data-terminal="key:${n}">${n}</button>`).join("")}
+        <button type="button" class="pos-key action cancel" data-terminal="cancel">إلغاء</button>
+        <button type="button" class="pos-key" data-terminal="key:0">0</button>
+        <button type="button" class="pos-key action enter" data-terminal="enter">تأكيد</button>
+      </div>
+      <div class="pos-printer-slot"></div>
+    `;
+  }
+  return "";
+}
+function terminalBodyWrap(g, extraHtml){
+  const inner = terminalShell(terminalScreenHTML(g), saleBodyContent(g));
+  return `${inner}${extraHtml ? `<div style="margin-top:14px;">${extraHtml}</div>` : ""}`;
+}
+function terminalGameHTML(){
+  const g = terminalGame;
+  if(g.screen==="home") return terminalShell(terminalHomeScreenHTML(), terminalHomeBodyHTML());
+  if(g.screen==="transactions") return terminalShell(terminalHomeScreenHTML(), terminalTransactionsBodyHTML());
+  if(g.screen==="returns") return terminalShell(terminalHomeScreenHTML(), terminalReturnsBodyHTML(g));
+  if(g.screen==="settings") return terminalShell(terminalHomeScreenHTML(), terminalSettingsBodyHTML());
+  // screen === "sale"
+  if(g.stage!=="mcq") return terminalBodyWrap(g, "");
+  const info = PAYMENT_STATE_INFO[g.outcome];
+  const receiptHtml = (g.outcome==="success" && g.receiptPrinted) ? terminalReceiptHTML(g) : "";
+  if(g.chosen===null){
+    if(g.outcome==="success" && !g.receiptPrinted){
+      return terminalBodyWrap(g, `
+        <div class="cash-feedback correct">✅ مقبول — تمت الموافقة على العملية</div>
+        <button type="button" class="btn btn-primary btn-block" data-terminal="print-receipt" style="margin-top:10px;">🖨️ طباعة الإيصال</button>
+      `);
+    }
+    return terminalBodyWrap(g, `
+      ${receiptHtml}
+      <p class="muted" style="margin-bottom:6px;">ماذا تفعل الآن؟</p>
+      <div class="scenario-options">
+        ${info.options.map((o,i)=>`<button type="button" class="scenario-opt" data-terminal="mcq:${i}">${o.text}</button>`).join("")}
+      </div>
+    `);
+  }
+  const chosenOpt = info.options[g.chosen];
+  return terminalBodyWrap(g, `
+    ${receiptHtml}
+    <div class="cash-feedback ${chosenOpt.good ? "correct" : "wrong"}">${chosenOpt.good ? "✅" : "⚠️"} ${chosenOpt.feedback}</div>
+    <div class="cta-row" style="margin-top:10px;">
+      <button type="button" class="btn btn-outline" data-terminal="home">🏠 الرئيسية</button>
+      <button type="button" class="btn btn-primary" data-terminal="reset">معاملة جديدة</button>
+    </div>
+  `);
+}
+function renderTerminalGame(){
+  const el = document.getElementById("terminalGameContainer");
+  if(el) el.innerHTML = terminalGameHTML();
+}
+function terminalOpenApp(app){
+  if(terminalGame.screen!=="home") return;
+  if(app==="sale"){
+    terminalGame.screen = "sale";
+    terminalGame.amount = null;
+    terminalGame.stage = "enter_amount";
+    terminalGame.authMethod = null;
+    terminalGame.pin = "";
+    terminalGame.outcome = null;
+    terminalGame.chosen = null;
+    terminalGame.receiptPrinted = false;
+  }else if(app==="returns"){
+    terminalGame.screen = "returns";
+    terminalGame.refundDone = null;
+  }else if(app==="transactions"){
+    terminalGame.screen = "transactions";
+  }else if(app==="settings"){
+    terminalGame.screen = "settings";
+  }
+  renderTerminalGame();
+}
+function terminalGoHome(){
+  terminalGame.screen = "home";
+  renderTerminalGame();
+}
+function terminalDoRefund(id){
+  const txn = terminalTxnLog.find(t=>t.id===id);
+  if(!txn || txn.refunded) return;
+  txn.refunded = true;
+  logTerminalTransaction({id:"RF-"+Date.now(), type:"refund", amount:txn.amount, method:txn.method, refunded:true});
+  terminalGame.refundDone = {amount:txn.amount};
+  renderTerminalGame();
+}
+function terminalConfirmAmount(){
+  const input = document.getElementById("terminalAmountInput");
+  const val = parseFloat(input.value);
+  if(isNaN(val) || val<=0){
+    const err = document.getElementById("terminalAmountError");
+    err.textContent = "أدخل مبلغًا صحيحًا أكبر من صفر";
+    err.style.display = "block";
+    return;
+  }
+  terminalGame.amount = Math.round(val*100)/100;
+  terminalGame.stage = "awaiting_card";
+  renderTerminalGame();
+}
+function terminalKeyPress(n){
+  if(terminalGame.stage!=="awaiting_card" || terminalGame.pin.length>=4) return;
+  terminalKeyBeep();
+  terminalGame.pin += n;
+  renderTerminalGame();
+}
+function terminalRunProcessing(forcedOutcome, outcomeGenerator){
+  terminalGame.stage = "connecting";
+  renderTerminalGame();
+  setTimeout(()=>{
+    terminalGame.stage = "processing";
+    renderTerminalGame();
+    setTimeout(()=>{
+      terminalGame.outcome = forcedOutcome || outcomeGenerator();
+      terminalGame.stage = "mcq";
+      if(terminalGame.outcome==="success"){
+        terminalSuccessTone();
+        const methodLabel = terminalGame.authMethod==="chip" ? "بطاقة (شريحة ورقم سري)" : "بطاقة (لاتلامسي)";
+        logTerminalTransaction({id:"TX-"+Date.now(), type:"sale", amount:terminalGame.amount, method:methodLabel, refunded:false});
+      }else{
+        terminalErrorTone();
+      }
+      renderTerminalGame();
+    }, 650);
+  }, 500);
+}
+function terminalCancel(){
+  if(terminalGame.stage!=="awaiting_card") return;
+  terminalKeyBeep();
+  terminalGame.stage = "processing";
+  renderTerminalGame();
+  setTimeout(()=>{
+    terminalGame.outcome = "cancelled";
+    terminalGame.stage = "mcq";
+    renderTerminalGame();
+  }, 400);
+}
+function terminalEnter(){
+  if(terminalGame.stage!=="awaiting_card" || terminalGame.pin.length<4) return;
+  terminalKeyBeep();
+  terminalGame.authMethod = "chip";
+  terminalRunProcessing(null, generatePinOutcome);
+}
+function terminalTap(forcedOutcome){
+  if(terminalGame.stage!=="awaiting_card") return;
+  terminalKeyBeep();
+  terminalGame.authMethod = "contactless";
+  terminalRunProcessing(forcedOutcome, generateContactlessOutcome);
+}
+function terminalPrintReceipt(){
+  if(terminalGame.outcome!=="success" || terminalGame.receiptPrinted) return;
+  terminalGame.receiptPrinted = true;
+  renderTerminalGame();
+}
+function terminalMcqPick(i){
+  if(terminalGame.chosen!==null) return;
+  terminalGame.chosen = parseInt(i,10);
+  if(PAYMENT_STATE_INFO[terminalGame.outcome].options[terminalGame.chosen].good){ state.xp += 15; saveState(state); }
+  renderTerminalGame();
+}
+function terminalReset(){
+  terminalGame.amount = null;
+  terminalGame.stage = "enter_amount";
+  terminalGame.authMethod = null;
+  terminalGame.pin = "";
+  terminalGame.outcome = null;
+  terminalGame.chosen = null;
+  terminalGame.receiptPrinted = false;
+  renderTerminalGame();
+}
+
+/* ---------- LEARN MORE ---------- */
+/* draggable payment cards — pointer events work for both touch and mouse, unlike native HTML5 drag */
+function terminalCardDragAllowed(){
+  return terminalGame.screen==="sale" && terminalGame.stage==="awaiting_card";
+}
+function setupCardDrag(cardEl, dropZoneEl, hasFunds){
+  if(!cardEl || !dropZoneEl) return;
+  if(cardEl.dataset.dragSetup) return; // avoid double-binding if re-rendered
+  cardEl.dataset.dragSetup = "1";
+  let startX=0, startY=0, curX=0, curY=0, dragging=false;
+  cardEl.addEventListener("pointerdown", e=>{
+    if(!terminalCardDragAllowed()) return;
+    dragging = true;
+    startX = e.clientX - curX;
+    startY = e.clientY - curY;
+    cardEl.classList.add("dragging");
+    if(cardEl.setPointerCapture){
+      try{ cardEl.setPointerCapture(e.pointerId); }catch(err){}
+    }
+  });
+  cardEl.addEventListener("pointermove", e=>{
+    if(!dragging) return;
+    curX = e.clientX - startX;
+    curY = e.clientY - startY;
+    cardEl.style.transform = `translate(${curX}px, ${curY}px)`;
+  });
+  function endDrag(){
+    if(!dragging) return;
+    dragging = false;
+    cardEl.classList.remove("dragging");
+    const cardRect = cardEl.getBoundingClientRect();
+    const zoneRect = dropZoneEl.getBoundingClientRect();
+    const overlap = !(cardRect.right<zoneRect.left || cardRect.left>zoneRect.right || cardRect.bottom<zoneRect.top || cardRect.top>zoneRect.bottom);
+    const wasAllowed = terminalCardDragAllowed();
+    cardEl.style.transition = "transform .25s ease";
+    curX = 0; curY = 0;
+    cardEl.style.transform = "translate(0,0)";
+    setTimeout(()=>{ cardEl.style.transition = ""; }, 260);
+    if(overlap && wasAllowed){
+      terminalTap(hasFunds ? null : "insufficient_balance");
+    }
+  }
+  cardEl.addEventListener("pointerup", endDrag);
+  cardEl.addEventListener("pointercancel", endDrag);
+}
+function setupPaymentCards(){
+  setupCardDrag(document.getElementById("cardFunded"), document.getElementById("terminalDropZone"), true);
+  setupCardDrag(document.getElementById("cardEmpty"), document.getElementById("terminalDropZone"), false);
+}
+
+/* ---------- FULL CUSTOMER-JOURNEY STORY (enter → browse → counter → invoice → payment) ---------- */
+const STORY_SVG = {
+  enter: `<svg viewBox="0 0 140 90" width="140" height="90" fill="none" stroke="#16324F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="95" y="10" width="35" height="70" rx="3"/><line x1="122" y1="45" x2="126" y2="45"/>
+    <circle cx="25" cy="28" r="9"/><path d="M25 37v22M15 48l10-8 10 8M14 76l11-11 11 11"/>
+    <path d="M45 45h35" stroke-dasharray="6 6"/><path d="M74 38l8 7-8 7"/>
+  </svg>`,
+  browse: `<svg viewBox="0 0 140 90" width="140" height="90" fill="none" stroke="#16324F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="10" y1="20" x2="130" y2="20"/><line x1="10" y1="50" x2="130" y2="50"/><line x1="10" y1="80" x2="130" y2="80"/>
+    <rect x="18" y="8" width="16" height="12"/><rect x="42" y="6" width="16" height="14"/><rect x="66" y="9" width="16" height="11"/>
+    <rect x="18" y="36" width="16" height="14"/><rect x="46" y="34" width="16" height="16"/><rect x="74" y="37" width="16" height="13"/>
+  </svg>`,
+  counter: `<svg viewBox="0 0 140 90" width="140" height="90" fill="none" stroke="#16324F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 80V50a5 5 0 0 1 5-5h100a5 5 0 0 1 5 5v30"/>
+    <rect x="45" y="20" width="30" height="20" rx="2"/><line x1="55" y1="40" x2="65" y2="40"/><line x1="60" y1="40" x2="60" y2="45"/>
+  </svg>`,
+  invoice: `<svg viewBox="0 0 90 110" width="90" height="110" fill="none" stroke="#16324F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 10h60v90l-8-6-8 6-8-6-8 6-8-6-8 6-8-6-6 6z"/>
+    <line x1="25" y1="28" x2="65" y2="28"/><line x1="25" y1="40" x2="65" y2="40"/><line x1="25" y1="52" x2="50" y2="52"/>
+    <line x1="25" y1="72" x2="30" y2="72" stroke-width="4"/><line x1="34" y1="72" x2="36" y2="72" stroke-width="4"/>
+    <line x1="40" y1="72" x2="44" y2="72" stroke-width="4"/><line x1="48" y1="72" x2="50" y2="72" stroke-width="4"/>
+    <line x1="54" y1="72" x2="60" y2="72" stroke-width="4"/>
+  </svg>`,
+};
+const STORY_ORDER = ["enter","browse","counter","invoice","payment"];
+let storyGame = null;
+function freshStoryGame(){ return {stage:"enter", cart:[]}; }
+function storyCartTotal(){ return storyGame.cart.reduce((s,i)=>s+i.price*i.qty,0); }
+function storyProductListHTML(){
+  return POS_PRODUCTS.map(p=>{
+    const inCart = storyGame.cart.find(i=>i.barcode===p.barcode);
+    return `
+      <div class="sim-product">
+        <div class="pname">${p.name}</div>
+        <div class="pprice">${p.price.toFixed(2)} ر.س</div>
+        <button type="button" class="sim-scan-btn" data-story="add:${p.barcode}">${inCart ? `أضيف (${inCart.qty})` : "أضف"}</button>
+      </div>
+    `;
+  }).join("");
+}
+function storyCartSummaryHTML(){
+  if(storyGame.cart.length===0) return `<p class="muted" style="padding:8px 4px;">السلة فارغة — اختر منتجًا من القائمة فوق.</p>`;
+  return storyGame.cart.map(i=>`
+    <div class="sim-cart-row">
+      <div class="cname">${i.name}</div>
+      <div>${i.qty} × ${i.price.toFixed(2)}</div>
+      <button type="button" class="remove-btn" data-story="remove:${i.barcode}">✕</button>
+    </div>
+  `).join("");
+}
+function storyGameHTML(){
+  const g = storyGame;
+  const stepNum = STORY_ORDER.indexOf(g.stage)+1;
+  const stepLabel = `<p class="muted" style="margin-bottom:8px;">الخطوة ${stepNum} من ${STORY_ORDER.length}</p>`;
+
+  if(g.stage==="enter"){
+    return `
+      ${stepLabel}
+      <div class="story-illustration">${STORY_SVG.enter}</div>
+      <p style="text-align:center;font-weight:600;margin:10px 0;">دخل عميل جديد إلى المتجر</p>
+      <button type="button" class="btn btn-primary btn-block" data-story="next">التالي</button>
+    `;
+  }
+  if(g.stage==="browse"){
+    return `
+      ${stepLabel}
+      <div class="story-illustration">${STORY_SVG.browse}</div>
+      <p style="text-align:center;font-weight:600;margin:10px 0;">العميل يتصفح الرفوف — ساعده يختار منتجاته</p>
+      <div id="storyProductList">${storyProductListHTML()}</div>
+      <p class="muted" style="margin:10px 0 4px;">سلة العميل:</p>
+      <div id="storyCartSummary">${storyCartSummaryHTML()}</div>
+      <button type="button" class="btn btn-primary btn-block" data-story="next" style="margin-top:12px;" ${g.cart.length===0 ? "disabled" : ""}>التالي: التوجه للكاشير</button>
+    `;
+  }
+  if(g.stage==="counter"){
+    return `
+      ${stepLabel}
+      <div class="story-illustration">${STORY_SVG.counter}</div>
+      <p style="text-align:center;font-weight:600;margin:10px 0;">انتهى العميل من التسوق وتوجه إليك عند نقطة البيع</p>
+      <button type="button" class="btn btn-primary btn-block" data-story="next">بدء المحاسبة</button>
+    `;
+  }
+  if(g.stage==="invoice"){
+    const subtotal = storyCartTotal();
+    const vatAmt = extractVat(subtotal);
+    return `
+      ${stepLabel}
+      <div class="story-illustration">${STORY_SVG.invoice}</div>
+      <p style="text-align:center;font-weight:600;margin:10px 0;">راجع فاتورة العميل قبل الانتقال للدفع</p>
+      <div id="storyCartSummary">${storyCartSummaryHTML()}</div>
+      <div class="cash-line" style="margin-top:10px;"><span>الإجمالي (شامل الضريبة)</span><span>${subtotal.toFixed(2)} ر.س</span></div>
+      <div class="cash-line"><span>منها ضريبة القيمة المضافة (15%)</span><span>${vatAmt.toFixed(2)} ر.س</span></div>
+      <button type="button" class="btn btn-primary btn-block" data-story="next" style="margin-top:10px;">متابعة للدفع</button>
+    `;
+  }
+  // g.stage === "payment"
+  return `
+    ${stepLabel}
+    <div class="pay-cards-row">
+      <div class="pay-card funded" id="cardFunded">
+        <div class="pay-card-chip"></div>
+        <div class="pay-card-number">•••• 4521</div>
+        <div class="pay-card-balance">💰 يوجد رصيد</div>
+      </div>
+      <div class="pay-card empty" id="cardEmpty">
+        <div class="pay-card-chip"></div>
+        <div class="pay-card-number">•••• 0000</div>
+        <div class="pay-card-balance">🚫 بدون رصيد</div>
+      </div>
+    </div>
+    <p class="muted" style="text-align:center;margin:8px 0 16px;">اسحب أي بطاقة وأفلتها فوق الجهاز، أو استخدم لوحة المفاتيح</p>
+    <div id="terminalDropZone" class="pos-terminal-wrap">
+      <div id="terminalGameContainer">${terminalGameHTML()}</div>
+    </div>
+    <button type="button" class="btn btn-outline btn-block" data-story="restart" style="margin-top:14px;">🔄 بدء قصة عميل جديد</button>
+  `;
+}
+function renderStoryGame(){
+  const el = document.getElementById("storyContainer");
+  if(el) el.innerHTML = storyGameHTML();
+}
+function storyAdd(barcode){
+  const p = POS_PRODUCTS.find(x=>x.barcode===barcode);
+  if(!p) return;
+  const existing = storyGame.cart.find(i=>i.barcode===barcode);
+  if(existing) existing.qty++;
+  else storyGame.cart.push({barcode:p.barcode, name:p.name, price:p.price, qty:1});
+  renderStoryGame();
+}
+function storyRemove(barcode){
+  storyGame.cart = storyGame.cart.filter(i=>i.barcode!==barcode);
+  renderStoryGame();
+}
+function storyNext(){
+  if(storyGame.stage==="browse" && storyGame.cart.length===0) return;
+  const idx = STORY_ORDER.indexOf(storyGame.stage);
+  if(idx<STORY_ORDER.length-1) storyGame.stage = STORY_ORDER[idx+1];
+  if(storyGame.stage==="payment"){
+    terminalGame = freshTerminalGame();
+    terminalGame.screen = "sale";
+    terminalGame.amount = Math.round(storyCartTotal()*100)/100;
+    terminalGame.stage = "awaiting_card";
+  }
+  renderStoryGame();
+  if(storyGame.stage==="payment") setupPaymentCards();
+}
+function storyRestart(){
+  storyGame = freshStoryGame();
+  terminalGame = freshTerminalGame();
+  renderStoryGame();
+}
+
+function renderLearnMore(){
+  storyGame = freshStoryGame();
+  terminalGame = freshTerminalGame();
+  mount(`
+    <div class="section-head"><h2>تعلم أكثر</h2><span class="count">محاكاة كاملة لعملية بيع</span></div>
+    <div class="receipt-wrap stagger">
+      <div class="receipt">
+        <h2 style="margin-bottom:12px;font-size:1.05rem;">🎬 من دخول العميل حتى الدفع</h2>
+        <p class="muted" style="margin-bottom:14px;">محاكاة كاملة تمرّ بكل مراحل عملية البيع: دخول العميل، اختيار منتجاته، المحاسبة، الفاتورة، ثم الدفع الواقعي.</p>
+        <div id="storyContainer">${storyGameHTML()}</div>
+      </div>
+    </div>
+  `);
+}
+
+/* ---------- COMING SOON ---------- */
+function renderComingSoon(title, items){
+  mount(`
+    <div class="receipt-wrap stagger">
+      <div class="receipt">
+        <h2 style="margin-bottom:12px;">${title}</h2>
+        <p class="muted">هذا الجزء قيد البناء ضمن المراحل القادمة من المشروع. المخطط له حتى الآن:</p>
+        <ul class="soon-list">${items.map(i=>`<li>${i}</li>`).join("")}</ul>
+      </div>
+    </div>
+  `);
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+
+render();
+</script>
+</body>
+</html>
