@@ -82,6 +82,14 @@
   button{font-family:inherit;cursor:pointer;}
 
   /* ---------- layout shell ---------- */
+  #updateBanner{background:var(--grad);color:#fff;}
+  .update-banner-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 18px;}
+  .update-banner-icon{font-size:1.1rem;}
+  .update-banner-text{flex:1;min-width:160px;font-size:.86rem;font-weight:600;}
+  #updateBannerBtn{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4);padding:6px 14px;font-size:.8rem;border-radius:20px;font-weight:700;cursor:pointer;transition:background-color .15s ease;}
+  #updateBannerBtn:hover{background:rgba(255,255,255,.32);}
+  .update-banner-close{background:none;border:none;color:#fff;opacity:.8;cursor:pointer;font-size:1rem;padding:4px;line-height:1;}
+  .update-banner-close:hover{opacity:1;}
   header.topbar{
     background:rgba(255,255,255,.82);
     backdrop-filter:blur(16px) saturate(1.4);
@@ -144,7 +152,7 @@
     transition:all .18s ease;
   }
   nav.top-nav button svg{flex:0 0 auto;}
-  nav.top-nav button:hover{color:var(--primary);background:#fff;}
+  nav.top-nav button:hover{color:var(--primary);background:var(--surface);}
   nav.top-nav button.active{
     color:#fff;
     background:var(--grad);
@@ -211,7 +219,7 @@
   }
   .btn-primary:hover{background-position:100% 50%;transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(124,58,237,.65);}
   .btn-primary:active{transform:translateY(0) scale(.98);}
-  .btn-outline{background:#fff;border:1.5px solid var(--line);color:var(--primary-2);}
+  .btn-outline{background:var(--surface);border:1.5px solid var(--line);color:var(--primary-2);}
   .btn-outline:hover{background:#F5F3FF;border-color:#C4B5FD;transform:translateY(-2px);box-shadow:0 8px 18px -10px rgba(76,29,149,.3);}
   .btn-outline:active{transform:translateY(0) scale(.98);}
   .btn-block{width:100%;}
@@ -220,7 +228,7 @@
   /* generic form field (search box, selects, discount input) */
   .field{
     padding:11px 14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
-    font-family:inherit;font-size:.9rem;background:#fff;width:100%;color:var(--ink);
+    font-family:inherit;font-size:.9rem;background:var(--surface);width:100%;color:var(--ink);
     transition:border-color .15s ease, box-shadow .15s ease;
   }
   .field::placeholder{color:#9CA3B8;}
@@ -254,7 +262,7 @@
   .login-box{max-width:400px;margin:26px auto 0;display:flex;gap:10px;}
   .login-box input{
     flex:1;padding:13px 16px;border:1.5px solid var(--line);border-radius:14px;font-family:inherit;font-size:.95rem;
-    background:#fff;transition:border-color .15s ease, box-shadow .15s ease;
+    background:var(--surface);transition:border-color .15s ease, box-shadow .15s ease;
   }
   .login-box input:focus{border-color:var(--accent-2);box-shadow:0 0 0 4px var(--accent-soft);outline:none;}
 
@@ -262,13 +270,13 @@
   .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:6px;}
   .section-head h2{font-size:1.25rem;display:flex;align-items:center;gap:9px;}
   .section-head h2::before{content:"";width:6px;height:24px;border-radius:4px;background:var(--grad);flex:0 0 auto;}
-  .section-head .count{font-size:.82rem;color:var(--ink-soft);background:#fff;border:1px solid var(--line);padding:4px 12px;border-radius:20px;font-weight:600;}
+  .section-head .count{font-size:.82rem;color:var(--ink-soft);background:var(--surface);border:1px solid var(--line);padding:4px 12px;border-radius:20px;font-weight:600;}
 
   /* level list */
   .level{
     display:flex;align-items:center;gap:14px;
     padding:16px;border:1px solid var(--line);
-    margin:12px 0;background:#fff;border-radius:16px;
+    margin:12px 0;background:var(--surface);border-radius:16px;
     cursor:pointer;
     box-shadow:0 2px 10px -6px rgba(15,23,42,.08);
     transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
@@ -293,7 +301,7 @@
 
   /* lesson list inside a level */
   .lesson-list{
-    padding:8px;margin:0 0 14px;background:#fff;border:1px solid var(--line);
+    padding:8px;margin:0 0 14px;background:var(--surface);border:1px solid var(--line);
     border-radius:16px;box-shadow:0 2px 10px -6px rgba(15,23,42,.08);
   }
   .lesson-row{
@@ -305,7 +313,7 @@
   .lesson-row .check{
     width:22px;height:22px;border-radius:8px;border:1.5px solid #D8DBE8;
     display:flex;align-items:center;justify-content:center;font-size:.72rem;flex:0 0 22px;
-    background:#fff;transition:all .18s ease;color:#fff;
+    background:var(--surface);transition:all .18s ease;color:var(--surface);
   }
   .lesson-row.done .check{background:var(--success);border-color:var(--success);box-shadow:0 3px 8px -2px rgba(5,150,105,.5);}
   .lesson-row a.lesson-link, .lesson-row .lesson-link{flex:1;min-width:0;overflow-wrap:break-word;font-size:.92rem;font-weight:600;text-decoration:none;color:var(--ink);transition:color .15s ease;cursor:pointer;}
@@ -362,7 +370,7 @@
   .q-block .q-text{font-weight:700;flex:1;min-width:0;overflow-wrap:break-word;color:var(--primary-2);}
   .opt{
     display:flex;align-items:center;gap:10px;padding:11px 12px;margin-bottom:6px;
-    background:#fff;border:1.5px solid var(--line);border-radius:12px;
+    background:var(--surface);border:1.5px solid var(--line);border-radius:12px;
     font-size:.92rem;cursor:pointer;transition:all .14s ease;
   }
   .opt:hover{background:#F6F5FF;border-color:#C7D2FE;transform:translateX(-2px);}
@@ -410,12 +418,12 @@
   .sim-product:last-child{border-bottom:none;}
   .sim-product .pname{flex:1;min-width:0;overflow-wrap:break-word;font-size:.9rem;font-weight:600;}
   .sim-product .pprice{font-size:.85rem;color:var(--ink-soft);min-width:64px;text-align:left;font-weight:600;}
-  .sim-scan-btn{background:#fff;color:var(--accent-2);border:1.5px solid #C7D2FE;border-radius:10px;padding:7px 14px;font-size:.8rem;font-weight:700;transition:all .15s ease;}
+  .sim-scan-btn{background:var(--surface);color:var(--accent-2);border:1.5px solid #C7D2FE;border-radius:10px;padding:7px 14px;font-size:.8rem;font-weight:700;transition:all .15s ease;}
   .sim-scan-btn:hover{background:var(--grad);color:#fff;border-color:transparent;transform:translateY(-1px);box-shadow:0 4px 12px -4px rgba(124,58,237,.5);}
   .sim-cart-row{display:flex;align-items:center;gap:8px;padding:10px 6px;border-bottom:1px solid rgba(15,23,42,.06);font-size:.88rem;}
   .sim-cart-row:last-child{border-bottom:none;}
   .sim-cart-row .cname{flex:1;min-width:0;overflow-wrap:break-word;font-weight:600;}
-  .qty-ctrl{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:2px 5px;}
+  .qty-ctrl{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:2px 5px;}
   .qty-btn{width:22px;height:22px;border-radius:7px;border:none;background:#F1F5F9;font-size:.95rem;line-height:1;display:flex;align-items:center;justify-content:center;color:var(--primary-2);font-weight:800;transition:background-color .14s ease;}
   .qty-btn:hover{background:#E0E7FF;}
   .remove-btn{color:var(--danger);background:none;border:none;font-size:.85rem;padding:2px 6px;border-radius:6px;transition:background-color .14s ease;}
@@ -458,7 +466,7 @@
 
   /* ---------- cash change-calculator game ---------- */
   .diff-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-  .diff-btn{border:1.5px solid var(--line);background:#fff;padding:8px 16px;border-radius:22px;font-size:.85rem;font-weight:700;cursor:pointer;color:var(--ink-soft);transition:all .16s ease;}
+  .diff-btn{border:1.5px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:22px;font-size:.85rem;font-weight:700;cursor:pointer;color:var(--ink-soft);transition:all .16s ease;}
   .diff-btn.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 4px 12px -4px rgba(124,58,237,.5);}
   .diff-btn:hover:not(.active){border-color:#C7D2FE;color:var(--primary);}
   .cash-scenario{background:linear-gradient(180deg,#FBFAFF,#F7F6FD);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;}
@@ -473,7 +481,7 @@
   .cash-denom-unit{font-size:.6rem;opacity:.9;font-weight:600;margin-top:1px;}
   .cash-denom:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 10px 20px -6px rgba(15,23,42,.32);}
   .cash-selected{display:flex;flex-wrap:wrap;gap:6px;min-height:38px;margin:12px 0;padding:12px;background:#FBFAFF;border:1.5px dashed #C7D2FE;border-radius:12px;align-items:center;}
-  .chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-size:.8rem;font-weight:700;box-shadow:0 2px 6px -2px rgba(15,23,42,.12);}
+  .chip{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-size:.8rem;font-weight:700;box-shadow:0 2px 6px -2px rgba(15,23,42,.12);}
   .chip button{background:none;border:none;color:var(--danger);cursor:pointer;font-size:.82rem;padding:0 2px;font-weight:800;}
   .cash-total-row{display:flex;justify-content:space-between;font-weight:800;font-family:'Cairo',sans-serif;padding:10px 0;border-top:1.5px dashed var(--line);margin-top:6px;margin-bottom:16px;color:var(--primary-2);}
   .cash-feedback{padding:14px;border-radius:14px;font-weight:700;text-align:center;margin-bottom:12px;font-size:.92rem;border:1px solid transparent;}
@@ -1433,6 +1441,48 @@ const POS_PRODUCTS = [
 
 /* ============ STATE ============ */
 const STORE_KEY = "ksrAcademyState_v1";
+
+/* ---------- update notice ---------- */
+/* bump APP_VERSION and update APP_CHANGELOG whenever a new round of changes ships,
+   so returning visitors see a "there's an update" notice describing what's new */
+const APP_VERSION = "1.1.0";
+const APP_CHANGELOG = "نظام الاختبارات الآن يتطلب الإجابة الصحيحة على جميع الأسئلة للنجاح، ويوضح لك رقم أي سؤال أخطأت فيه دون كشف الإجابة الصحيحة. كما أضفنا هذا النظام نفسه لإشعارك بتحديثات الموقع الجديدة.";
+const UPDATE_SEEN_KEY = "ksrAcademyLastSeenVersion_v1";
+function markUpdateSeen(){
+  try{ localStorage.setItem(UPDATE_SEEN_KEY, APP_VERSION); }catch(e){}
+}
+function showUpdateBanner(){
+  const banner = document.createElement("div");
+  banner.id = "updateBanner";
+  banner.innerHTML = `
+    <div class="update-banner-inner">
+      <span class="update-banner-icon">🔔</span>
+      <span class="update-banner-text" id="updateBannerText">يوجد تحديث جديد للموقع</span>
+      <button type="button" class="btn" id="updateBannerBtn">عرض التحديث</button>
+      <button type="button" class="update-banner-close" id="updateBannerClose" aria-label="إغلاق">✕</button>
+    </div>
+  `;
+  document.body.insertBefore(banner, document.body.firstChild);
+  document.getElementById("updateBannerBtn").addEventListener("click", function handleFirstClick(){
+    document.getElementById("updateBannerText").textContent = APP_CHANGELOG;
+    const btn = document.getElementById("updateBannerBtn");
+    btn.textContent = "حسنًا، فهمت";
+    btn.removeEventListener("click", handleFirstClick);
+    btn.addEventListener("click", ()=>{ banner.remove(); markUpdateSeen(); });
+  });
+  document.getElementById("updateBannerClose").addEventListener("click", ()=>{
+    banner.remove();
+    markUpdateSeen();
+  });
+}
+function checkForUpdateNotice(){
+  try{
+    const lastSeen = localStorage.getItem(UPDATE_SEEN_KEY);
+    if(lastSeen===APP_VERSION) return;
+    showUpdateBanner();
+  }catch(e){ /* localStorage unavailable — skip the notice silently */ }
+}
+
 function loadState(){
   try{
     const raw = localStorage.getItem(STORE_KEY);
@@ -1901,13 +1951,14 @@ function renderQuiz(levelN){
       errorBox.style.display = "none";
 
       let score = 0;
+      const wrongQuestions = [];
       quiz.forEach((q,i)=>{
         const sel = document.querySelector(`input[name="q${i}"]:checked`);
         if(sel && parseInt(sel.value)===q.a) score++;
+        else wrongQuestions.push(i+1);
       });
       const total = quiz.length;
-      const threshold = QUIZ_PASS_THRESHOLD[levelN] || 0.66;
-      const passed = score/total >= threshold;
+      const passed = score===total;
       state.quizzes = state.quizzes || {};
       const already = state.quizzes[levelN] && state.quizzes[levelN].passed;
       state.quizzes[levelN] = {score, total, passed};
@@ -1917,7 +1968,7 @@ function renderQuiz(levelN){
         state.certificateDate = formatArabicDate(new Date());
       }
       saveState(state);
-      renderQuizResult(score, total, passed, levelN);
+      renderQuizResult(score, total, passed, levelN, wrongQuestions);
     }catch(err){
       // surface any unexpected failure visibly instead of the button silently doing nothing
       errorBox.style.display = "block";
@@ -1927,7 +1978,7 @@ function renderQuiz(levelN){
   });
 }
 
-function renderQuizResult(score, total, passed, levelN){
+function renderQuizResult(score, total, passed, levelN, wrongQuestions){
   const isFinal = levelN===12;
   mount(`
     <div class="receipt-wrap stagger">
@@ -1936,7 +1987,10 @@ function renderQuizResult(score, total, passed, levelN){
         <div class="score"><span data-countup="${score}">0</span>/${total}</div>
         <p class="${passed?'badge-pass':'badge-fail'}">${passed
           ? (isFinal ? "ناجح — استحقيت شهادة إتمام الدورة 🎓" : "ناجح — تم منحك 150 XP")
-          : "لم تجتز الحد الأدنى، حاول مرة أخرى"}</p>
+          : "يجب الإجابة الصحيحة على جميع الأسئلة للنجاح"}</p>
+        ${!passed && wrongQuestions && wrongQuestions.length ? `
+          <p style="color:var(--danger);font-weight:600;margin-top:10px;">راجع إجابتك على ${wrongQuestions.length>1?"الأسئلة رقم":"السؤال رقم"}: ${wrongQuestions.join("، ")}</p>
+        ` : ""}
         <div class="cta-row" style="margin-top:18px;">
           <button class="btn btn-outline" data-nav="quiz/${levelN}">إعادة المحاولة</button>
           <button class="btn btn-primary" data-nav="course">رجوع للدورة</button>
@@ -2013,13 +2067,15 @@ function renderGeneralTest(){
       }
       errorBox.style.display = "none";
       let score = 0;
+      const wrongQuestions = [];
       questions.forEach((q,i)=>{
         const sel = document.querySelector(`input[name="q${i}"]:checked`);
         if(sel && parseInt(sel.value)===q.a) score++;
+        else wrongQuestions.push(i+1);
       });
       state.xp += 30;
       saveState(state);
-      renderGeneralTestResult(score, questions.length);
+      renderGeneralTestResult(score, questions.length, wrongQuestions);
     }catch(err){
       errorBox.style.display = "block";
       errorBox.textContent = "حدث خطأ تقني غير متوقع: " + (err && err.message ? err.message : String(err));
@@ -2027,7 +2083,7 @@ function renderGeneralTest(){
     }
   });
 }
-function renderGeneralTestResult(score, total){
+function renderGeneralTestResult(score, total, wrongQuestions){
   const pct = total>0 ? score/total : 0;
   const label = pct>=0.9 ? "ممتاز جدًا 🏆" : pct>=0.75 ? "جيد جدًا 👏" : pct>=0.5 ? "جيد، راجع نقاطك الضعيفة" : "يحتاج مراجعة شاملة";
   mount(`
@@ -2037,6 +2093,9 @@ function renderGeneralTestResult(score, total){
         <div class="score"><span data-countup="${score}">0</span>/${total}</div>
         <p class="muted">تم منحك 30 XP لإكمال الاختبار</p>
         <p class="badge-pass">${label}</p>
+        ${wrongQuestions && wrongQuestions.length ? `
+          <p style="color:var(--danger);font-weight:600;margin-top:10px;">راجع إجابتك على ${wrongQuestions.length>1?"الأسئلة رقم":"السؤال رقم"}: ${wrongQuestions.join("، ")}</p>
+        ` : ""}
         <div class="cta-row" style="margin-top:18px;">
           <button class="btn btn-outline" data-nav="tests">اختبار جديد بأسئلة عشوائية</button>
           <button class="btn btn-primary" data-nav="home">رجوع للرئيسية</button>
@@ -3866,6 +3925,7 @@ function escapeHtml(s){
 }
 
 render();
+checkForUpdateNotice();
 </script>
 </body>
 </html>
