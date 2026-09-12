@@ -23,8 +23,8 @@
     --success:#059669;
     --success-soft:#0596691A;
     --line:#E7E9F2;
-    --radius:18px;
-    --radius-sm:12px;
+    --radius:22px;
+    --radius-sm:14px;
     --shadow-soft:0 10px 34px -14px rgba(15,23,42,.16);
     --shadow-hover:0 20px 46px -16px rgba(76,29,149,.22);
     --grad:linear-gradient(135deg,#4F46E5,#8B5CF6);
@@ -83,7 +83,7 @@
 
   /* ---------- layout shell ---------- */
   #updateBanner{background:var(--grad);color:#fff;}
-  #managerMsgOverlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;animation:msgOverlayFade .25s ease;}
+  #managerMsgOverlay,#levelOverrideOverlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;animation:msgOverlayFade .25s ease;}
   @keyframes msgOverlayFade{from{opacity:0;}to{opacity:1;}}
   .manager-msg-box{background:var(--surface);border-radius:24px;padding:0;max-width:380px;width:100%;text-align:center;box-shadow:0 30px 70px -20px rgba(0,0,0,.55);overflow:hidden;animation:msgBoxPop .3s cubic-bezier(.34,1.56,.64,1);}
   @keyframes msgBoxPop{from{opacity:0;transform:scale(.85) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
@@ -121,9 +121,22 @@
   .admin-stat-badge.pass{background:var(--success-soft);color:var(--success);}
   .admin-stat-badge.fail{background:var(--danger-soft);color:var(--danger);}
   .admin-stat-badge.pending{background:var(--line);color:var(--ink-soft);}
+  .admin-overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;}
+  .admin-stat-card{background:var(--grad-soft);border-radius:14px;padding:14px 10px;text-align:center;display:flex;flex-direction:column;gap:2px;}
+  .admin-stat-num{font-weight:800;font-size:1.3rem;color:var(--primary-2);}
+  .admin-stat-label{font-size:.75rem;color:var(--ink-soft);}
+  .admin-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .admin-toolbar .field{flex:1;min-width:160px;}
+  .admin-inactive-badge{background:var(--danger-soft);color:var(--danger);font-size:.72rem;padding:2px 8px;border-radius:10px;font-weight:700;margin-inline-start:6px;}
+  .admin-trainee-note{font-size:.78rem;color:var(--accent-2);font-style:italic;margin-top:4px;}
+  .admin-level-control{display:flex;gap:8px;flex-wrap:wrap;width:100%;padding:0 6px 14px;}
+  .admin-level-control select{flex:1;min-width:200px;}
   .admin-msg-box{padding:0 6px 14px;display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;}
   .admin-msg-box textarea{flex:1;min-width:180px;resize:vertical;}
-  #adminDetailOverlay,#adminStatsOverlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;animation:msgOverlayFade .2s ease;}
+  #adminDetailOverlay,#adminStatsOverlay,#customTestOverlay,#customTestTakeOverlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;animation:msgOverlayFade .2s ease;}
+  #customTestTakeOverlay{z-index:350;background:rgba(15,23,42,.7);}
+  .custom-test-q-block{background:var(--grad-soft);border-radius:12px;padding:12px;margin-bottom:12px;}
+  .custom-test-q-block .field{margin-top:6px;}
   .admin-detail-box{background:var(--surface);border-radius:20px;padding:26px 22px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;position:relative;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);animation:msgBoxPop .3s cubic-bezier(.34,1.56,.64,1);}
   .admin-detail-close{position:absolute;top:12px;left:12px;background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--ink-soft);}
   .admin-detail-name{font-weight:800;font-size:1.1rem;color:var(--primary-2);margin:0 0 4px;}
@@ -258,19 +271,20 @@
     display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px;
   }
   .btn{
-    border:none;padding:12px 20px;font-size:.92rem;font-weight:700;border-radius:12px;
+    border:none;padding:13px 24px;font-size:.92rem;font-weight:700;border-radius:50px;
     font-family:'IBM Plex Sans Arabic',sans-serif;
-    transition:all .18s ease;
+    cursor:pointer;
+    transition:transform .16s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease,background-color .2s ease,border-color .2s ease;
   }
   .btn-primary{
     background:var(--grad);background-size:200% 200%;
     color:#fff;box-shadow:0 8px 20px -8px rgba(124,58,237,.6);
   }
-  .btn-primary:hover{background-position:100% 50%;transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(124,58,237,.65);}
-  .btn-primary:active{transform:translateY(0) scale(.98);}
+  .btn-primary:hover{background-position:100% 50%;transform:translateY(-3px) scale(1.02);box-shadow:0 14px 30px -8px rgba(124,58,237,.7);}
+  .btn-primary:active{transform:translateY(0) scale(.96);box-shadow:0 6px 14px -8px rgba(124,58,237,.55);}
   .btn-outline{background:var(--surface);border:1.5px solid var(--line);color:var(--primary-2);}
-  .btn-outline:hover{background:#F5F3FF;border-color:#C4B5FD;transform:translateY(-2px);box-shadow:0 8px 18px -10px rgba(76,29,149,.3);}
-  .btn-outline:active{transform:translateY(0) scale(.98);}
+  .btn-outline:hover{background:#F5F3FF;border-color:#C4B5FD;transform:translateY(-3px) scale(1.02);box-shadow:0 10px 22px -10px rgba(76,29,149,.35);}
+  .btn-outline:active{transform:translateY(0) scale(.96);}
   .btn-block{width:100%;}
   .btn:disabled{opacity:.45;cursor:not-allowed;transform:none !important;box-shadow:none !important;}
 
@@ -419,7 +433,7 @@
   .q-block .q-text{font-weight:700;flex:1;min-width:0;overflow-wrap:break-word;color:var(--primary-2);}
   .opt{
     display:flex;align-items:center;gap:10px;padding:11px 12px;margin-bottom:6px;
-    background:var(--surface);border:1.5px solid var(--line);border-radius:12px;
+    background:var(--surface);border:1.5px solid var(--line);border-radius:16px;
     font-size:.92rem;cursor:pointer;transition:all .14s ease;
   }
   .opt:hover{background:#F6F5FF;border-color:#C7D2FE;transform:translateX(-2px);}
@@ -1709,6 +1723,119 @@ function showCelebrationOverlay(text){
   document.getElementById("celebrationCloseBtn").addEventListener("click", ()=>overlay.remove());
   setTimeout(()=>{ const el = document.getElementById("celebrationOverlay"); if(el) el.remove(); }, 9000);
 }
+function applyLevelOverride(targetLevel){
+  state.quizzes = state.quizzes || {};
+  state.completed = state.completed || [];
+  for(let n=1; n<targetLevel; n++){
+    const quiz = (LEVELS_CONTENT[n] && LEVELS_CONTENT[n].quiz) || [];
+    state.quizzes[n] = {score: quiz.length, total: quiz.length, passed: true};
+    lessonsForLevel(n).forEach(l=>{ if(!state.completed.includes(l.id)) state.completed.push(l.id); });
+  }
+  saveState(state);
+  showLevelOverrideNotice(targetLevel);
+  const {route} = currentRoute();
+  if(route==="course" || route==="home") render();
+}
+function showLevelOverrideNotice(level){
+  const existing = document.getElementById("levelOverrideOverlay");
+  if(existing) existing.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "levelOverrideOverlay";
+  overlay.innerHTML = `
+    <div class="manager-msg-box">
+      <div class="manager-msg-header">
+        <div class="manager-msg-icon">🔓</div>
+        <p class="manager-msg-title">فتح لك المشرف مستوى جديد!</p>
+      </div>
+      <div class="manager-msg-body">
+        <p class="manager-msg-text">تم فتح المستوى ${level} لك مباشرة. تقدر تبدأه الآن من صفحة الدورة.</p>
+        <button type="button" class="manager-msg-close-btn" id="levelOverrideCloseBtn">تمام، يعطيه العافية</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById("levelOverrideCloseBtn").addEventListener("click", ()=>overlay.remove());
+}
+function listenForLevelOverride(){
+  if(!fbEnabled) return;
+  try{
+    const id = getTraineeId();
+    fbDb.ref("trainees/"+id+"/levelOverride").on("value", snap=>{
+      const o = snap.val();
+      if(!o || !o.level || !o.timestamp) return;
+      const lastSeenTs = parseInt(localStorage.getItem("ksrAcademyLastLevelOverrideTs")||"0", 10);
+      if(o.timestamp > lastSeenTs){
+        localStorage.setItem("ksrAcademyLastLevelOverrideTs", String(o.timestamp));
+        applyLevelOverride(o.level);
+      }
+    });
+  }catch(e){ console.warn("تعذّر الاستماع لتحديث المستوى من المشرف:", e); }
+}
+/* ---------- custom test (trainee side) — full-screen, no dismiss until submitted ---------- */
+const CUSTOM_TEST_LETTERS = ["أ","ب","ج","د"];
+function listenForCustomTest(){
+  if(!fbEnabled) return;
+  try{
+    const id = getTraineeId();
+    fbDb.ref("trainees/"+id+"/customTest").on("value", snap=>{
+      const t = snap.val();
+      if(!t || !t.questions || !t.questions.length || !t.timestamp) return;
+      const lastSeenTs = parseInt(localStorage.getItem("ksrAcademyLastCustomTestTs")||"0", 10);
+      if(t.timestamp > lastSeenTs){
+        localStorage.setItem("ksrAcademyLastCustomTestTs", String(t.timestamp));
+        showCustomTestOverlay(t.questions, t.title || "اختبار من المشرف");
+      }
+    });
+  }catch(e){ console.warn("تعذّر الاستماع لاختبار المشرف:", e); }
+}
+function showCustomTestOverlay(questions, title){
+  const existing = document.getElementById("customTestTakeOverlay");
+  if(existing) existing.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "customTestTakeOverlay";
+  overlay.innerHTML = `
+    <div class="admin-detail-box" style="max-width:480px;">
+      <p class="admin-detail-name">📋 ${escapeHtml(title)}</p>
+      <p class="muted" style="margin-bottom:14px;">يجب إكمال هذا الاختبار قبل المتابعة في الموقع.</p>
+      <div id="customTestTakeError" style="display:none;color:var(--danger);font-weight:600;margin-bottom:10px;font-size:.85rem;"></div>
+      <div id="customTestTakeForm">
+        ${questions.map((q,i)=>`
+          <div class="q-block">
+            <div class="q-header"><span class="q-num">${i+1}</span><span class="q-text">${escapeHtml(q.q)}</span></div>
+            ${q.opts.map((o,j)=>`
+              <label class="opt">
+                <input type="radio" name="ctq${i}" value="${j}">
+                <span class="opt-letter">${CUSTOM_TEST_LETTERS[j]||j+1}</span>
+                ${escapeHtml(o)}
+              </label>
+            `).join("")}
+          </div>
+        `).join("")}
+        <button type="button" class="btn btn-primary btn-block" id="customTestTakeSubmitBtn">تسليم الاختبار</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById("customTestTakeSubmitBtn").addEventListener("click", ()=>{
+    const errEl = document.getElementById("customTestTakeError");
+    for(let i=0;i<questions.length;i++){
+      if(!document.querySelector(`input[name="ctq${i}"]:checked`)){
+        errEl.textContent = `يرجى الإجابة على السؤال رقم ${i+1} قبل التسليم`;
+        errEl.style.display = "block";
+        return;
+      }
+    }
+    errEl.style.display = "none";
+    let score = 0;
+    questions.forEach((q,i)=>{
+      const sel = document.querySelector(`input[name="ctq${i}"]:checked`);
+      if(sel && parseInt(sel.value,10)===q.a) score++;
+    });
+    const id = getTraineeId();
+    fbDb.ref("trainees/"+id+"/customTestResult").set({score, total: questions.length, timestamp: Date.now()});
+    overlay.remove();
+  });
+}
 function describeRouteForAdmin(routeStr){
   if(!routeStr || routeStr==="home") return "الصفحة الرئيسية";
   const [route, param] = routeStr.split("/");
@@ -1737,6 +1864,10 @@ function formatRelativeTime(ms){
 }
 
 let adminAuthed = false;
+let adminTraineeDataCache = {};
+let adminSearchQuery = "";
+let adminSortMode = "name";
+const ADMIN_INACTIVE_MS = 3*24*60*60*1000; // flag as inactive after 3 days with no visit
 function renderAdmin(){
   if(!fbEnabled){
     mount(`
@@ -1773,17 +1904,203 @@ function renderAdmin(){
     });
     return;
   }
+  adminSearchQuery = "";
+  adminSortMode = "name";
   mount(`
     <div class="receipt-wrap stagger">
       <div class="receipt">
         <div class="section-head"><h2>لوحة متابعة المتدربين</h2><span class="count" id="adminTraineeCount">—</span></div>
+        <div id="adminOverviewStats" class="admin-overview-grid"></div>
+        <div class="admin-toolbar">
+          <input class="field" id="adminSearchInput" placeholder="🔍 ابحث بالاسم..." oninput="updateAdminSearch(this.value)">
+          <select class="field" id="adminSortSelect" onchange="updateAdminSort(this.value)">
+            <option value="name">ترتيب: الاسم</option>
+            <option value="xp">الأكثر تقدمًا (XP)</option>
+            <option value="recent">الأكثر نشاطًا</option>
+            <option value="least-active">الأقل نشاطًا</option>
+          </select>
+        </div>
+        <div class="admin-toolbar">
+          <button type="button" class="btn btn-outline" data-admin-broadcast-open="1">📢 رسالة للجميع</button>
+          <button type="button" class="btn btn-outline" id="adminExportBtn">⬇️ تصدير تقرير CSV</button>
+        </div>
+        <div class="admin-msg-box" id="adminBroadcastBox" style="display:none;">
+          <textarea class="field" id="adminBroadcastInput" rows="2" placeholder="اكتب رسالة تصل لجميع المتدربين دفعة واحدة..."></textarea>
+          <button type="button" class="btn btn-primary" id="adminBroadcastSendBtn">إرسال للجميع</button>
+        </div>
         <div id="adminTraineeList"><p class="muted">جارِ التحميل...</p></div>
       </div>
     </div>
   `);
+  document.getElementById("adminExportBtn").addEventListener("click", exportTraineesCSV);
+  document.getElementById("adminBroadcastSendBtn").addEventListener("click", sendBroadcastMessage);
   fbDb.ref("trainees").on("value", snap=>{
-    renderAdminTraineeList(snap.val() || {});
+    adminTraineeDataCache = snap.val() || {};
+    renderAdminOverview(adminTraineeDataCache);
+    renderAdminTraineeList(adminTraineeDataCache);
   });
+}
+function updateAdminSearch(val){
+  adminSearchQuery = val;
+  renderAdminTraineeList(adminTraineeDataCache);
+}
+function updateAdminSort(val){
+  adminSortMode = val;
+  renderAdminTraineeList(adminTraineeDataCache);
+}
+function renderAdminOverview(data){
+  const el = document.getElementById("adminOverviewStats");
+  if(!el) return;
+  const ids = Object.keys(data);
+  const now = Date.now();
+  const onlineCount = ids.filter(id => data[id].online===true && (now-(data[id].lastSeen||0) < 60000)).length;
+  const totalLessonsAvailable = ALL_LEVELS.reduce((s,lv)=>s+lessonsForLevel(lv.n).length, 0);
+  const avgProgress = (ids.length>0 && totalLessonsAvailable>0)
+    ? Math.round(ids.reduce((s,id)=> s + ((data[id].completedCount||0)/totalLessonsAvailable*100), 0) / ids.length)
+    : 0;
+  const finishedCount = ids.filter(id => data[id].quizzes && data[id].quizzes[12] && data[id].quizzes[12].passed).length;
+  el.innerHTML = `
+    <div class="admin-stat-card"><span class="admin-stat-num">${onlineCount}</span><span class="admin-stat-label">متصل الآن</span></div>
+    <div class="admin-stat-card"><span class="admin-stat-num">${avgProgress}%</span><span class="admin-stat-label">متوسط التقدم</span></div>
+    <div class="admin-stat-card"><span class="admin-stat-num">${finishedCount}</span><span class="admin-stat-label">أكملوا الدورة</span></div>
+  `;
+}
+function sendBroadcastMessage(){
+  const input = document.getElementById("adminBroadcastInput");
+  const text = input.value.trim();
+  if(!text) return;
+  const ids = Object.keys(adminTraineeDataCache);
+  const ts = Date.now();
+  ids.forEach(id=>{ fbDb.ref("trainees/"+id+"/message").set({text, timestamp: ts}); });
+  input.value = "";
+  document.getElementById("adminBroadcastBox").style.display = "none";
+  const btn = document.getElementById("adminBroadcastSendBtn");
+  const original = btn.textContent;
+  btn.textContent = "✅ أُرسلت للجميع!";
+  btn.disabled = true;
+  setTimeout(()=>{ btn.textContent = original; btn.disabled = false; }, 2500);
+}
+function exportTraineesCSV(){
+  const ids = Object.keys(adminTraineeDataCache);
+  const rows = [["الاسم","XP","دروس مكتملة","اختبارات ناجحة","آخر ظهور","الحالة"]];
+  const now = Date.now();
+  ids.forEach(id=>{
+    const t = adminTraineeDataCache[id];
+    const isOnline = t.online===true && (now-(t.lastSeen||0) < 60000);
+    rows.push([
+      t.name || "بدون اسم",
+      t.xp || 0,
+      t.completedCount || 0,
+      t.quizzesPassed || 0,
+      t.lastSeen ? new Date(t.lastSeen).toLocaleString("ar-SA") : "—",
+      isOnline ? "متصل الآن" : "غير متصل"
+    ]);
+  });
+  const csvContent = "\uFEFF" + rows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob([csvContent], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "trainees-report-"+new Date().toISOString().slice(0,10)+".csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+/* ---------- custom test builder (admin side) ---------- */
+let customTestDraft = [];
+let customTestTargetId = null;
+let customTestTargetName = null;
+function openCustomTestBuilder(id, name){
+  customTestTargetId = id;
+  customTestTargetName = name;
+  customTestDraft = [{q:"", opts:["","","",""], a:0}];
+  renderCustomTestBuilder();
+}
+function closeCustomTestBuilder(){
+  const el = document.getElementById("customTestOverlay");
+  if(el) el.remove();
+}
+function renderCustomTestBuilder(){
+  closeCustomTestBuilder();
+  const overlay = document.createElement("div");
+  overlay.id = "customTestOverlay";
+  overlay.innerHTML = `
+    <div class="admin-detail-box" style="max-width:560px;">
+      <button type="button" class="admin-detail-close" id="customTestCloseBtn">✕</button>
+      <p class="admin-detail-name">إنشاء اختبار لـ${escapeHtml(customTestTargetName)}</p>
+      <div id="customTestQuestionsArea"></div>
+      <div id="customTestError" style="display:none;color:var(--danger);font-size:.85rem;margin-bottom:8px;"></div>
+      <div class="cta-row">
+        <button type="button" class="btn btn-outline" id="customTestAddQBtn">➕ أضف سؤال</button>
+        <button type="button" class="btn btn-primary" id="customTestSendBtn">📤 إرسال الاختبار</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  renderCustomTestQuestionsArea();
+  document.getElementById("customTestCloseBtn").addEventListener("click", closeCustomTestBuilder);
+  document.getElementById("customTestAddQBtn").addEventListener("click", ()=>{
+    customTestDraft.push({q:"", opts:["","","",""], a:0});
+    renderCustomTestQuestionsArea();
+  });
+  document.getElementById("customTestSendBtn").addEventListener("click", sendCustomTest);
+}
+function renderCustomTestQuestionsArea(){
+  const area = document.getElementById("customTestQuestionsArea");
+  if(!area) return;
+  area.innerHTML = customTestDraft.map((qq,i)=>`
+    <div class="custom-test-q-block">
+      <div class="cta-row" style="justify-content:space-between;">
+        <p class="muted" style="margin:0;">السؤال ${i+1}</p>
+        ${customTestDraft.length>1 ? `<button type="button" class="admin-stat-link" data-ct-remove="${i}">حذف</button>` : ""}
+      </div>
+      <input class="field" data-ct-q="${i}" placeholder="نص السؤال" value="${escapeHtml(qq.q)}">
+      ${qq.opts.map((o,j)=>`
+        <div class="cta-row" style="align-items:center;gap:8px;margin-top:6px;flex-wrap:nowrap;">
+          <input type="radio" name="ctCorrect${i}" data-ct-correct="${i}:${j}" ${qq.a===j?"checked":""}>
+          <input class="field" data-ct-opt="${i}:${j}" placeholder="الخيار ${j+1}" value="${escapeHtml(o)}" style="flex:1;">
+        </div>
+      `).join("")}
+    </div>
+  `).join("");
+  area.querySelectorAll("[data-ct-q]").forEach(inp=>{
+    inp.addEventListener("input", ()=>{ customTestDraft[parseInt(inp.dataset.ctQ,10)].q = inp.value; });
+  });
+  area.querySelectorAll("[data-ct-opt]").forEach(inp=>{
+    inp.addEventListener("input", ()=>{
+      const [qi,oi] = inp.dataset.ctOpt.split(":").map(Number);
+      customTestDraft[qi].opts[oi] = inp.value;
+    });
+  });
+  area.querySelectorAll("[data-ct-correct]").forEach(inp=>{
+    inp.addEventListener("change", ()=>{
+      const [qi,oi] = inp.dataset.ctCorrect.split(":").map(Number);
+      customTestDraft[qi].a = oi;
+    });
+  });
+  area.querySelectorAll("[data-ct-remove]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      customTestDraft.splice(parseInt(btn.dataset.ctRemove,10), 1);
+      renderCustomTestQuestionsArea();
+    });
+  });
+}
+function sendCustomTest(){
+  const errEl = document.getElementById("customTestError");
+  for(const qq of customTestDraft){
+    if(!qq.q.trim() || qq.opts.some(o=>!o.trim())){
+      errEl.textContent = "يجب تعبئة نص كل سؤال وكل الخيارات الأربعة قبل الإرسال.";
+      errEl.style.display = "block";
+      return;
+    }
+  }
+  errEl.style.display = "none";
+  const questions = customTestDraft.map(qq=>({q:qq.q.trim(), opts:qq.opts.map(o=>o.trim()), a:qq.a}));
+  fbDb.ref("trainees/"+customTestTargetId+"/customTest").set({
+    questions, timestamp: Date.now(), title: "اختبار من المشرف"
+  });
+  closeCustomTestBuilder();
 }
 function buildLivePreviewHTML(routeStr){
   if(!routeStr || routeStr==="home") return `<p class="muted">في الصفحة الرئيسية للموقع.</p>`;
@@ -1906,41 +2223,112 @@ function renderAdminTraineeList(data){
   const listEl = document.getElementById("adminTraineeList");
   const countEl = document.getElementById("adminTraineeCount");
   if(!listEl || !countEl) return; // navigated away from the admin page
-  const ids = Object.keys(data);
+  let ids = Object.keys(data);
   countEl.textContent = ids.length + " متدرب";
   if(ids.length===0){
     listEl.innerHTML = `<p class="muted">لا يوجد متدربون بعد.</p>`;
     return;
   }
   const now = Date.now();
+  if(adminSearchQuery.trim()){
+    const q = adminSearchQuery.trim().toLowerCase();
+    ids = ids.filter(id => (data[id].name||"").toLowerCase().includes(q));
+  }
+  ids.sort((a,b)=>{
+    const ta = data[a], tb = data[b];
+    if(adminSortMode==="xp") return (tb.xp||0)-(ta.xp||0);
+    if(adminSortMode==="recent") return (tb.lastSeen||0)-(ta.lastSeen||0);
+    if(adminSortMode==="least-active") return (ta.lastSeen||0)-(tb.lastSeen||0);
+    return (ta.name||"").localeCompare(tb.name||"", "ar");
+  });
+  if(ids.length===0){
+    listEl.innerHTML = `<p class="muted">لا يوجد نتائج مطابقة للبحث.</p>`;
+    return;
+  }
   listEl.innerHTML = ids.map(id=>{
     const t = data[id];
     const isOnline = t.online===true && (now-(t.lastSeen||0) < 60000);
     const seenText = t.lastSeen ? formatRelativeTime(now-t.lastSeen) : "—";
     const safeName = escapeHtml(t.name||"بدون اسم");
+    const isInactive = !isOnline && t.lastSeen && (now-t.lastSeen > ADMIN_INACTIVE_MS);
+    const noteVal = t.adminNote || "";
     return `
       <div class="admin-trainee-row">
         <div class="admin-trainee-status ${isOnline?"online":"offline"}"></div>
         <div class="admin-trainee-info">
-          <p class="admin-trainee-name">${safeName}</p>
+          <p class="admin-trainee-name">${safeName} ${isInactive ? `<span class="admin-inactive-badge">⚠️ غير نشط</span>` : ""}</p>
           <p class="admin-trainee-meta">${isOnline ? "متصل الآن — " : "آخر ظهور: "+seenText+" — "}${describeRouteForAdmin(t.currentRoute)}</p>
           <p class="admin-trainee-stats">
             <button type="button" class="admin-stat-link" data-admin-stats="${id}:lessons" data-admin-name="${safeName}">📘 ${t.completedCount||0} درس</button> ·
             <button type="button" class="admin-stat-link" data-admin-stats="${id}:quizzes" data-admin-name="${safeName}">✅ ${t.quizzesPassed||0} اختبار</button> ·
             ⭐ ${t.xp||0} XP
           </p>
+          ${noteVal ? `<p class="admin-trainee-note">📝 ${escapeHtml(noteVal)}</p>` : ""}
+          ${t.customTestResult ? `<p class="admin-trainee-note">🧪 نتيجة الاختبار المخصص: ${t.customTestResult.score}/${t.customTestResult.total}</p>` : ""}
         </div>
         <button type="button" class="btn btn-outline" data-admin-view="${id}" data-admin-name="${safeName}">👁️ ماذا يفعل الآن</button>
         <button type="button" class="btn btn-outline" data-admin-msg="${id}">✉️ رسالة</button>
         <button type="button" class="btn btn-outline admin-celebrate-btn" data-admin-celebrate="${id}">🎉 هنّئه بتقدمه</button>
+        <button type="button" class="btn btn-outline" data-admin-note="${id}">📝 ملاحظة</button>
+        <button type="button" class="btn btn-outline" data-admin-customtest="${id}" data-admin-name="${safeName}">🧪 اختبار مخصص</button>
       </div>
       <div class="admin-msg-box" id="msgBox_${id}" style="display:none;">
         <textarea class="field" id="msgInput_${id}" rows="2" placeholder="اكتب رسالتك للمتدرب..."></textarea>
         <button type="button" class="btn btn-primary" data-admin-send="${id}">إرسال</button>
       </div>
+      <div class="admin-msg-box" id="noteBox_${id}" style="display:none;">
+        <textarea class="field" id="noteInput_${id}" rows="2" placeholder="اكتب ملاحظة خاصة (تظهر لك فقط)...">${escapeHtml(noteVal)}</textarea>
+        <button type="button" class="btn btn-primary" data-admin-note-save="${id}">حفظ الملاحظة</button>
+      </div>
+      <div class="admin-level-control">
+        <select class="field" id="levelSelect_${id}">
+          ${ALL_LEVELS.map(lv=>`<option value="${lv.n}">افتح حتى المستوى ${lv.n}: ${lv.title}</option>`).join("")}
+        </select>
+        <button type="button" class="btn btn-outline" data-admin-unlock="${id}">🔓 تطبيق</button>
+      </div>
     `;
   }).join("");
 }
+document.addEventListener("click", e=>{
+  const noteBtn = e.target.closest("[data-admin-note]");
+  if(noteBtn){
+    const box = document.getElementById("noteBox_"+noteBtn.dataset.adminNote);
+    if(box) box.style.display = box.style.display==="none" ? "block" : "none";
+    return;
+  }
+  const noteSaveBtn = e.target.closest("[data-admin-note-save]");
+  if(noteSaveBtn){
+    const id = noteSaveBtn.dataset.adminNoteSave;
+    const input = document.getElementById("noteInput_"+id);
+    fbDb.ref("trainees/"+id).update({adminNote: input.value.trim()});
+    const box = document.getElementById("noteBox_"+id);
+    if(box) box.style.display = "none";
+    return;
+  }
+  const broadcastOpenBtn = e.target.closest("[data-admin-broadcast-open]");
+  if(broadcastOpenBtn){
+    const box = document.getElementById("adminBroadcastBox");
+    if(box) box.style.display = box.style.display==="none" ? "block" : "none";
+    return;
+  }
+  const unlockBtn = e.target.closest("[data-admin-unlock]");
+  if(unlockBtn){
+    const id = unlockBtn.dataset.adminUnlock;
+    const select = document.getElementById("levelSelect_"+id);
+    const level = parseInt(select.value, 10);
+    fbDb.ref("trainees/"+id+"/levelOverride").set({level, timestamp: Date.now()});
+    const original = unlockBtn.textContent;
+    unlockBtn.textContent = "✅ تم الفتح!";
+    unlockBtn.disabled = true;
+    setTimeout(()=>{ unlockBtn.textContent = original; unlockBtn.disabled = false; }, 2500);
+    return;
+  }
+  const ctBtn = e.target.closest("[data-admin-customtest]");
+  if(ctBtn){
+    openCustomTestBuilder(ctBtn.dataset.adminCustomtest, ctBtn.dataset.adminName);
+    return;
+  }
+});
 document.addEventListener("click", e=>{
   const viewBtn = e.target.closest("[data-admin-view]");
   if(viewBtn){
@@ -4427,6 +4815,8 @@ checkForUpdateNotice();
 setupPresence();
 listenForManagerMessages();
 listenForCelebrations();
+listenForLevelOverride();
+listenForCustomTest();
 setInterval(syncTraineeToFirebase, 25000);
 </script>
 </body>
