@@ -83,11 +83,29 @@
 
   /* ---------- layout shell ---------- */
   #updateBanner{background:var(--grad);color:#fff;}
-  #managerMsgOverlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
-  .manager-msg-box{background:var(--surface);border-radius:20px;padding:28px 24px;max-width:360px;text-align:center;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);}
-  .manager-msg-icon{font-size:2.2rem;margin-bottom:8px;}
-  .manager-msg-title{font-weight:800;color:var(--primary-2);margin-bottom:10px;font-size:1.05rem;}
-  .manager-msg-text{color:var(--ink);margin-bottom:18px;line-height:1.6;}
+  #managerMsgOverlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;animation:msgOverlayFade .25s ease;}
+  @keyframes msgOverlayFade{from{opacity:0;}to{opacity:1;}}
+  .manager-msg-box{background:var(--surface);border-radius:24px;padding:0;max-width:380px;width:100%;text-align:center;box-shadow:0 30px 70px -20px rgba(0,0,0,.55);overflow:hidden;animation:msgBoxPop .3s cubic-bezier(.34,1.56,.64,1);}
+  @keyframes msgBoxPop{from{opacity:0;transform:scale(.85) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+  .manager-msg-header{background:var(--grad);padding:28px 24px 40px;position:relative;}
+  .manager-msg-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto;border:3px solid rgba(255,255,255,.4);}
+  .manager-msg-title{color:#fff;font-weight:800;font-size:1.05rem;margin-top:12px;}
+  .manager-msg-body{padding:24px 24px 26px;margin-top:-24px;background:var(--surface);border-radius:24px 24px 0 0;position:relative;}
+  .manager-msg-text{color:var(--ink);margin-bottom:20px;line-height:1.7;font-size:.95rem;}
+  .manager-msg-close-btn{background:var(--grad);color:#fff;border:none;padding:12px 32px;border-radius:14px;font-weight:700;font-size:.92rem;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;box-shadow:0 10px 24px -10px rgba(79,70,229,.5);}
+  .manager-msg-close-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(79,70,229,.6);}
+  #celebrationOverlay{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);overflow:hidden;animation:msgOverlayFade .25s ease;}
+  .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti-piece{position:absolute;top:-20px;width:9px;height:15px;opacity:.9;border-radius:2px;animation-name:confettiFall;animation-timing-function:ease-in;animation-fill-mode:forwards;}
+  @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(var(--rot,360deg));opacity:.7;}}
+  .celebration-box{position:relative;z-index:1;background:var(--surface);border-radius:26px;padding:34px 26px;max-width:380px;width:100%;text-align:center;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);animation:msgBoxPop .35s cubic-bezier(.34,1.56,.64,1);}
+  .celebration-trophy{font-size:3.2rem;animation:trophyBounce 1s ease infinite;}
+  @keyframes trophyBounce{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-10px) scale(1.08);}}
+  .celebration-title{font-weight:800;font-size:1.3rem;color:var(--primary-2);margin:10px 0 6px;}
+  .celebration-text{color:var(--ink);line-height:1.7;margin-bottom:20px;font-size:.95rem;}
+  .celebration-close-btn{background:var(--grad);color:#fff;border:none;padding:12px 34px;border-radius:14px;font-weight:700;font-size:.92rem;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;box-shadow:0 10px 24px -10px rgba(79,70,229,.5);}
+  .celebration-close-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(79,70,229,.6);}
+  .admin-celebrate-btn:disabled{opacity:.7;cursor:default;}
   .admin-trainee-row{display:flex;align-items:center;gap:12px;padding:14px 6px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
   .admin-trainee-status{width:10px;height:10px;border-radius:50%;flex:0 0 auto;background:#9CA3AF;}
   .admin-trainee-status.online{background:var(--success);box-shadow:0 0 0 3px var(--success-soft);}
@@ -95,6 +113,14 @@
   .admin-trainee-name{font-weight:700;margin:0;}
   .admin-trainee-meta{font-size:.8rem;color:var(--ink-soft);margin:2px 0;}
   .admin-trainee-stats{font-size:.78rem;color:var(--ink-soft);margin:0;}
+  .admin-stat-link{background:none;border:none;padding:0;font:inherit;color:var(--accent-2);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;}
+  .admin-stat-link:hover{color:var(--primary);}
+  .admin-stats-list{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow-y:auto;}
+  .admin-stat-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;background:var(--grad-soft);border-radius:10px;font-size:.85rem;}
+  .admin-stat-badge{font-weight:700;padding:2px 10px;border-radius:12px;font-size:.76rem;white-space:nowrap;}
+  .admin-stat-badge.pass{background:var(--success-soft);color:var(--success);}
+  .admin-stat-badge.fail{background:var(--danger-soft);color:var(--danger);}
+  .admin-stat-badge.pending{background:var(--line);color:var(--ink-soft);}
   .admin-msg-box{padding:0 6px 14px;display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;}
   .admin-msg-box textarea{flex:1;min-width:180px;resize:vertical;}
   #adminDetailOverlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -1578,7 +1604,9 @@ function syncTraineeToFirebase(){
       name: state.name || "بدون اسم",
       xp: state.xp || 0,
       completedCount: (state.completed||[]).length,
+      completed: state.completed || [],
       quizzesPassed: Object.values(state.quizzes||{}).filter(q=>q.passed).length,
+      quizzes: state.quizzes || {},
       currentRoute: routeStr,
       lastSeen: firebase.database.ServerValue.TIMESTAMP
     });
@@ -1620,14 +1648,66 @@ function showManagerMessagePopup(text){
   overlay.id = "managerMsgOverlay";
   overlay.innerHTML = `
     <div class="manager-msg-box">
-      <div class="manager-msg-icon">🧑‍💼</div>
-      <p class="manager-msg-title">رسالة من المشرف</p>
-      <p class="manager-msg-text">${escapeHtml(text)}</p>
-      <button type="button" class="btn btn-primary" id="managerMsgCloseBtn">حسنًا</button>
+      <div class="manager-msg-header">
+        <div class="manager-msg-icon">🧑‍💼</div>
+        <p class="manager-msg-title">رسالة من المشرف</p>
+      </div>
+      <div class="manager-msg-body">
+        <p class="manager-msg-text">${escapeHtml(text)}</p>
+        <button type="button" class="manager-msg-close-btn" id="managerMsgCloseBtn">حسنًا، فهمت</button>
+      </div>
     </div>
   `;
   document.body.appendChild(overlay);
   document.getElementById("managerMsgCloseBtn").addEventListener("click", ()=>overlay.remove());
+}
+function listenForCelebrations(){
+  if(!fbEnabled) return;
+  try{
+    const id = getTraineeId();
+    fbDb.ref("trainees/"+id+"/celebration").on("value", snap=>{
+      const c = snap.val();
+      if(!c || !c.timestamp) return;
+      const lastSeenTs = parseInt(localStorage.getItem("ksrAcademyLastCelebrationTs")||"0", 10);
+      if(c.timestamp > lastSeenTs){
+        localStorage.setItem("ksrAcademyLastCelebrationTs", String(c.timestamp));
+        showCelebrationOverlay(c.text || "أحسنت! تقدمك ممتاز ونفتخر فيك 🎉");
+      }
+    });
+  }catch(e){ console.warn("تعذّر الاستماع لتهنئة المشرف:", e); }
+}
+function createConfettiPiece(){
+  const colors = ["#7C3AED","#4F46E5","#EC4899","#F59E0B","#10B981","#3B82F6"];
+  const el = document.createElement("div");
+  el.className = "confetti-piece";
+  el.style.left = Math.random()*100+"%";
+  el.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+  el.style.animationDelay = (Math.random()*0.6)+"s";
+  el.style.animationDuration = (2.4+Math.random()*1.6)+"s";
+  el.style.setProperty("--rot", (Math.random()*360)+"deg");
+  return el;
+}
+function showCelebrationOverlay(text){
+  const existing = document.getElementById("celebrationOverlay");
+  if(existing) existing.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "celebrationOverlay";
+  const confettiContainer = document.createElement("div");
+  confettiContainer.className = "confetti-container";
+  for(let i=0;i<50;i++) confettiContainer.appendChild(createConfettiPiece());
+  overlay.appendChild(confettiContainer);
+  const box = document.createElement("div");
+  box.className = "celebration-box";
+  box.innerHTML = `
+    <div class="celebration-trophy">🏆</div>
+    <p class="celebration-title">أحسنت! 🎉</p>
+    <p class="celebration-text">${escapeHtml(text)}</p>
+    <button type="button" class="celebration-close-btn" id="celebrationCloseBtn">شكرًا! 💪</button>
+  `;
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  document.getElementById("celebrationCloseBtn").addEventListener("click", ()=>overlay.remove());
+  setTimeout(()=>{ const el = document.getElementById("celebrationOverlay"); if(el) el.remove(); }, 9000);
 }
 function describeRouteForAdmin(routeStr){
   if(!routeStr || routeStr==="home") return "الصفحة الرئيسية";
@@ -1770,6 +1850,58 @@ function openAdminDetail(id, name){
   adminDetailUnsub = ()=>ref.off("value", cb);
 }
 
+function buildLessonsDetailHTML(completedArr){
+  const completedSet = new Set(completedArr||[]);
+  return ALL_LEVELS.map(lv=>{
+    const lessons = lessonsForLevel(lv.n);
+    if(lessons.length===0) return `<div class="admin-stat-row"><span>المستوى ${lv.n}: ${lv.title}</span><span class="admin-stat-badge pending">لا يوجد دروس</span></div>`;
+    const doneCount = lessons.filter(l=>completedSet.has(l.id)).length;
+    const cls = doneCount===lessons.length ? "pass" : doneCount>0 ? "pending" : "fail";
+    return `<div class="admin-stat-row"><span>المستوى ${lv.n}: ${lv.title}</span><span class="admin-stat-badge ${cls}">${doneCount}/${lessons.length}</span></div>`;
+  }).join("");
+}
+function buildQuizzesDetailHTML(quizzesObj){
+  quizzesObj = quizzesObj || {};
+  return ALL_LEVELS.map(lv=>{
+    const label = lv.n===12 ? "المحاكاة النهائية" : `اختبار المستوى ${lv.n}`;
+    const q = quizzesObj[lv.n];
+    let statusText, cls;
+    if(!q){ statusText = "لم يُحل بعد"; cls = "pending"; }
+    else if(q.passed){ statusText = lv.n===12 ? `مكتملة (${q.score}%)` : `ناجح (${q.score}/${q.total})`; cls = "pass"; }
+    else{ statusText = `لم ينجح (${q.score}/${q.total})`; cls = "fail"; }
+    return `<div class="admin-stat-row"><span>${label}</span><span class="admin-stat-badge ${cls}">${statusText}</span></div>`;
+  }).join("");
+}
+function openAdminStatsDetail(name, kind, completedArr, quizzesObj){
+  const existing = document.getElementById("adminStatsOverlay");
+  if(existing) existing.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "adminStatsOverlay";
+  const title = kind==="lessons" ? "تفاصيل الدروس المكتملة" : "تفاصيل نتائج الاختبارات";
+  const body = kind==="lessons" ? buildLessonsDetailHTML(completedArr) : buildQuizzesDetailHTML(quizzesObj);
+  overlay.innerHTML = `
+    <div class="admin-detail-box">
+      <button type="button" class="admin-detail-close" id="adminStatsCloseBtn">✕</button>
+      <p class="admin-detail-name">${escapeHtml(name)}</p>
+      <p class="muted" style="margin-bottom:14px;">${title}</p>
+      <div class="admin-stats-list">${body}</div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById("adminStatsCloseBtn").addEventListener("click", ()=>overlay.remove());
+  overlay.addEventListener("click", e=>{ if(e.target===overlay) overlay.remove(); });
+}
+document.addEventListener("click", e=>{
+  const statsBtn = e.target.closest("[data-admin-stats]");
+  if(!statsBtn) return;
+  const [id, kind] = statsBtn.dataset.adminStats.split(":");
+  const name = statsBtn.dataset.adminName;
+  fbDb.ref("trainees/"+id).once("value").then(snap=>{
+    const t = snap.val() || {};
+    openAdminStatsDetail(name, kind, t.completed, t.quizzes);
+  });
+});
+
 function renderAdminTraineeList(data){
   const listEl = document.getElementById("adminTraineeList");
   const countEl = document.getElementById("adminTraineeCount");
@@ -1792,10 +1924,15 @@ function renderAdminTraineeList(data){
         <div class="admin-trainee-info">
           <p class="admin-trainee-name">${safeName}</p>
           <p class="admin-trainee-meta">${isOnline ? "متصل الآن — " : "آخر ظهور: "+seenText+" — "}${describeRouteForAdmin(t.currentRoute)}</p>
-          <p class="admin-trainee-stats">📘 ${t.completedCount||0} درس · ✅ ${t.quizzesPassed||0} اختبار · ⭐ ${t.xp||0} XP</p>
+          <p class="admin-trainee-stats">
+            <button type="button" class="admin-stat-link" data-admin-stats="${id}:lessons" data-admin-name="${safeName}">📘 ${t.completedCount||0} درس</button> ·
+            <button type="button" class="admin-stat-link" data-admin-stats="${id}:quizzes" data-admin-name="${safeName}">✅ ${t.quizzesPassed||0} اختبار</button> ·
+            ⭐ ${t.xp||0} XP
+          </p>
         </div>
         <button type="button" class="btn btn-outline" data-admin-view="${id}" data-admin-name="${safeName}">👁️ ماذا يفعل الآن</button>
         <button type="button" class="btn btn-outline" data-admin-msg="${id}">✉️ رسالة</button>
+        <button type="button" class="btn btn-outline admin-celebrate-btn" data-admin-celebrate="${id}">🎉 هنّئه بتقدمه</button>
       </div>
       <div class="admin-msg-box" id="msgBox_${id}" style="display:none;">
         <textarea class="field" id="msgInput_${id}" rows="2" placeholder="اكتب رسالتك للمتدرب..."></textarea>
@@ -1814,6 +1951,19 @@ document.addEventListener("click", e=>{
   if(msgBtn){
     const box = document.getElementById("msgBox_"+msgBtn.dataset.adminMsg);
     if(box) box.style.display = box.style.display==="none" ? "block" : "none";
+    return;
+  }
+  const celebrateBtn = e.target.closest("[data-admin-celebrate]");
+  if(celebrateBtn){
+    const id = celebrateBtn.dataset.adminCelebrate;
+    fbDb.ref("trainees/"+id+"/celebration").set({
+      text: "أحسنت! تقدمك ممتاز ونفتخر فيك. استمر بنفس الحماس! 👏",
+      timestamp: Date.now()
+    });
+    const original = celebrateBtn.textContent;
+    celebrateBtn.textContent = "✅ تم الإرسال!";
+    celebrateBtn.disabled = true;
+    setTimeout(()=>{ celebrateBtn.textContent = original; celebrateBtn.disabled = false; }, 2500);
     return;
   }
   const sendBtn = e.target.closest("[data-admin-send]");
@@ -4276,6 +4426,7 @@ render();
 checkForUpdateNotice();
 setupPresence();
 listenForManagerMessages();
+listenForCelebrations();
 setInterval(syncTraineeToFirebase, 25000);
 </script>
 </body>
