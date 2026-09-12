@@ -83,6 +83,29 @@
 
   /* ---------- layout shell ---------- */
   #updateBanner{background:var(--grad);color:#fff;}
+  #managerMsgOverlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .manager-msg-box{background:var(--surface);border-radius:20px;padding:28px 24px;max-width:360px;text-align:center;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);}
+  .manager-msg-icon{font-size:2.2rem;margin-bottom:8px;}
+  .manager-msg-title{font-weight:800;color:var(--primary-2);margin-bottom:10px;font-size:1.05rem;}
+  .manager-msg-text{color:var(--ink);margin-bottom:18px;line-height:1.6;}
+  .admin-trainee-row{display:flex;align-items:center;gap:12px;padding:14px 6px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .admin-trainee-status{width:10px;height:10px;border-radius:50%;flex:0 0 auto;background:#9CA3AF;}
+  .admin-trainee-status.online{background:var(--success);box-shadow:0 0 0 3px var(--success-soft);}
+  .admin-trainee-info{flex:1;min-width:180px;}
+  .admin-trainee-name{font-weight:700;margin:0;}
+  .admin-trainee-meta{font-size:.8rem;color:var(--ink-soft);margin:2px 0;}
+  .admin-trainee-stats{font-size:.78rem;color:var(--ink-soft);margin:0;}
+  .admin-msg-box{padding:0 6px 14px;display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;}
+  .admin-msg-box textarea{flex:1;min-width:180px;resize:vertical;}
+  #adminDetailOverlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .admin-detail-box{background:var(--surface);border-radius:20px;padding:26px 22px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;position:relative;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);}
+  .admin-detail-close{position:absolute;top:12px;left:12px;background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--ink-soft);}
+  .admin-detail-name{font-weight:800;font-size:1.1rem;color:var(--primary-2);margin:0 0 4px;}
+  .admin-preview-lesson{background:var(--grad-soft);border-radius:14px;padding:16px;}
+  .admin-preview-badge{font-size:1.6rem;margin-bottom:6px;}
+  .admin-preview-title{font-weight:700;margin:0 0 4px;color:var(--primary-2);}
+  .admin-preview-points{margin:8px 0 0;padding-inline-start:20px;font-size:.85rem;color:var(--ink);}
+  .admin-preview-points li{margin-bottom:4px;}
   .update-banner-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 18px;}
   .update-banner-icon{font-size:1.1rem;}
   .update-banner-text{flex:1;min-width:160px;font-size:.86rem;font-weight:600;}
@@ -641,6 +664,32 @@
   <button data-nav="learnmore"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>محاكي الدفع</span></button>
   <button data-nav="profile"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>حسابي</span></button>
 </div>
+
+<!-- ============================================================
+     FIREBASE SETUP — required for the manager/admin live dashboard
+     ============================================================
+     1) Go to https://console.firebase.google.com → create a free project.
+     2) In the project, add a "Realtime Database" (not Firestore) and start it
+        in test mode to begin with.
+     3) Project settings → your apps → add a "Web app" → copy the config
+        object it gives you, and paste its values into FIREBASE_CONFIG below.
+     4) In the Realtime Database → Rules tab, at minimum use:
+          { "rules": { ".read": true, ".write": true } }
+        This is OPEN to anyone with your config — fine for trying this out,
+        but before real use, restrict it (e.g. with Firebase Auth) so only
+        your trainees' devices can write their own record and only you can
+        write "message" fields. I can't set that up for you from here since
+        it lives in your Firebase console, not in this file.
+     5) Set ADMIN_PASSWORD further down in the script to your own password.
+        This is a basic client-side gate, NOT real security — anyone who
+        views this page's source can read it. Real access control needs
+        Firebase Auth + database rules, which requires the Firebase console
+        step above.
+     If FIREBASE_CONFIG is left with placeholder values, all of this stays
+     silently disabled and the app works exactly as before.
+-->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
 /* ============ CONTENT: LEVEL 1 ============ */
@@ -1483,6 +1532,303 @@ function checkForUpdateNotice(){
   }catch(e){ /* localStorage unavailable — skip the notice silently */ }
 }
 
+/* ============================================================
+   MANAGER LIVE-TRACKING SYSTEM (optional, needs Firebase — see
+   the setup comment near the <script> tags above)
+   ============================================================ */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCGlIwuWTJmv8dt0K2z_32u2tCvpZg5WpQ",
+  authDomain: "mood-ba82f.firebaseapp.com",
+  databaseURL: "https://mood-ba82f-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mood-ba82f",
+};
+/* change this before relying on the admin gate for anything real —
+   it's a basic client-side check, not real authentication */
+const ADMIN_PASSWORD = "5060";
+
+let fbDb = null;
+let fbEnabled = false;
+try{
+  if(typeof firebase !== "undefined" && FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf("ضع_")===-1){
+    firebase.initializeApp(FIREBASE_CONFIG);
+    fbDb = firebase.database();
+    fbEnabled = true;
+  }
+}catch(e){
+  console.warn("Firebase غير مفعّل أو إعداداته غير مكتملة:", e);
+  fbEnabled = false;
+}
+
+function getTraineeId(){
+  let id = localStorage.getItem("ksrAcademyTraineeId");
+  if(!id){
+    id = "T"+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+    localStorage.setItem("ksrAcademyTraineeId", id);
+  }
+  return id;
+}
+function syncTraineeToFirebase(){
+  if(!fbEnabled) return;
+  try{
+    const {route, param} = currentRoute();
+    if(route==="admin") return; // never sync whoever is viewing the admin dashboard as a "trainee"
+    const id = getTraineeId();
+    const routeStr = param ? `${route}/${param}` : route;
+    fbDb.ref("trainees/"+id).update({
+      name: state.name || "بدون اسم",
+      xp: state.xp || 0,
+      completedCount: (state.completed||[]).length,
+      quizzesPassed: Object.values(state.quizzes||{}).filter(q=>q.passed).length,
+      currentRoute: routeStr,
+      lastSeen: firebase.database.ServerValue.TIMESTAMP
+    });
+  }catch(e){ console.warn("تعذّر مزامنة التقدم:", e); }
+}
+function setupPresence(){
+  if(!fbEnabled) return;
+  try{
+    const id = getTraineeId();
+    const presenceRef = fbDb.ref("trainees/"+id+"/online");
+    const connectedRef = fbDb.ref(".info/connected");
+    connectedRef.on("value", snap=>{
+      if(snap.val()===true){
+        presenceRef.onDisconnect().set(false);
+        presenceRef.set(true);
+      }
+    });
+  }catch(e){ console.warn("تعذّر إعداد حالة الاتصال:", e); }
+}
+function listenForManagerMessages(){
+  if(!fbEnabled) return;
+  try{
+    const id = getTraineeId();
+    fbDb.ref("trainees/"+id+"/message").on("value", snap=>{
+      const msg = snap.val();
+      if(!msg || !msg.text || !msg.timestamp) return;
+      const lastSeenTs = parseInt(localStorage.getItem("ksrAcademyLastMsgTs")||"0", 10);
+      if(msg.timestamp > lastSeenTs){
+        localStorage.setItem("ksrAcademyLastMsgTs", String(msg.timestamp));
+        showManagerMessagePopup(msg.text);
+      }
+    });
+  }catch(e){ console.warn("تعذّر الاستماع لرسائل المشرف:", e); }
+}
+function showManagerMessagePopup(text){
+  const existing = document.getElementById("managerMsgOverlay");
+  if(existing) existing.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "managerMsgOverlay";
+  overlay.innerHTML = `
+    <div class="manager-msg-box">
+      <div class="manager-msg-icon">🧑‍💼</div>
+      <p class="manager-msg-title">رسالة من المشرف</p>
+      <p class="manager-msg-text">${escapeHtml(text)}</p>
+      <button type="button" class="btn btn-primary" id="managerMsgCloseBtn">حسنًا</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById("managerMsgCloseBtn").addEventListener("click", ()=>overlay.remove());
+}
+function describeRouteForAdmin(routeStr){
+  if(!routeStr || routeStr==="home") return "الصفحة الرئيسية";
+  const [route, param] = routeStr.split("/");
+  if(route==="course") return "صفحة الدورة";
+  if(route==="lesson"){
+    const found = findLessonById(parseInt(param,10));
+    return found ? `يذاكر: ${found.lesson.title} (مستوى ${found.level})` : "يذاكر درسًا";
+  }
+  if(route==="quiz") return param==="12" ? "يحل الاختبار النهائي" : `يحل اختبار المستوى ${param}`;
+  if(route==="finalsim") return "في المحاكاة النهائية";
+  if(route==="simulator") return "في صفحة المحاكي";
+  if(route==="learnmore") return "في محاكي الدفع";
+  if(route==="profile") return "في صفحة حسابه";
+  if(route==="tests") return "في صفحة الاختبارات";
+  if(route==="certificate") return "يشاهد شهادته";
+  return "في الموقع";
+}
+function formatRelativeTime(ms){
+  const sec = Math.floor(ms/1000);
+  if(sec<60) return "قبل لحظات";
+  const min = Math.floor(sec/60);
+  if(min<60) return `قبل ${min} دقيقة`;
+  const hr = Math.floor(min/60);
+  if(hr<24) return `قبل ${hr} ساعة`;
+  return `قبل ${Math.floor(hr/24)} يوم`;
+}
+
+let adminAuthed = false;
+function renderAdmin(){
+  if(!fbEnabled){
+    mount(`
+      <div class="receipt-wrap stagger">
+        <div class="receipt">
+          <h2>لوحة المشرف</h2>
+          <p class="muted" style="margin-top:10px;">لوحة المتابعة الحية تحتاج ربط الموقع بقاعدة بيانات Firebase أولًا. راجع تعليمات "FIREBASE SETUP" أعلى ملف الكود لإضافة إعدادات مشروعك.</p>
+        </div>
+      </div>
+    `);
+    return;
+  }
+  if(!adminAuthed){
+    mount(`
+      <div class="receipt-wrap stagger">
+        <div class="receipt" style="max-width:360px;margin:0 auto;text-align:center;">
+          <h2 style="margin-bottom:14px;">دخول المشرف</h2>
+          <input class="field" id="adminPassInput" type="password" placeholder="كلمة المرور">
+          <div id="adminPassError" style="display:none;color:var(--danger);font-size:.85rem;margin-top:8px;"></div>
+          <button class="btn btn-primary btn-block" id="adminPassBtn" style="margin-top:14px;">دخول</button>
+        </div>
+      </div>
+    `);
+    document.getElementById("adminPassBtn").addEventListener("click", ()=>{
+      const val = document.getElementById("adminPassInput").value;
+      if(val===ADMIN_PASSWORD){
+        adminAuthed = true;
+        renderAdmin();
+      }else{
+        const err = document.getElementById("adminPassError");
+        err.textContent = "كلمة المرور غير صحيحة";
+        err.style.display = "block";
+      }
+    });
+    return;
+  }
+  mount(`
+    <div class="receipt-wrap stagger">
+      <div class="receipt">
+        <div class="section-head"><h2>لوحة متابعة المتدربين</h2><span class="count" id="adminTraineeCount">—</span></div>
+        <div id="adminTraineeList"><p class="muted">جارِ التحميل...</p></div>
+      </div>
+    </div>
+  `);
+  fbDb.ref("trainees").on("value", snap=>{
+    renderAdminTraineeList(snap.val() || {});
+  });
+}
+function buildLivePreviewHTML(routeStr){
+  if(!routeStr || routeStr==="home") return `<p class="muted">في الصفحة الرئيسية للموقع.</p>`;
+  const [route, param] = routeStr.split("/");
+  if(route==="course") return `<p class="muted">يتصفح خريطة الدورة الكاملة (12 مستوى).</p>`;
+  if(route==="lesson"){
+    const found = findLessonById(parseInt(param,10));
+    if(!found) return `<p class="muted">يذاكر درسًا.</p>`;
+    const {lesson, level} = found;
+    return `
+      <div class="admin-preview-lesson">
+        <div class="admin-preview-badge">${lesson.icon||"📘"}</div>
+        <p class="admin-preview-title">${escapeHtml(lesson.title)}</p>
+        <p class="muted" style="margin-bottom:8px;">مستوى ${level}</p>
+        <ul class="admin-preview-points">${lesson.points.map(p=>`<li>${escapeHtml(p)}</li>`).join("")}</ul>
+      </div>
+    `;
+  }
+  if(route==="quiz"){
+    const quiz = (LEVELS_CONTENT[param] && LEVELS_CONTENT[param].quiz) || [];
+    return `<p class="muted">يحل ${param==="12"?"الاختبار النهائي الشامل":"اختبار المستوى "+param} — ${quiz.length} سؤال.</p>`;
+  }
+  if(route==="finalsim") return `<p class="muted">في المحاكاة النهائية (المستوى 12) — يتعامل مع عملاء افتراضيين.</p>`;
+  if(route==="simulator") return `<p class="muted">في صفحة المحاكي — يجرب POS أو النقد أو الخصومات أو العملاء أو المرتجعات.</p>`;
+  if(route==="learnmore") return `<p class="muted">في محاكي الدفع — يجرب جهاز الدفع الواقعي.</p>`;
+  if(route==="profile") return `<p class="muted">يشاهد صفحة حسابه الشخصي.</p>`;
+  if(route==="tests") return `<p class="muted">يحل الاختبار السريع العام.</p>`;
+  if(route==="certificate") return `<p class="muted">يشاهد شهادة إتمام الدورة.</p>`;
+  return `<p class="muted">في صفحة أخرى بالموقع.</p>`;
+}
+let adminDetailUnsub = null;
+function closeAdminDetail(){
+  const overlay = document.getElementById("adminDetailOverlay");
+  if(overlay) overlay.remove();
+  if(adminDetailUnsub){ adminDetailUnsub(); adminDetailUnsub = null; }
+}
+function openAdminDetail(id, name){
+  closeAdminDetail();
+  const overlay = document.createElement("div");
+  overlay.id = "adminDetailOverlay";
+  overlay.innerHTML = `
+    <div class="admin-detail-box">
+      <button type="button" class="admin-detail-close" id="adminDetailCloseBtn">✕</button>
+      <p class="admin-detail-name">${escapeHtml(name)}</p>
+      <p class="muted" id="adminDetailStatus">جارِ التحميل...</p>
+      <div id="adminDetailPreview" style="margin-top:14px;"></div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById("adminDetailCloseBtn").addEventListener("click", closeAdminDetail);
+  overlay.addEventListener("click", e=>{ if(e.target===overlay) closeAdminDetail(); });
+  const ref = fbDb.ref("trainees/"+id);
+  const cb = snap=>{
+    const t = snap.val();
+    if(!t) return;
+    const now = Date.now();
+    const isOnline = t.online===true && (now-(t.lastSeen||0) < 60000);
+    const statusEl = document.getElementById("adminDetailStatus");
+    const previewEl = document.getElementById("adminDetailPreview");
+    if(statusEl) statusEl.textContent = isOnline ? "🟢 متصل الآن" : "⚪ آخر ظهور: "+formatRelativeTime(now-(t.lastSeen||0));
+    if(previewEl) previewEl.innerHTML = buildLivePreviewHTML(t.currentRoute);
+  };
+  ref.on("value", cb);
+  adminDetailUnsub = ()=>ref.off("value", cb);
+}
+
+function renderAdminTraineeList(data){
+  const listEl = document.getElementById("adminTraineeList");
+  const countEl = document.getElementById("adminTraineeCount");
+  if(!listEl || !countEl) return; // navigated away from the admin page
+  const ids = Object.keys(data);
+  countEl.textContent = ids.length + " متدرب";
+  if(ids.length===0){
+    listEl.innerHTML = `<p class="muted">لا يوجد متدربون بعد.</p>`;
+    return;
+  }
+  const now = Date.now();
+  listEl.innerHTML = ids.map(id=>{
+    const t = data[id];
+    const isOnline = t.online===true && (now-(t.lastSeen||0) < 60000);
+    const seenText = t.lastSeen ? formatRelativeTime(now-t.lastSeen) : "—";
+    const safeName = escapeHtml(t.name||"بدون اسم");
+    return `
+      <div class="admin-trainee-row">
+        <div class="admin-trainee-status ${isOnline?"online":"offline"}"></div>
+        <div class="admin-trainee-info">
+          <p class="admin-trainee-name">${safeName}</p>
+          <p class="admin-trainee-meta">${isOnline ? "متصل الآن — " : "آخر ظهور: "+seenText+" — "}${describeRouteForAdmin(t.currentRoute)}</p>
+          <p class="admin-trainee-stats">📘 ${t.completedCount||0} درس · ✅ ${t.quizzesPassed||0} اختبار · ⭐ ${t.xp||0} XP</p>
+        </div>
+        <button type="button" class="btn btn-outline" data-admin-view="${id}" data-admin-name="${safeName}">👁️ ماذا يفعل الآن</button>
+        <button type="button" class="btn btn-outline" data-admin-msg="${id}">✉️ رسالة</button>
+      </div>
+      <div class="admin-msg-box" id="msgBox_${id}" style="display:none;">
+        <textarea class="field" id="msgInput_${id}" rows="2" placeholder="اكتب رسالتك للمتدرب..."></textarea>
+        <button type="button" class="btn btn-primary" data-admin-send="${id}">إرسال</button>
+      </div>
+    `;
+  }).join("");
+}
+document.addEventListener("click", e=>{
+  const viewBtn = e.target.closest("[data-admin-view]");
+  if(viewBtn){
+    openAdminDetail(viewBtn.dataset.adminView, viewBtn.dataset.adminName);
+    return;
+  }
+  const msgBtn = e.target.closest("[data-admin-msg]");
+  if(msgBtn){
+    const box = document.getElementById("msgBox_"+msgBtn.dataset.adminMsg);
+    if(box) box.style.display = box.style.display==="none" ? "block" : "none";
+    return;
+  }
+  const sendBtn = e.target.closest("[data-admin-send]");
+  if(sendBtn){
+    const id = sendBtn.dataset.adminSend;
+    const input = document.getElementById("msgInput_"+id);
+    const text = input.value.trim();
+    if(!text) return;
+    fbDb.ref("trainees/"+id+"/message").set({text, timestamp: Date.now()});
+    input.value = "";
+    const box = document.getElementById("msgBox_"+id);
+    if(box) box.style.display = "none";
+  }
+});
+
 function loadState(){
   try{
     const raw = localStorage.getItem(STORE_KEY);
@@ -1699,8 +2045,10 @@ function countUp(el, to, suffix){
 }
 
 function render(){
+  syncTraineeToFirebase();
   const {route, param} = currentRoute();
   setActiveNav(route);
+  if(route==="admin") return renderAdmin();
   if(route==="home") return renderHome();
   if(route==="course") return renderCourse();
   if(route==="lesson") return renderLesson(parseInt(param));
@@ -3926,6 +4274,9 @@ function escapeHtml(s){
 
 render();
 checkForUpdateNotice();
+setupPresence();
+listenForManagerMessages();
+setInterval(syncTraineeToFirebase, 25000);
 </script>
 </body>
 </html>
